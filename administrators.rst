@@ -301,6 +301,40 @@ Example: ``/mnt/astor/archivematica1/tmp``
 
 * Remote name: (Optional) Name or IP of the remote machine.
 
+
+Swift
+^^^^^
+
+OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
+higher. At this time, locations within Swift have been tested as AIP Storage,
+DIP Storage and Transfer Backlog. Using Swift as Transfer Source is possible,
+but under-tested at this time.
+
+**Fields**
+
+* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Path: Absolute path to the space on the storage service machine.
+
+* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+* Auth url: URL to authenticate against
+
+* Auth version: OpenStack auth version
+
+* Username: Username to authenticate as. E.g. http://example.com:5000/v2.0/
+
+* Password: Password to authenticate with
+
+* Container:
+
+* Tenant: The tenant/account name, required when connecting to an auth
+  2.0 system.
+
+* Region (Optional): Region in Swift.
+
 Locations
 ---------
 
