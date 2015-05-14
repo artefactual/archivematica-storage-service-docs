@@ -256,6 +256,51 @@ relationship with a space within DuraCloud.
 * Duraspace: Name of the Space within DuraCloud
 
 
+Arkivum
+^^^^^^^
+
+Archivematica can use Arkivum's A-Stor as an access protocol in version 0.7 and
+higher. A-Stor can expose a CIFS share to the Storage Service so that the
+storage service can copy files to an A-Stor datapool for AIP storage, for example.
+
+Add an entry to ``/etc/fstab`` on the Storage Service, then mount the A-Stor
+CIFS share.
+
+Example:
+
+.. code:: bash
+
+   //ARK00092/astor /mnt/astor cifs
+   defaults,guest,file_mode=0666,dir_mode=0777,uid=archivematica,gid
+   =archivematica,forcegid,forceuid,rw 0 1
+
+In this example, ARK00092 is the name of the appliance and should be resolvable
+through DNS or be set as an entry in ``/etc/hosts``.
+
+Then, choosing Arkivum as the access protocol, create a new space in the
+Storage Service:
+
+**Fields**
+
+* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Path: local path on the Storage Service machine to the CIFS share.
+
+Example: ``/mnt/astor``
+
+* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+Example: ``/mnt/astor/archivematica1/tmp``
+
+* Host: Arkivum appliance hostname or IP address with port.
+
+* Remote user: (Optional) Username on the remote machine accessible via
+  passwordless ssh.
+
+* Remote name: (Optional) Name or IP of the remote machine.
+
 Locations
 ---------
 
