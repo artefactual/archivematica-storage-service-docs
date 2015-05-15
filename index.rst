@@ -14,6 +14,7 @@ Archivematica Storage Service documentation
    index
    administrators
    users
+   recovery
 
 This documentation describes the Storage Service, used by Archivematica to manage
 archival storage and transfer locations and packages.
@@ -25,6 +26,7 @@ Contents:
 
 * :ref:`Administrators page <administrators>`
 * :ref:`Users page <users>`
+* :ref:`AIP recovery <recovery>`
 
 Go to the :ref:`Archivematica User and Administrator <archivematica:home>`
 documentation.

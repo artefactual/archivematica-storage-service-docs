@@ -1,5 +1,8 @@
+.. _recovery:
+
 :Authors:
     Mike Cantelon
+
 
 AIP Recovery
 ============
