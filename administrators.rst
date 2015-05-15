@@ -14,6 +14,34 @@ installation, both locally and remote.
    :width: 80%
    :alt: Home page of the Storage Service
 
+
+*On this page:*
+
+* :ref:`Storage Service entities and organization <organization>`
+
+* :ref:`Archivematica Configuration <archivematica-configuration>`
+
+* :ref:`Spaces <spaces>`
+
+  * :ref:`Local filesystem <local-filesystem>`
+  * :ref:`NFS <nfs>`
+  * :ref:`Pipeline local filesystem <pipeline>`
+  * :ref:`LOCKSS <lockss>`
+  * :ref:`DuraCloud <duracloud>`
+  * :ref:`Arkivum <arkivum>`
+  * :ref:`Swift <swift>`
+
+* :ref:`Locations <locations>`
+
+* :ref:`Pipelines <pipelines>`
+
+* :ref:`Packages <packages>`
+
+* :ref:`Administration <administration>`
+
+
+.. _organization:
+
 Storage Service entities and organization
 -----------------------------------------
 
@@ -42,6 +70,8 @@ Locations
 A location is a subdivision of a space. Each location is assigned a specific
 purpose, such as AIP storage, DIP storage, transfer source or transfer backlog,
 in order to provide an organized way to structure content within a space.
+
+.. _archivematica-configuration:
 
 Archivematica Configuration
 ---------------------------
@@ -95,6 +125,8 @@ you can set it to use port 80.
 Make sure to adjust the dashboard UUID in the Archivematica dashboard under
 Administration -> General.
 
+.. _spaces:
+
 Spaces
 ------
 
@@ -116,6 +148,8 @@ Space's path would be ``/home/artefactual/``
 Currently supported protocols are local filesystem, NFS, pipeline
 local filesystem, LOCKSS and DuraCloud.
 
+.. _local-filesystem:
+
 Local Filesystem
 ^^^^^^^^^^^^^^^^
 
@@ -132,6 +166,7 @@ mounted, we recommend using a more specific Space if one is available.
 * Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
   for unlimited.
 
+.. _nfs:
 
 NFS
 ^^^
@@ -157,6 +192,8 @@ Archivematica pipeline.
 * Manually Mounted: Check this if it has been mounted already. Otherwise, the
   Storage Service will try to mount it. Note: this feature is not yet available.
 
+
+.. _pipeline:
 
 Pipeline Local Filesystem
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -225,6 +262,8 @@ and a Private LOCKSS Network (PLN).
    When creating a Location for a LOCKSS space (see below), the Purpose of the
    Location must be AIP Storage.
 
+.. _duracloud:
+
 DuraCloud
 ^^^^^^^^^
 
@@ -255,6 +294,7 @@ relationship with a space within DuraCloud.
 
 * Duraspace: Name of the Space within DuraCloud
 
+.. _arkivum:
 
 Arkivum
 ^^^^^^^
@@ -301,6 +341,7 @@ Example: ``/mnt/astor/archivematica1/tmp``
 
 * Remote name: (Optional) Name or IP of the remote machine.
 
+.. _swift:
 
 Swift
 ^^^^^
@@ -334,6 +375,8 @@ but under-tested at this time.
   2.0 system.
 
 * Region (Optional): Region in Swift.
+
+.. _locations:
 
 Locations
 ---------
@@ -376,6 +419,7 @@ be created.
 * Enabled: If checked, this location is accessible to pipelines associated with
   it. If unchecked, it will not show up to any pipeline.
 
+.. _pipelines:
 
 Pipelines
 ---------
@@ -403,6 +447,7 @@ register its UUID with the Storage Service, with a description of
   Administration -> Configuration will be created or associated with the new
   pipeline.
 
+.. _packages:
 
 Packages
 --------
@@ -418,6 +463,8 @@ deleted through the Storage Service interface, though a deletion request can
 be submitted through Archivematica that must be approved or rejected by the
 storage service administrator. To learn more about deleting an AIP, see
 :ref:`Deleting an AIP <archivematica:delete-aip>`.
+
+.. _administration:
 
 Administration
 --------------
