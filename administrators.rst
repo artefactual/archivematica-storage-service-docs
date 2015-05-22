@@ -30,6 +30,7 @@ installation, both locally and remote.
   * :ref:`DuraCloud <duracloud>`
   * :ref:`Arkivum <arkivum>`
   * :ref:`Swift <swift>`
+  * :ref:`Fedora <fedora>`
 
 * :ref:`Locations <locations>`
 
@@ -375,6 +376,33 @@ but under-tested at this time.
   2.0 system.
 
 * Region (Optional): Region in Swift.
+
+.. _fedora:
+
+Fedora via SWORD2
+^^^^^^^^^^^^^^^^^
+
+Fedora via SWORD2 is currently supported in the Storage Service as an Access
+Protocol to facilitate use of the
+`Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA715/Archidora>`_,
+which allows ingest of material from Islandora to Archivematica. This workflow
+is in beta testing as of Storage Service 0.7/Archivematica 1.4/Islandora 7.x-1.5.
+
+**Fields**
+
+* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Path: Absolute path to the space on the storage service machine.
+
+* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+* Fedora user: Fedora user name (for SWORD functionality)
+
+* Fedora password: Fedora password (for SWORD functionality)
+
+* Fedora name: Name or IP of the remote Fedora machine
 
 .. _locations:
 
