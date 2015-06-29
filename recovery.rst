@@ -40,6 +40,23 @@ One an AIP recovery has been approved, the storage service does the following:
    check fails
 
 
+Example Recovery command
+------------------------
+
+AIP recovery was designed to be used with `Binder <http://binder.readthedocs.org/en/latest/>`_.
+Binder is capable of sending notification to the Storage Service that a replacement
+AIP is ready for recovery. If you are not using Binder, it is possible to send
+the notfication using a curl command. Here is an example:
+
+.. code:: bash
+
+   curl --data="event_reason=<description>&pipeline=<pipeline UUID>&user_id=<int>&user_email=<email>" http://127.0.0.1:8000/api/v2/file/<package UUID>/recover_aip/?format=json
+
+
+In this example, ``<description``, ``<int>`` and ``<email>`` are to be replaced
+by information for human use, to relay information from the person making the AIP
+recovery request to the Storage Service administrator.
+
 Reporting Recovery Progress to External Systems
 -----------------------------------------------
 
