@@ -26,7 +26,7 @@ installation, both locally and remote.
   * :ref:`Local filesystem <local-filesystem>`
   * :ref:`NFS <nfs>`
   * :ref:`Pipeline local filesystem <pipeline>`
-  * :ref:`LOCKSS <lockss>`
+  * :ref:`LOCKSS <admin-lockss>`
   * :ref:`DuraCloud <duracloud>`
   * :ref:`Arkivum <arkivum>`
   * :ref:`Swift <swift>`
@@ -227,7 +227,7 @@ Local Filesystem.
 
 * Remote user: Username on the remote host
 
-.. _lockss:
+.. _admin-lockss:
 
 LOCKSS
 ^^^^^^
