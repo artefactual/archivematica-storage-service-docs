@@ -147,7 +147,11 @@ sampledata-2013-10-10-09-17-20`` and ``/home/artefactual/maildir_transfers``, th
 Space's path would be ``/home/artefactual/``
 
 Currently supported protocols are local filesystem, NFS, pipeline
-local filesystem, LOCKSS and DuraCloud.
+local filesystem, LOCKSS, DuraCloud, Arkivum, Fedora and Swift.
+
+Some protocols require a staging path. This is a temporary location on the
+Storage Service server that is used when copying material from that service
+service (DuraCloud, Swift, etc) to another space within the Storage Service.
 
 .. _local-filesystem:
 
@@ -370,7 +374,8 @@ but under-tested at this time.
 
 * Password: Password to authenticate with
 
-* Container:
+* Container: Name of the Swift container. To list available containers in
+  your Swift installation, run ``swift list`` from the command line.
 
 * Tenant: The tenant/account name, required when connecting to an auth
   2.0 system.
