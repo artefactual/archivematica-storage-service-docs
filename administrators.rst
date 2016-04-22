@@ -46,13 +46,11 @@ installation, both locally and remote.
 Storage Service entities and organization
 -----------------------------------------
 
-Packages
-^^^^^^^^
+Pipelines
+^^^^^^^^^
 
-The Storage Service is oriented to storing packages. A "package" is a bundle of
-one or more files transferred from an external service; for example, a package
-may be an AIP, a backlogged transfer, or a DIP. Each package is stored in a
-location.
+A pipeline refers to a single installation of an Archivematica dashboard.
+The Storage Service can be used to configure spaces and locations across multiple Archivematica pipelines.
 
 Spaces
 ^^^^^^
@@ -71,6 +69,14 @@ Locations
 A location is a subdivision of a space. Each location is assigned a specific
 purpose, such as AIP storage, DIP storage, transfer source or transfer backlog,
 in order to provide an organized way to structure content within a space.
+
+Packages
+^^^^^^^^
+
+The Storage Service is oriented to storing packages. A "package" is a bundle of
+one or more files transferred from an external service; for example, a package
+may be an AIP, a backlogged transfer, or a DIP. Each package is stored in a
+location.
 
 .. _archivematica-configuration:
 
