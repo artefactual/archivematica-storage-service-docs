@@ -1,6 +1,9 @@
+.. _recovery:
+
 :Authors:
     Mike Cantelon
 
+============
 AIP Recovery
 ============
 
@@ -64,3 +67,5 @@ url" field.
 
 If the endpoint requires basic authentication, you'll also need to enter a
 username and password into the two fields below it. Click "Save" when you're done.
+
+:ref:`Back to the top <recovery>`
