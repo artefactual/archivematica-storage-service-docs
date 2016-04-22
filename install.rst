@@ -1,10 +1,17 @@
+.. _install:
+
 :Authors:
     Justin Simpson
     Holly Becker
     Misty De Meo
 
+=======
 Install
-=========
+=======
+
+.. seealso::
+
+   :ref:`Archivematica general installation <archivematica:installation>`
 
 This app is designed to be run using pip + virtualenv + virtualenvwrapper.
 Tested with python 2.7.3.
@@ -66,3 +73,5 @@ To get up and running:
     cdproject
     cd storage_service
     python2 manage.py runserver 0.0.0.0:8000
+
+:ref:`Back to the top <install>`
