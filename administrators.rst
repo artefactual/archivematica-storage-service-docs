@@ -599,11 +599,11 @@ To create and configure a new Location:
 ..  note::
 
     If the path you are defining in your Location  doesn't exist, you must
-    create it manually and make sure it is writable by  the archivematica
+    create it manually and make sure it is writable by the Archivematica
     user.
 
 4. Save the Location settings.
-5. The new location will now be available as an option under the appropriate
+5. The new Location will now be available as an option under the appropriate
    options in the Dashboard, for example as a Transfer location (which must be
    enabled under the Dashboard "Administration" tab) or as a destination for AIP
    storage.
