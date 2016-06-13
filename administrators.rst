@@ -376,9 +376,9 @@ but under-tested at this time.
 
 * Auth version: OpenStack auth version
 
-* Username: Username to authenticate as. E.g. http://example.com:5000/v2.0/
+* Username: Username to authenticate as (Swift username)
 
-* Password: Password to authenticate with
+* Password: Password to authenticate with (Swift password)
 
 * Container: Name of the Swift container. To list available containers in
   your Swift installation, run ``swift list`` from the command line.
