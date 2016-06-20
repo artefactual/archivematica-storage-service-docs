@@ -426,7 +426,7 @@ Locations
    :alt: Storage Service locations screen.
 
 A storage Location is contained in a Space, and knows its purpose in the Archivematica system.
-Each Location is associated with a pipeline and can only be accessed by that pipeline.
+Each Location is associated with at least one pipeline; with the exception of Backlog and Currently Processing locations, for which there must be exactly one per pipeline, a pipeline can have multiple instances of any location, and a location can be associated with any number of pipelines.
 Currently, a Location can have one of eight purposes: Transfer Source, Transfer Backlog, AIP Storage, DIP Storage, Currently Processing, Storage Service Internal Processing, AIP Recovery or FEDORA Deposit.
 
 Transfer source locations display in Archivematica's Transfer tab, and any folder in a transfer source can be selected to become a Transfer.
