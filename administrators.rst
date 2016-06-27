@@ -395,9 +395,9 @@ Fedora via SWORD2
 
 Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
-`Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA715/Archidora>`_,
+`Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA/Archidora>`_,
 which allows ingest of material from Islandora to Archivematica. This workflow
-is in beta testing as of Storage Service 0.7/Archivematica 1.4/Islandora 7.x-1.5.
+is in beta testing as of Storage Service 0.8/Archivematica 1.5/Islandora 7.x-1.6.
 
 **Fields**
 
