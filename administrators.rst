@@ -415,6 +415,19 @@ is in beta testing as of Storage Service 0.8/Archivematica 1.5/Islandora 7.x-1.6
 
 * Fedora name: Name or IP of the remote Fedora machine
 
+.. note::
+
+   * A Location (see below) must also be created, with the purpose 
+     of FEDORA Deposits.
+
+   * On the Archivematica dashboard, the IP of the storage service 
+     needs to be added to the IP whitelist for the REST API, so that
+     transfers will be approved automatically.
+
+   * A post-store callback can be configured, to enable Islandora to 
+     list objects that can be deleted once they have been
+     stored by Archivematica. See the :ref:`Administration <administration>` section.
+
 .. _locations:
 
 Locations
@@ -576,6 +589,21 @@ is created for all Pipelines, since one is required. Multiple Transfer Source
 or AIP Storage Locations can be configured by holding down Ctrl when selecting
 them. New Locations in an existing Space can be created for Pipelines that use
 default locations by entering the relevant information.
+
+Service Callbacks
+^^^^^^^^^^^^^^^^^
+
+Callbacks allow REST calls to be made by the Archivematica Storage Service
+after performing certain types of actions. This allows external services
+to be notified when internal actions have taken place.
+
+A callback can be configured for the Islandora (Fedora) integration, as follows:
+
+* URI: http://{islandora-base-url}/islandora/object/<source_id>/archidora/{Islandora API key}/delete
+  (the Islandora API key is generated on the Archidora admin screen in Islandora)
+* Event: post-store
+* Method: post
+* Expected status: 200
 
 How to Configure a Location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
