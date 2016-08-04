@@ -527,6 +527,37 @@ If you want the same directory on disk to have multiple purposes, multiple Locat
 * Enabled: If checked, this location is accessible to pipelines associated with
   it. If unchecked, it will not show up to any pipeline.
 
+How to Configure a Location
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For Spaces of the type "Local Filesystem," Locations are basically directories
+(or more accurately, paths to directories). You can create Locations for
+Transfer Source, Currently Processing, or AIP and DIP Storage.
+
+To create and configure a new Location:
+
+1. In the Storage Service, click on the "Spaces" tab.
+2. Under the Space that you want to add the Location to, click on the
+     "Create Location here" link.
+3. Choose a purpose (e.g. AIP Storage) and pipeline, and enter a "Relative Path"
+     (e.g. ``var/mylocation``) and human-readable description. The Relative Path is
+     relative to the Path defined in the Space you are adding the Location to.
+     For example, for the default Space, the Path is ``/`` so your Location path
+     would be relative to that (in the example here, the complete path would end
+     up being ``/var/mylocation``).
+
+  ..  note::
+
+      If the path you are defining in your Location  doesn't exist, you must
+      create it manually and make sure it is writable by the Archivematica
+      user.
+
+4. Save the Location settings.
+5. The new Location will now be available as an option under the appropriate
+     options in the Dashboard, for example as a Transfer location (which must be
+     enabled under the Dashboard "Administration" tab) or as a destination for AIP
+     storage.
+
 .. _pipelines:
 
 Pipelines
@@ -642,35 +673,5 @@ A callback can be configured for the Islandora (Fedora) integration, as follows:
 * Method: post
 * Expected status: 200
 
-How to Configure a Location
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-For Spaces of the type "Local Filesystem," Locations are basically directories
-(or more accurately, paths to directories). You can create Locations for
-Transfer Source, Currently Processing, or AIP and DIP Storage.
-
-To create and configure a new Location:
-
-1. In the Storage Service, click on the "Spaces" tab.
-2. Under the Space that you want to add the Location to, click on the
-   "Create Location here" link.
-3. Choose a purpose (e.g. AIP Storage) and pipeline, and enter a "Relative Path"
-   (e.g. ``var/mylocation``) and human-readable description. The Relative Path is
-   relative to the Path defined in the Space you are adding the Location to.
-   For example, for the default Space, the Path is ``/`` so your Location path
-   would be relative to that (in the example here, the complete path would end
-   up being ``/var/mylocation``).
-
-..  note::
-
-    If the path you are defining in your Location  doesn't exist, you must
-    create it manually and make sure it is writable by the Archivematica
-    user.
-
-4. Save the Location settings.
-5. The new Location will now be available as an option under the appropriate
-   options in the Dashboard, for example as a Transfer location (which must be
-   enabled under the Dashboard "Administration" tab) or as a destination for AIP
-   storage.
 
 :ref:`Back to the top <administrators>`
