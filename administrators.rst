@@ -405,9 +405,11 @@ is in beta testing as of Storage Service 0.8/Archivematica 1.5/Islandora 7.x-1.6
   for unlimited.
 
 * Path: Absolute path to the space on the storage service machine.
+  E.g. '/var/archivematica/storage_service/archidora'
 
 * Staging Path: Absolute path to a staging area. Must be UNIX filesystem
   compatible, preferably on the same filesystem as the path.
+  E.g. '/var/archivematica/storage_service/archidora_staging'
 
 * Fedora user: Fedora user name (for SWORD functionality)
 
@@ -420,9 +422,12 @@ is in beta testing as of Storage Service 0.8/Archivematica 1.5/Islandora 7.x-1.6
    * A Location (see below) must also be created, with the purpose 
      of FEDORA Deposits.
 
-   * On the Archivematica dashboard, the IP of the storage service 
-     needs to be added to the IP whitelist for the REST API, so that
-     transfers will be approved automatically.
+   * To allow transfers to be approved automatically:
+   
+     * Ensure that the pipeline has been configured with the correct
+       username and API key for the pipeline (Archivematica dashboard) user
+     * On the Archivematica dashboard, the IP of the storage service. 
+       needs to be added to the IP whitelist for the REST API
 
    * A post-store callback can be configured, to enable Islandora to 
      list objects that can be deleted once they have been
@@ -512,6 +517,9 @@ register its UUID with the Storage Service, with a description of
 * UUID: Unique identifier of the Archivematica pipeline
 * Description: Description of the pipeline displayed to the user. e.g. Sankofa
   demo site
+* Remote name: Hostname or IP of the pipeline
+* Api username: Pipeline (dashboard) user to use when making API calls to the pipeline
+* Api key: API key for the user indicated above
 * Enabled: If checked, this pipeline can access locations associate with it.
   If unchecked, all locations will be disabled, even if associated.
 * Default Locations: If checked, the default locations configured in
