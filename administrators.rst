@@ -658,6 +658,11 @@ or AIP Storage Locations can be configured by holding down Ctrl when selecting
 them. New Locations in an existing Space can be created for Pipelines that use
 default locations by entering the relevant information.
 
+Version
+^^^^^^^
+
+The version page will display the current version and specific git commit of your installation of the Storage Service.
+
 Service Callbacks
 ^^^^^^^^^^^^^^^^^
 
