@@ -11,6 +11,7 @@
    users
    recovery
    install
+   fixity
 
 Indices and tables
 ==================

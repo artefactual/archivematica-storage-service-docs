@@ -18,6 +18,7 @@ Contents:
 * :ref:`Users page <users>`
 * :ref:`AIP recovery <recovery>`
 * :ref:`Installation <install>`
+* :ref:`Fixity application <fixity>`
 
 Go to the :ref:`Archivematica User and Administrator <archivematica:home>`
 documentation.
