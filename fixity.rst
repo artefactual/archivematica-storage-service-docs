@@ -6,6 +6,8 @@ Fixity
 
 Fixity is an application for use with an Archivematica/Storage Service installation. Fixity is run from the command-line and will check the checksums of AIPs in storage, by means of verifying the bags.
 
+Fixity can also be configured to POST its reports to a remote service after completing every scan. It also retains an internal database which keeps track of every AIP it has scanned and a report of every scan. The Archivematica Storage Service displays these reports in the Packages tab; see :ref:`reporting <fixity_reporting>`, below.
+
 *On this page*
 
 * :ref:`Installation <fixity_install>`
@@ -138,6 +140,33 @@ And to exit the root user:
 
 Usage
 -----
+
+Fixity is run from the command line, after installation as per the instructions above.
+
+**To check fixity of all AIPs in storage** run
+
+.. code-block:: none
+
+   fixity scanall
+
+**To check fixity of a specific AIP** use the AIPs UUID and run
+
+.. code-block:: none
+
+   fixity scan 229adfe9-c63b-4ebc-9428-0b9427b5862c
+
+replacing the above UUID with your AIP's UUID.
+
+**Additional options**
+
+The following flags can be used with the commands above:
+
+Use ``--throttle`` to add time (in seconds) to wait when scanning multiple AIPs. This can help reduce extended disk load on the filesystem on which the AIPs reside.
+
+``--force-local``: Some types of Storage Service spaces (e.g. Arkivum) have a space-specific way of performing fixity checks. Using ``force-local`` forces the use of the Storage Service for the fixity check, rather than using the space's internal fixity method.
+
+``debug`` will add extra debugging output.
+
 
 
 .. _fixity_reporting:
