@@ -6,6 +6,12 @@ Fixity
 
 Fixity is an application for use with an Archivematica/Storage Service installation. Fixity is run from the command-line and will check the checksums of AIPs in storage, by means of verifying the bags.
 
+*On this page*
+
+* :ref:`Installation <fixity_install>`
+* :ref:`Usage <fixity_usage>`
+* :ref:`Reporting <fixity_reporting>`
+
 .. _fixity_install:
 
 Installation
@@ -24,6 +30,10 @@ b. Clone the code:
 .. code-block:: none
 
     user@root:/usr/lib/archivematica/$ git clone https://github.com/artefactual/fixity.git
+
+.. tip::
+
+   If you get a permissions error, try running the command as sudo: ``sudo git clone https://github.com/artefactual/fixity.git``
 
 Once this is complete, the directory `/usr/lib/archivematica/fixity` should exist. `cd` back to the home directory
 
@@ -130,10 +140,23 @@ Usage
 -----
 
 
+.. _fixity_reporting:
 
+Fixity reporting
+----------------
 
+Fixity checks will be reported in the Packages tab, in the Fixity Date and Fixity Status columns:
 
+.. image:: images/fixity_packages.*
+   :align: center
+   :width: 80%
+   :alt: The packages tab in the Storage Service showing Fixity Date and Fixity Status.
 
+Click on the Fixity status for an AIP (either "Failed" or "Success") to see the history of fixity checks. The history page will show the time and date of the fixity checks and the error, if any.
 
+.. image:: images/fixity_error.*
+   :align: center
+   :width: 80%
+   :alt: Fixity history page showing an error in fixity check.
 
 :ref:`Return to the top <fixity>`
