@@ -389,6 +389,49 @@ but under-tested at this time.
 
 * Region (Optional): Region in Swift.
 
+.. _dspace:
+
+DSpace via SWORD2 API
+^^^^^^^^^^^^^^^^^^^^^
+
+DSpace locations are currently supported only for AIP Storage locations.  Becasue
+DSpace is typically used as a public-facing system, the behaviour is different
+than when using other access protocols for AIP Storage: upon deposit in DSpace,
+the AIP will be split into an objects bitstream, which contains all original and
+normalized objects in the AIP, as well as a metadata bitstream, which contains
+all of the bag artifacts, metadata and logs that one would expect to see in
+an Archivematica AIP. The metadata bitstream can optionally be restricted; see
+below. Presently, the Storage Service and Dashboard are not capable of
+downloading/reconstituting the AIP- this must be done manually from
+the DSpace interface.
+
+If using DSpace as the AIP location in conjunction with the ArchivesSpace workflow
+in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP hook will
+send the DSpace handle to the ArchivesSpace digital object record upon AIP
+storage.
+
+**Fields**
+
+* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Path: Absolute path to the space on the storage service machine.
+
+* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+* Service Document IRI: URL of the service document. E.g.
+  http://demo.dspace.org/swordv2/servicedocument, where servicedocument is the
+  handle to the community or collection being used for deposit.
+
+* User: DSpace username to authenticate as
+
+* Password: DSpace password to authenticate with
+
+* Restricted metadata policy: Use to restrict access to the metadata bitstream.
+  Must be specified as a list of objects in JSON. This will override existing
+  policies. Example: [{"action":"READ","groupId":"5","rpType":"TYPE_CUSTOM"}]
+
 .. _fedora:
 
 Fedora via SWORD2
@@ -464,6 +507,7 @@ Within this location, the relative path can be used to store a query string, whi
 
 The Storage Service will always add ``type=dataset`` to the calls that it makes to the Dataverse Search API.
 The automation tools will create one transfer for every dataset, which subsequently becomes one SIP and one AIP.
+
 
 .. _locations:
 
