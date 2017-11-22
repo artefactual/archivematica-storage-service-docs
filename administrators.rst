@@ -595,6 +595,10 @@ This is only required if AIP recovery is used.
 FEDORA Deposit is used with the Archidora plugin to ingest material from Islandora.
 This is only available to the FEDORA Space, and is only required for that space.
 
+Replicator locations can be configured to replicate the AIPs in one or more
+AIP storage locations. If you wish for the replicated AIPs to be encrypted,
+create the location in an :ref:`encrypted space <gpg>`.
+
 If you want the same directory on disk to have multiple purposes, multiple Locations with different purposes can be created.
 
 **Fields**
@@ -633,8 +637,9 @@ To create and configure a new Location:
       create it manually and make sure it is writable by the Archivematica
       user.
 
-4. Save the Location settings.
-5. The new Location will now be available as an option under the appropriate
+4. If desired, for an AIP storage location choose the replicator location(s).
+5. Save the Location settings.
+6. The new Location will now be available as an option under the appropriate
      options in the Dashboard, for example as a Transfer location (which must be
      enabled under the Dashboard "Administration" tab) or as a destination for AIP
      storage.
