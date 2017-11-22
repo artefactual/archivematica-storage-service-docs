@@ -698,21 +698,6 @@ For more information about Fixity Status, see :ref:`Fixity <fixity>`.
 Administration
 --------------
 
-.. image:: images/StorageserviceAdmin1.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 1.
-
-.. image:: images/StorageserviceAdmin2.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 2.
-
-.. image:: images/StorageserviceAdmin3.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 3.
-
 The Administration section manages the users and settings for the Storage
 Service.
 
