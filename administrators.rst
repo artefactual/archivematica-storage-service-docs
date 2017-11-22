@@ -26,6 +26,7 @@ installation, both locally and remote.
   * :ref:`Local filesystem <local-filesystem>`
   * :ref:`NFS <nfs>`
   * :ref:`Pipeline local filesystem <pipeline>`
+  * :ref:`GPG encyption on local filesystem <gpg>`
   * :ref:`LOCKSS <admin-lockss>`
   * :ref:`DuraCloud <duracloud>`
   * :ref:`Arkivum <arkivum>`
@@ -237,6 +238,42 @@ Local Filesystem.
   Should be SSH accessible from the Storage Service computer.
 
 * Remote user: Username on the remote host
+
+.. _gpg:
+
+GPG encryption on local file system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating a GPG encryption space will allow users to create encrypted AIPs and
+transfers. Only AIP storage, Transfer backlog and Replicator locations can be
+created in a GPG encryption space.
+
+Encrypted AIPs and transfers can be downloaded unencrypted via the Storage
+Service and Archivematica dashboard.
+
+Before creating a GPG encryption space ensure that you have created or imported
+a GPG key on the :ref:`Administration page <administration>`.
+
+**Fields**
+
+* Path: Absolute path to the Space on the local filesystem
+
+* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Staging path:  Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+* Key: Choose the encryption key to be used for the space.
+
+.. important::
+
+   It is possible to encrypt uncompressed AIPs, which will be stored as tar
+   files.
+
+   Uncompressed AIPs do not have pointer files, so if the key for the space
+   is changed and the original key is deleted/unknown, Archivematica will
+   have no record of the key for decryption.
 
 .. _admin-lockss:
 
@@ -731,5 +768,23 @@ A callback can be configured for the Islandora (Fedora) integration, as follows:
 * Method: post
 * Expected status: 200
 
+Encryption Keys
+^^^^^^^^^^^^^^^
+
+GPG encryption keys can be created or imported to be used in spaces to store
+encrypted AIPs, transfers or replicated AIPs/transfers. Keys can either be
+created by the Storage Service or imported.
+
+To create a new key:
+
+1. Click on Create New Key
+
+2. Enter the name and email address you want associated with the key.
+
+To import a key:
+
+1. Click on Import Existing Key
+
+2. Paste in your key in ASCII-armored format.
 
 :ref:`Back to the top <administrators>`
