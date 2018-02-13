@@ -717,6 +717,70 @@ users. The only distinction between the two types is for email notifications;
 administrators will be notified by email when special events occur, while
 regular users will not.
 
+**CLI password resetting**
+
+If you've forgotten the password for your administrator user, or any other
+user, you can change it on the command-line:
+
+.. code:: bash
+
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-storage-service)
+   cd /usr/lib/archivematica/storage-service
+   /usr/share/python/archivematica-storage-service/bin/python manage.py changepassword <username>
+
+**CLI creation of administrative users**
+
+If you need an additional administrator user, it can be created via the
+command-line, run the following commands:
+
+.. code:: bash
+
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-storage-service)
+   cd /usr/lib/archivematica/storage-service
+   /usr/share/python/archivematica-storage-service/bin/python manage.py createsuperuser
+
+**CLI user deleting**
+
+To delete a user, run the following commands:
+
+.. code:: bash
+
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-storage-service)
+   cd /usr/lib/archivematica/storage-service
+   /usr/share/python/archivematica-storage-service/bin/python manage.py shell
+   from django.contrib.auth.models import User
+   User.objects.get(username="<username>").delete()
+   exit()
+
+
+**CLI creation of administrative users (non interactive)**
+
+To create an additional administrator user in a non-interactive way and
+define the API key:
+
+.. code:: bash
+
+   sudo su - archivematica -s /bin/bash
+   export $(grep -v ^# /etc/default/archivematica-storage-service)
+   cd /usr/lib/archivematica/storage-service
+   /usr/share/python/archivematica-storage-service/bin/python manage.py  create_user \
+      --username=<username> \
+      --password=<password> \
+      --email=<email-adddress> \
+      --api-key=<api-key> \
+      --superuser
+
+These commands are most suitable to use on automated installations, for example
+when deploying using ansible. For manual installations, please use the web
+configuration method.
+
+.. NOTE::
+   Use /etc/sysconfig/archivematica-storage-service as environment file on
+   CentOS/RedHat.
+
 Settings
 ^^^^^^^^
 
