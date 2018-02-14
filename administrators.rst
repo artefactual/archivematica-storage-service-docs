@@ -26,6 +26,7 @@ installation, both locally and remote.
   * :ref:`Local filesystem <local-filesystem>`
   * :ref:`NFS <nfs>`
   * :ref:`Pipeline local filesystem <pipeline>`
+  * :ref:`GPG encyption on local filesystem <gpg>`
   * :ref:`LOCKSS <admin-lockss>`
   * :ref:`DuraCloud <duracloud>`
   * :ref:`Arkivum <arkivum>`
@@ -237,6 +238,42 @@ Local Filesystem.
   Should be SSH accessible from the Storage Service computer.
 
 * Remote user: Username on the remote host
+
+.. _gpg:
+
+GPG encryption on local file system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating a GPG encryption space will allow users to create encrypted AIPs and
+transfers. Only AIP storage, Transfer backlog and Replicator locations can be
+created in a GPG encryption space.
+
+Encrypted AIPs and transfers can be downloaded unencrypted via the Storage
+Service and Archivematica dashboard.
+
+Before creating a GPG encryption space ensure that you have created or imported
+a GPG key on the :ref:`Administration page <administration>`.
+
+**Fields**
+
+* Path: Absolute path to the Space on the local filesystem
+
+* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited.
+
+* Staging path:  Absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path.
+
+* Key: Choose the encryption key to be used for the space.
+
+.. important::
+
+   It is possible to encrypt uncompressed AIPs, which will be stored as tar
+   files.
+
+   Uncompressed AIPs do not have pointer files, so if the key for the space
+   is changed and the original key is deleted/unknown, Archivematica will
+   have no record of the key for decryption.
 
 .. _admin-lockss:
 
@@ -558,6 +595,10 @@ This is only required if AIP recovery is used.
 FEDORA Deposit is used with the Archidora plugin to ingest material from Islandora.
 This is only available to the FEDORA Space, and is only required for that space.
 
+Replicator locations can be configured to replicate the AIPs in one or more
+AIP storage locations. If you wish for the replicated AIPs to be encrypted,
+create the location in an :ref:`encrypted space <gpg>`.
+
 If you want the same directory on disk to have multiple purposes, multiple Locations with different purposes can be created.
 
 **Fields**
@@ -596,8 +637,9 @@ To create and configure a new Location:
       create it manually and make sure it is writable by the Archivematica
       user.
 
-4. Save the Location settings.
-5. The new Location will now be available as an option under the appropriate
+4. If desired, for an AIP storage location choose the replicator location(s).
+5. Save the Location settings.
+6. The new Location will now be available as an option under the appropriate
      options in the Dashboard, for example as a Transfer location (which must be
      enabled under the Dashboard "Administration" tab) or as a destination for AIP
      storage.
@@ -661,21 +703,6 @@ For more information about Fixity Status, see :ref:`Fixity <fixity>`.
 Administration
 --------------
 
-.. image:: images/StorageserviceAdmin1.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 1.
-
-.. image:: images/StorageserviceAdmin2.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 2.
-
-.. image:: images/StorageserviceAdmin3.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service Administration screen part 3.
-
 The Administration section manages the users and settings for the Storage
 Service.
 
@@ -731,5 +758,23 @@ A callback can be configured for the Islandora (Fedora) integration, as follows:
 * Method: post
 * Expected status: 200
 
+Encryption Keys
+^^^^^^^^^^^^^^^
+
+GPG encryption keys can be created or imported to be used in spaces to store
+encrypted AIPs, transfers or replicated AIPs/transfers. Keys can either be
+created by the Storage Service or imported.
+
+To create a new key:
+
+1. Click on Create New Key
+
+2. Enter the name and email address you want associated with the key.
+
+To import a key:
+
+1. Click on Import Existing Key
+
+2. Paste in your key in ASCII-armored format.
 
 :ref:`Back to the top <administrators>`
