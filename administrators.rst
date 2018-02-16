@@ -706,6 +706,11 @@ Administration
 The Administration section manages the users and settings for the Storage
 Service.
 
+.. image:: images/StorageserviceAdmin.*
+   :align: center
+   :width: 80%
+   :alt: Storage Service Administration screen.
+
 Users
 ^^^^^
 
@@ -776,5 +781,10 @@ To import a key:
 1. Click on Import Existing Key
 
 2. Paste in your key in ASCII-armored format.
+   
+Set Language
+^^^^^^^^^^^^^^^
+
+Configure language settings for the Storage Service in this area of the Administration tab. Strings are available for translation on the localization platform (Transifex).
 
 :ref:`Back to the top <administrators>`
