@@ -556,7 +556,7 @@ Locations
    :width: 80%
    :alt: Storage Service locations screen.
 
-A storage Location is contained in a Space, and knows its purpose in the Archivematica system.
+A storage Location is contained within a Space, and knows its purpose in the Archivematica system.
 Each Location is associated with at least one pipeline; with the exception of Backlog and Currently Processing locations, for which there must be exactly one per pipeline, a pipeline can have multiple instances of any location, and a location can be associated with any number of pipelines.
 Currently, a Location can have one of eight purposes: Transfer Source, Transfer Backlog, AIP Storage, DIP Storage, Currently Processing, Storage Service Internal Processing, AIP Recovery or FEDORA Deposit.
 
@@ -603,7 +603,7 @@ If you want the same directory on disk to have multiple purposes, multiple Locat
 
 **Fields**
 
-* Purpose: What use the Location is for
+* Purpose: What use the Location is for.
 * Pipeline: Which pipelines this location is available to.
 * Relative Path: Path to this Location, relative to the space that contains it.
 * Description: Description of the Location to be displayed to the user.
@@ -611,6 +611,9 @@ If you want the same directory on disk to have multiple purposes, multiple Locat
   for unlimited.
 * Enabled: If checked, this location is accessible to pipelines associated with
   it. If unchecked, it will not show up to any pipeline.
+* Set as global default location for its purpose: If checked, this location will
+  be the default for its purpose unless Archivematica is explicitly told
+  otherwise.
 
 How to Configure a Location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -623,13 +626,13 @@ To create and configure a new Location:
 
 1. In the Storage Service, click on the "Spaces" tab.
 2. Under the Space that you want to add the Location to, click on the
-     "Create Location here" link.
+   "Create Location here" link.
 3. Choose a purpose (e.g. AIP Storage) and pipeline, and enter a "Relative Path"
-     (e.g. ``var/mylocation``) and human-readable description. The Relative Path is
-     relative to the Path defined in the Space you are adding the Location to.
-     For example, for the default Space, the Path is ``/`` so your Location path
-     would be relative to that (in the example here, the complete path would end
-     up being ``/var/mylocation``).
+   (e.g. ``var/mylocation``) and human-readable description. The Relative Path is
+   relative to the Path defined in the Space you are adding the Location to.
+   For example, for the default Space, the Path is ``/`` so your Location path
+   would be relative to that (in the example here, the complete path would end
+   up being ``/var/mylocation``).
 
   ..  note::
 
@@ -640,9 +643,9 @@ To create and configure a new Location:
 4. If desired, for an AIP storage location choose the replicator location(s).
 5. Save the Location settings.
 6. The new Location will now be available as an option under the appropriate
-     options in the Dashboard, for example as a Transfer location (which must be
-     enabled under the Dashboard "Administration" tab) or as a destination for AIP
-     storage.
+   options in the Dashboard, for example as a Transfer location (which must be
+   enabled under the Dashboard "Administration" tab) or as a destination for AIP
+   storage.
 
 .. _pipelines:
 
