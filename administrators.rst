@@ -499,7 +499,7 @@ higher. At this time, locations within Swift have been tested as AIP Storage,
 DIP Storage and Transfer Backlog. Using Swift as Transfer Source is possible,
 but under-tested at this time.
 
-**Fields**
+Fields:
 
 * **Size**: the maximum size allowed for this space. Set to 0 or leave blank
   for unlimited. This field is optional.
