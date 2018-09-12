@@ -21,6 +21,8 @@ installation, both locally and remote.
 
 * :ref:`Archivematica Configuration <archivematica-configuration>`
 
+* :ref:`Pipelines <pipelines>`
+
 * :ref:`Spaces <spaces>`
 
   * :ref:`Arkivum <arkivum>`
@@ -36,8 +38,6 @@ installation, both locally and remote.
   * :ref:`S3 (Amazon) <amazon-s3>`
 
 * :ref:`Locations <locations>`
-
-* :ref:`Pipelines <pipelines>`
 
 * :ref:`Packages <packages>`
 
@@ -133,6 +133,36 @@ you can set it to use port 80.
 
 Make sure to adjust the dashboard UUID in the Archivematica dashboard under
 Administration -> General.
+
+.. _pipelines:
+
+Pipelines
+---------
+
+.. image:: images/Pipelines.*
+   :align: center
+   :width: 80%
+   :alt: Storage Service pipelines screen.
+
+A pipeline is an Archivematica instance registered with the Storage Service,
+including the server and all associated clients. Each pipeline is uniquely
+identified by a UUID, which can be found in the dashboard under
+**Administration** -> **General Configuration**. When installing Archivematica,
+it will attempt to register the UUID with the Storage Service, with a
+description of "Archivematica on <hostname>".
+
+Fields:
+
+* **UUID**: the unique identifier of the Archivematica pipeline.
+* **Description**: a description of the pipeline displayed to the user. e.g.
+  ``Development site``.
+* **Enabled**: If checked, this pipeline can access locations associate with it.
+  If unchecked, all locations will be disabled, even if associated directly with
+  this pipeline.
+* **Default Location**: If checked, the default locations configured in
+  Administration -> Configuration will be created or associated with the new
+  pipeline.
+
 
 .. _spaces:
 
@@ -653,35 +683,6 @@ To create and configure a new Location:
    options in the Dashboard, for example as a Transfer location (which must be
    enabled under the Dashboard "Administration" tab) or as a destination for AIP
    storage.
-
-.. _pipelines:
-
-Pipelines
----------
-
-.. image:: images/Pipelines.*
-   :align: center
-   :width: 80%
-   :alt: Storage Service pipelines screen.
-
-A pipeline is an Archivematica instance registered with the Storage Service,
-including the server and all associated clients. Each pipeline is uniquely
-identified by a UUID, which can be found in the dashboard under Administration
--> General Configuration. When installing Archivematica, it will attempt to
-register its UUID with the Storage Service, with a description of
-"Archivematica on <hostname>".
-
-Fields:
-
-* **UUID**: the unique identifier of the Archivematica pipeline.
-* **Description**: a description of the pipeline displayed to the user. e.g.
-  ``Development site``.
-* **Enabled**: If checked, this pipeline can access locations associate with it.
-  If unchecked, all locations will be disabled, even if associated directly with
-  this pipeline.
-* **Default Location**: If checked, the default locations configured in
-  Administration -> Configuration will be created or associated with the new
-  pipeline.
 
 .. _packages:
 
