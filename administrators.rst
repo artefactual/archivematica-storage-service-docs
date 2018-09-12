@@ -1,8 +1,8 @@
 .. _administrators:
 
-===========================================
-Storage service- Administrator instructions
-===========================================
+==========================================
+Storage Service Administrator Instructions
+==========================================
 
 The Archivematica Storage Service allows the configuration of storage spaces
 associated with multiple Archivematica pipelines. It allows a storage
@@ -17,22 +17,22 @@ installation, both locally and remote.
 
 *On this page:*
 
-* :ref:`Storage Service entities and organization <organization>`
+* :ref:`Storage Service glossary and organization <organization>`
 
 * :ref:`Archivematica Configuration <archivematica-configuration>`
 
 * :ref:`Spaces <spaces>`
 
+  * :ref:`Arkivum <arkivum>`
+  * :ref:`Dataverse <dataverse>`
+  * :ref:`DuraCloud <duracloud>`
+  * :ref:`FEDORA via SWORD2 <fedora>`
+  * :ref:`GPG encyption on local filesystem <gpg>`
   * :ref:`Local filesystem <local-filesystem>`
+  * :ref:`LOCKSS (LOCKSS-o-matic) <admin-lockss>`
   * :ref:`NFS <nfs>`
   * :ref:`Pipeline local filesystem <pipeline>`
-  * :ref:`GPG encyption on local filesystem <gpg>`
-  * :ref:`LOCKSS <admin-lockss>`
-  * :ref:`DuraCloud <duracloud>`
-  * :ref:`Arkivum <arkivum>`
   * :ref:`Swift <swift>`
-  * :ref:`Fedora <fedora>`
-  * :ref:`Dataverse <dataverse>`
 
 * :ref:`Locations <locations>`
 
@@ -42,17 +42,16 @@ installation, both locally and remote.
 
 * :ref:`Administration <administration>`
 
-
 .. _organization:
 
-Storage Service entities and organization
+Storage Service glossary and organization
 -----------------------------------------
 
 Pipelines
 ^^^^^^^^^
 
-A pipeline refers to a single installation of an Archivematica dashboard.
-The Storage Service can be used to configure spaces and locations across multiple Archivematica pipelines.
+A pipeline refers to a single installation of an Archivematica dashboard. One
+Storage Service can be used to configure multiple Archivematica pipelines.
 
 Spaces
 ^^^^^^
@@ -90,7 +89,7 @@ Service will be presented.
 
 .. image:: images/Install3.*
    :align: center
-   :width: 80%
+   :width: 60%
    :alt: Configuring the Storage Service during Archivematica installation.
 
 If you have installed the Storage Service at a different URL, you may change
@@ -119,7 +118,7 @@ UUID is also available in Archivematica under Administration -> General.
 Change the port in the web server configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The storage services uses nginx by default, so you can edit
+The Storage Services uses nginx by default, so you can edit
 ``/etc/nginx/sites-enabled/storage`` and change the line that says
 
 ``listen 8000;``
@@ -128,7 +127,7 @@ change ``8000`` to whatever port you prefer to use.
 
 Keep in mind that in a default installation of Archivematica, the dashboard is
 running in Apache on port 80. So it is not possible to make nginx run on port
-80 on the same machine. If you install the storage service on its own server,
+80 on the same machine. If you install the Storage Service on its own server,
 you can set it to use port 80.
 
 Make sure to adjust the dashboard UUID in the Archivematica dashboard under
@@ -161,155 +160,88 @@ Some protocols require a staging path. This is a temporary location on the
 Storage Service server that is used when copying material from that service
 service (DuraCloud, Swift, etc) to another space within the Storage Service.
 
-.. _local-filesystem:
+.. _arkivum:
 
-Local Filesystem
-^^^^^^^^^^^^^^^^
+Arkivum
+^^^^^^^
 
-Local Filesystem spaces handle storage that is available locally on the
-machine running the storage service. Typically this is the hard drive, SSD or
-raid array attached to the machine, but it could also encompass remote storage
-that has already been mounted. For remote storage that has been locally
-mounted, we recommend using a more specific Space if one is available.
+Archivematica can use Arkivum's A-Stor as an access protocol in version 0.7 and
+higher. A-Stor can expose a CIFS share to the Storage Service so that the
+Storage Service can copy files to an A-Stor datapool for AIP storage, for
+example.
 
-**Fields**
+Add an entry to ``/etc/fstab`` on the Storage Service, then mount the A-Stor
+CIFS share.
 
-* Path: Absolute path to the Space on the local filesystem
+Example::
 
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
+   //ARK00092/astor /mnt/astor cifs
+   defaults,guest,file_mode=0666,dir_mode=0777,uid=archivematica,gid
+   =archivematica,forcegid,forceuid,rw 0 1
 
-.. _nfs:
+In this example, ARK00092 is the name of the appliance and should be resolvable
+through DNS or be set as an entry in ``/etc/hosts``.
 
-NFS
-^^^
+Then, choosing Arkivum as the access protocol, create a new space in the
+Storage Service.
 
-NFS spaces are for NFS exports mounted on the Storage Service server, and the
-Archivematica pipeline.
+Fields:
 
-**Fields**
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the local path on the Storage Service machine to the CIFS share,
+  e.g. ``/mnt/astor``
+* **Staging Path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible, preferably on the same filesystem as the path, e.g.
+  ``/mnt/astor/archivematica1/tmp``
+* **Host**: the hostname of the Arkivum web instance or IP address with port,
+  e.g. ``arkivum.example.com:8443``
+* **Remote user**: the username on the remote machine accessible via
+  passwordless ssh. This field is optional.
+* **Remote name**: the name or IP of the remote machine. This field is optional.
 
-* Path: Absolute path the space is mounted at on the filesystem local to the
-  storage service
+.. _dataverse:
 
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
+Dataverse
+^^^^^^^^^
 
-* Remote name: Hostname or IP address of the remote computer exporting the NFS
-  mount.
+As of Storage Service version 0.9, Dataverse integration is a beta feature. It
+requires the use of a development branch of Archivematica
+(https://github.com/artefactual/archivematica/tree/dev/issue-8693-dataverse) and
+of the Automation Tools
+(https://github.com/artefactual/automation-tools/tree/dev/dataverse)
 
-* Remote path: Export path on the NFS server
+Fields:
 
-* Version: nfs or nfs4 - as would be passed to the mount command.
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Host**: Hostname or IP address of the Dataverse instance, e.g.
+  ``test.dataverse.org``
+* **API key**: the key generated by Dataverse for a specific user account
+* **Agent name**: a string that will be used in Archivematica METS file to
+  identify this Dataverse instance as a PREMIS agent, e.g. ``My Institution's
+  Dataverse Instance``. This field is optional.
+* **Agent type**: a string that will be used in Archivematica METS file
+  to identify the type of PREMIS agent named above, e.g. ``organization``. This
+  field is optional.
+* **Agent identifier**: a string that will be used as an identifier in the
+  Archivematica METS file to uniquely identify the PREMIS agent named above.
+  This field is optional.
 
-* Manually Mounted: Check this if it has been mounted already. Otherwise, the
-  Storage Service will try to mount it. Note: this feature is not yet available.
+Inside this space, at least one location should be created for the purpose of
+Transfer Source. This is the only type of location that will be allowed inside a
+Dataverse space.
 
+Within this location, the relative path can be used to store a query string,
+which is used to interrogate the Dataverse Search API (for example, q=* will
+return all datasets).
 
-.. _pipeline:
-
-Pipeline Local Filesystem
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Pipeline Local Filesystems refer to the storage that is local to the
-Archivematica pipeline, but remote to the storage service. For this Space to
-work properly, passwordless SSH must be set up between the Storage Service
-host and the Archivematica host.
-
-For example, the storage service is hosted on storage_service_host and
-Archivematica is running on archivematica1 . The transfer sources for
-Archivematica are stored locally on archivematica1, but the storage service
-needs access to them. The Space for that transfer source would be a Pipeline
-Local Filesystem.
-
-.. note::
-
-   Passwordless SSH must be set up between the Storage Service host and the
-   computer Archivematica is running on.
-
-**Fields**
-
-* Path: Absolute path to the space on the remote machine.
-
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Remote name: Hostname or IP address of the computer running Archivematica.
-  Should be SSH accessible from the Storage Service computer.
-
-* Remote user: Username on the remote host
-
-.. _gpg:
-
-GPG encryption on local file system
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Creating a GPG encryption space will allow users to create encrypted AIPs and
-transfers. Only AIP storage, Transfer backlog and Replicator locations can be
-created in a GPG encryption space.
-
-Encrypted AIPs and transfers can be downloaded unencrypted via the Storage
-Service and Archivematica dashboard.
-
-Before creating a GPG encryption space ensure that you have created or imported
-a GPG key on the :ref:`Administration page <administration>`.
-
-**Fields**
-
-* Path: Absolute path to the Space on the local filesystem
-
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Staging path:  Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Key: Choose the encryption key to be used for the space.
-
-.. important::
-
-   It is possible to encrypt uncompressed AIPs, which will be stored as tar
-   files.
-
-   Uncompressed AIPs do not have pointer files, so if the key for the space
-   is changed and the original key is deleted/unknown, Archivematica will
-   have no record of the key for decryption.
-
-.. _admin-lockss:
-
-LOCKSS
-^^^^^^
-
-Archivematica can store AIPs in a `LOCKSS <http://www.lockss.org/>`_ network via
-LOCKSS-O-Matic, which uses SWORD to communicate between the Storage Service
-and a Private LOCKSS Network (PLN).
-
-**Fields:**
-
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: Absolute path to the space on the remote machine.
-
-* Staging path:  Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Service document IRI: URL of LOCKSS-o-matic service document IRI, eg.
-  http://lockssomatic.example.org/api/sword/2.0/sd-iri
-
-* Content Provider ID: On-Behalf-Of value when communicating with LOCKSS-o-matic
-
-* Externally available domain: Base URL for this server that LOCKSS will be
-  able to access. Generally this is the URL for the home page of the Storage
-  Service.
-
-* Keep local copy? Check the box if you wish to store a local copy of the AIPs
-  even after they are stored in LOCKSS.
-
-.. note::
-
-   When creating a Location for a LOCKSS space (see below), the Purpose of the
-   Location must be AIP Storage.
+The Storage Service will always add ``type=dataset`` to the calls that it makes
+to the Dataverse Search API. The automation tools will create one transfer for
+every dataset, which subsequently becomes one SIP and one AIP.
 
 .. _duracloud:
 
@@ -321,110 +253,21 @@ DuraCloud
    :ref:`Archivematica-DuraCloud Quick Start Guide <archivematica:duracloud-setup>`
 
 Archivematica can use DuraCloud as an access protocol for the Storage Service in
-version 0.5 and higher. Typically one Storage Service space has a one to one
+version 0.5 and higher. Typically, a Storage Service space has a one-to-one
 relationship with a space within DuraCloud.
 
-**Fields:**
+Fields:
 
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: Absolute path to the space on the remote machine. Normally left blank for
-  DuraCloud implementations.
-
-* Staging path:  Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Host: Hostname of the DuraCloud instance, e.g. example.duracloud.org
-
-* User: Username to authenticate as
-
-* Password: Password to authenticate with
-
-* Duraspace: Name of the Space within DuraCloud
-
-.. _arkivum:
-
-Arkivum
-^^^^^^^
-
-Archivematica can use Arkivum's A-Stor as an access protocol in version 0.7 and
-higher. A-Stor can expose a CIFS share to the Storage Service so that the
-storage service can copy files to an A-Stor datapool for AIP storage, for example.
-
-Add an entry to ``/etc/fstab`` on the Storage Service, then mount the A-Stor
-CIFS share.
-
-Example:
-
-.. code:: bash
-
-   //ARK00092/astor /mnt/astor cifs
-   defaults,guest,file_mode=0666,dir_mode=0777,uid=archivematica,gid
-   =archivematica,forcegid,forceuid,rw 0 1
-
-In this example, ARK00092 is the name of the appliance and should be resolvable
-through DNS or be set as an entry in ``/etc/hosts``.
-
-Then, choosing Arkivum as the access protocol, create a new space in the
-Storage Service:
-
-**Fields**
-
-* Size: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: local path on the Storage Service machine to the CIFS share.
-
-Example: ``/mnt/astor``
-
-* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-Example: ``/mnt/astor/archivematica1/tmp``
-
-* Host: Arkivum appliance hostname or IP address with port.
-
-* Remote user: (Optional) Username on the remote machine accessible via
-  passwordless ssh.
-
-* Remote name: (Optional) Name or IP of the remote machine.
-
-.. _swift:
-
-Swift
-^^^^^
-
-OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
-higher. At this time, locations within Swift have been tested as AIP Storage,
-DIP Storage and Transfer Backlog. Using Swift as Transfer Source is possible,
-but under-tested at this time.
-
-**Fields**
-
-* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: Absolute path to the space on the storage service machine.
-
-* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Auth url: URL to authenticate against
-
-* Auth version: OpenStack auth version
-
-* Username: Username to authenticate as (Swift username)
-
-* Password: Password to authenticate with (Swift password)
-
-* Container: Name of the Swift container. To list available containers in
-  your Swift installation, run ``swift list`` from the command line.
-
-* Tenant: The tenant/account name, required when connecting to an auth
-  2.0 system.
-
-* Region (Optional): Region in Swift.
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Host**: the hostname of the DuraCloud instance, e.g.
+  ``example.duracloud.org``.
+* **User**: a username with sufficient permissions to permit authentication.
+* **Password**: the password of the above user.
+* **Duraspace**: the name of the Space within DuraCloud
 
 .. _dspace:
 
@@ -447,27 +290,23 @@ in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP hook wil
 send the DSpace handle to the ArchivesSpace digital object record upon AIP
 storage.
 
-**Fields**
+Fields:
 
-* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: Absolute path to the space on the storage service machine.
-
-* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Service Document IRI: URL of the service document. E.g.
-  http://demo.dspace.org/swordv2/servicedocument, where servicedocument is the
-  handle to the community or collection being used for deposit.
-
-* User: DSpace username to authenticate as
-
-* Password: DSpace password to authenticate with
-
-* Restricted metadata policy: Use to restrict access to the metadata bitstream.
-  Must be specified as a list of objects in JSON. This will override existing
-  policies. Example: [{"action":"READ","groupId":"5","rpType":"TYPE_CUSTOM"}]
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Service Document IRI**: URL of the service document. E.g.
+  ``http://demo.dspace.org/swordv2/servicedocument``, where servicedocument is
+  the handle to the community or collection being used for deposit.
+* **User**: a username for the DSpace instance with sufficient permissions to
+  permit authentication.
+* **Password**: the password for the username above.
+* **Restricted metadata policy**: Use to restrict access to the metadata
+  bitstream. Must be specified as a list of objects in JSON, e.g.
+  ``[{"action":"READ","groupId":"5","rpType":"TYPE_CUSTOM"}]``. This will
+  override existing policies.
 
 .. _fedora:
 
@@ -480,28 +319,23 @@ Protocol to facilitate use of the
 which allows ingest of material from Islandora to Archivematica. This workflow
 is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora 7.x-1.6.
 
-**Fields**
+Fields:
 
-* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path: Absolute path to the space on the storage service machine.
-
-* Staging Path: Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Fedora user: Fedora user name (for SWORD functionality)
-
-* Fedora password: Fedora password (for SWORD functionality)
-
-* Fedora name: Name or IP of the remote Fedora machine
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Fedora user**: Fedora user name (for SWORD functionality).
+* **Fedora password**: Fedora password (for SWORD functionality).
+* **Fedora name**: Name or IP of the remote Fedora machine.
 
 .. note::
 
    * A Location (see below) must also be created, with the purpose
      of FEDORA Deposits.
 
-   * On the Archivematica dashboard, the IP of the storage service
+   * On the Archivematica dashboard, the IP of the Storage Service
      needs to be added to the IP whitelist for the REST API, so that
      transfers will be approved automatically.
 
@@ -509,42 +343,178 @@ is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora 7.x-1.6
      list objects that can be deleted once they have been
      stored by Archivematica. See the :ref:`Administration <administration>` section.
 
-.. _dataverse:
+.. _gpg:
 
-Dataverse
-^^^^^^^^^
+GPG encryption on local file system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As of Storage Service version 0.9, Dataverse integration is a beta feature.
-It requires the use of a development branch of Archivematica (https://github.com/artefactual/archivematica/tree/dev/issue-8693-dataverse) and of the Automation Tools (https://github.com/artefactual/automation-tools/tree/dev/dataverse)
+Creating a GPG encryption space will allow users to create encrypted AIPs and
+transfers. Only AIP storage, Transfer backlog and Replicator locations can be
+created in a GPG encryption space.
+
+Encrypted AIPs and transfers can be downloaded unencrypted via the Storage
+Service and Archivematica dashboard.
+
+Before creating a GPG encryption space ensure that you have created or imported
+a GPG key on the :ref:`Administration page <administration>`.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Key**: the encryption key to be used for the space.
+
+.. important::
+
+   It is possible to encrypt uncompressed AIPs, which will be stored as tar
+   files.
+
+   Uncompressed AIPs do not have pointer files, so if the key for the space
+   is changed and the original key is deleted/unknown, Archivematica will
+   have no record of the key for decryption.
+
+.. _local-filesystem:
+
+Local Filesystem
+^^^^^^^^^^^^^^^^
+
+Local Filesystem spaces handle storage that is available locally on the
+machine running the Storage Service. Typically this is the hard drive, SSD or
+raid array attached to the machine, but it could also encompass remote storage
+that has already been mounted. For remote storage that has been locally
+mounted, we recommend using a more specific Space if one is available.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+
+
+.. _admin-lockss:
+
+LOCKSS
+^^^^^^
+
+Archivematica can store AIPs in a `LOCKSS`_ network via LOCKSS-O-Matic, which
+uses SWORD to communicate between the Storage Service and a Private LOCKSS
+Network (PLN).
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Service document IRI**: the URL of the LOCKSS-o-matic service document IRI,
+  e.g. ``http://lockssomatic.example.org/api/sword/2.0/sd-iri``.
+* **Content Provider ID**: the On-Behalf-Of value when communicating with
+  LOCKSS-o-matic.
+* **Externally available domain**: the base URL for this server that LOCKSS will
+  be able to access. Generally this is the URL for the home page of the Storage
+  Service.
+* **Keep local copy?**: check this box if you wish to store a local copy of the
+  AIPs even after they are stored in LOCKSS.
+
+.. note::
+
+   When creating a Location for a LOCKSS space (see below), the Purpose of the
+   Location must be AIP Storage.
+
+.. _nfs:
+
+NFS
+^^^
+
+NFS spaces are for NFS exports mounted on the Storage Service server and the
+Archivematica pipeline.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to where the space is mounted on the filesystem
+  local to the Storage Service.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Remote name**: the hostname or IP address of the remote computer exporting
+  the NFS mount.
+* **Remote path**: the export path on the NFS server
+* **Version**:  the version of the filesystem, e.g. ``nfs`` or ``nfs4``,as would
+  be passed to the mount command.
+* **Manually mounted**: This is a placeholder for a feature that is not yet
+  available.
+
+.. _pipeline:
+
+Pipeline Local Filesystem
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pipeline Local Filesystems refer to the storage that is local to the
+Archivematica pipeline, but remote to the Storage Service. For this Space to
+work properly, passwordless SSH must be set up between the Storage Service
+host and the Archivematica host.
+
+For example, the Storage Service is hosted on storage_service_host and
+Archivematica is running on archivematica1 . The transfer sources for
+Archivematica are stored locally on archivematica1, but the Storage Service
+needs access to them. The Space for that transfer source would be a Pipeline
+Local Filesystem.
+
+.. note::
+
+   Passwordless SSH must be set up between the Storage Service host and the
+   computer Archivematica is running on.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to where the space is mounted on the filesystem
+  local to the Storage Service.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Remote user**: the username on the remote host.
+* **Remote name**: the hostname or IP address of the computer running
+  Archivematica. This should be SSH accessible from the Storage Service
+  computer.
+* **Assume remote host serving files with rsync daemon**: if checked, the
+  Storage Service will use rsync daemon-style commands instead of the default
+  rsync with remote shell.
+* **Rsync password**: the password for the rsync daemon
+
+.. _swift:
+
+Swift
+^^^^^
+
+OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
+higher. At this time, locations within Swift have been tested as AIP Storage,
+DIP Storage and Transfer Backlog. Using Swift as Transfer Source is possible,
+but under-tested at this time.
 
 **Fields**
 
-* Size (Optional): Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-
-* Path (Optional): Absolute path to the space on the storage service machine.
-
-* Staging Path (Optional): Absolute path to a staging area. Must be UNIX filesystem
-  compatible, preferably on the same filesystem as the path.
-
-* Host: Hostname or ip of the Dataverse instance, e.g. test.dataverse.org
-
-* API key: the key generated by Dataverse for a specific user account
-
-* Agent name: string that will be used in Archivematica METS file to identify this Dataverse instance as a PREMIS agent, e.g. My Institution's Dataverse
-
-* Agent type (Optional): string that will be used in Archivematica METS file to identify the type of PREMIS agent above, e.g. organization
-
-* Agent identifier (Optional): string that will be used in Archivematica METS file to uniquely identify the PREMIS agent above.
-
-Inside this space, at least one location should be created for the purpose of Transfer Source.
-This is the only type of location that will be allowed inside a Dataverse space.
-
-Within this location, the relative path can be used to store a query string, which is used to interrogate the Dataverse Search API (for example, q=* will return all datasets).
-
-The Storage Service will always add ``type=dataset`` to the calls that it makes to the Dataverse Search API.
-The automation tools will create one transfer for every dataset, which subsequently becomes one SIP and one AIP.
-
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Auth URL**: the URL to authenticate against.
+* **Auth version**: the OpenStack authentication version.
+* **Username**: the Swift username that will be used for authentication.
+* **Password**: the password for the above username.
+* **Container**: the name of the Swift container. To list available containers
+  in your Swift installation, run ``swift list`` from the command line.
+* **Tenant**: the tenant/account name, required when connecting to an auth
+  2.0 system.
+* **Region**: the region in Swift. This field is optional.
 
 .. _locations:
 
@@ -556,64 +526,79 @@ Locations
    :width: 80%
    :alt: Storage Service locations screen.
 
-A storage Location is contained within a Space, and knows its purpose in the Archivematica system.
-Each Location is associated with at least one pipeline; with the exception of Backlog and Currently Processing locations, for which there must be exactly one per pipeline, a pipeline can have multiple instances of any location, and a location can be associated with any number of pipelines.
-Currently, a Location can have one of eight purposes: Transfer Source, Transfer Backlog, AIP Storage, DIP Storage, Currently Processing, Storage Service Internal Processing, AIP Recovery or FEDORA Deposit.
+A storage Location is contained within a Space, and knows its purpose in the
+Archivematica system. Each Location is associated with at least one pipeline;
+with the exception of Backlog and Currently Processing locations, for which
+there must be exactly one per pipeline, a pipeline can have multiple instances
+of any location, and a location can be associated with any number of pipelines.
+Currently, a Location can have one of eight purposes: Transfer Source, Transfer
+Backlog, AIP Storage, DIP Storage, Currently Processing, Storage Service
+Internal Processing, AIP Recovery or FEDORA Deposit.
 
-Transfer source locations display in Archivematica's Transfer tab, and any folder in a transfer source can be selected to become a Transfer.
-The default value is '/home' in a Local Filesystem.
-This is required to start transfers.
+Transfer source locations display in Archivematica's Transfer tab, and any
+folder in a transfer source can be selected to become a Transfer. The default
+value is ``/home`` in a Local Filesystem. This is required to start transfers.
 
-Transfer backlog stores transfers until such a time that the user continues processing them.
-The default value is '/var/archivematica/sharedDirectory/www/AIPsStore/transferBacklog' in a Local Filesystem.
-This is required to store and retrieve transfers in backlog.
+Transfer backlog stores transfers until such a time that the user continues
+processing them. The default value is
+``/var/archivematica/sharedDirectory/www/AIPsStore/transferBacklog`` in a Local
+Filesystem. This is required to store and retrieve transfers in backlog.
 
-AIP storage locations are where the completed AIPs are put for long-term storage.
-The default value is '/var/archivematica/sharedDirectory/www/AIPsStore' in a Local Filesystem.
-This is required to store and retrieve AIPs.
+AIP storage locations are where the completed AIPs are put for long-term
+storage. The default value is '/var/archivematica/sharedDirectory/www/AIPsStore'
+in a Local Filesystem. This is required to store and retrieve AIPs.
 
-Likewise, DIP storage is used for storing DIPs until such a time that they can be uploaded to an access system.
-The default value is '/var/archivematica/sharedDirectory/www/DIPsStore' in a Local Filesystem.
-This is required to store and retrieve DIPs.
-This is not required to upload DIPs to access systems.
+Likewise, DIP storage is used for storing DIPs until such a time that they can
+be uploaded to an access system. The default value is
+``/var/archivematica/sharedDirectory/www/DIPsStore`` in a Local Filesystem.
+This is required to store and retrieve DIPs. This is not required to upload DIPs
+to access systems.
 
-During processing, Archivematica uses the currently processing location associated with that pipeline.
-Exactly one currently processing location should be associated with a given pipeline.
-The default value is '/var/archivematica/sharedDirectory' in a Local Filesystem.
-This is required for Archivematica to run.
+During processing, Archivematica uses the currently processing location
+associated with that pipeline. Exactly one currently processing location should
+be associated with a given pipeline. The default value is
+``/var/archivematica/sharedDirectory`` in a Local Filesystem. This is required
+for Archivematica to run.
 
-Likewise, there should only be exactly one Storage Service Internal Processing location for each Storage Service installation.
-The default value is '/var/archivematica/storage_service' in a Local Filesystem.
-This is required for the Storage Service to run, and must be locally available to the storage service.
-It should not be associated with any pipelines.
+Likewise, there should only be exactly one Storage Service Internal Processing
+location for each Storage Service installation. The default value is
+``/var/archivematica/storage_service`` in a Local Filesystem. This is required
+for the Storage Service to run, and must be locally available to the Storage
+Service. It should not be associated with any pipelines.
 
-AIP Recovery is where the :ref:`AIP recovery <recovery>` feature looks for an AIP to recover.
-No more than one AIP recovery locatio should be associated with a given pipeline.
-The default value is '/var/archivematica/storage_service/recover' in a Local Filesystem.
-This is only required if AIP recovery is used.
+AIP Recovery is where the :ref:`AIP recovery <recovery>` feature looks for an
+AIP to recover. No more than one AIP recovery locatio should be associated with
+a given pipeline. The default value is
+``/var/archivematica/storage_service/recover`` in a Local Filesystem. This is
+only required if AIP recovery is used.
 
-FEDORA Deposit is used with the Archidora plugin to ingest material from Islandora.
-This is only available to the FEDORA Space, and is only required for that space.
+FEDORA Deposit is used with the Archidora plugin to ingest material from
+Islandora. This is only available to the FEDORA Space, and is only required for
+that space.
 
-Replicator locations can be configured to replicate the AIPs in one or more
-AIP storage locations. If you wish for the replicated AIPs to be encrypted,
-create the location in an :ref:`encrypted space <gpg>`.
+Replicator locations can be configured to replicate the AIPs in one or more AIP
+storage locations. If you wish for the replicated AIPs to be encrypted, create
+the location in an :ref:`encrypted space <gpg>`.
 
-If you want the same directory on disk to have multiple purposes, multiple Locations with different purposes can be created.
+If you want the same directory on disk to have multiple purposes, multiple
+Locations with different purposes can be created.
 
-**Fields**
+Fields:
 
-* Purpose: What use the Location is for.
-* Pipeline: Which pipelines this location is available to.
-* Relative Path: Path to this Location, relative to the space that contains it.
-* Description: Description of the Location to be displayed to the user.
-* Quota: (Optional) Maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited.
-* Enabled: If checked, this location is accessible to pipelines associated with
-  it. If unchecked, it will not show up to any pipeline.
-* Set as global default location for its purpose: If checked, this location will
-  be the default for its purpose unless Archivematica is explicitly told
-  otherwise.
+* **Purpose**: the function that this location will fulfill, e.g.
+  ``AIP storage``.
+* **Pipelines**: the Archivematica instance(s) that will be able to use this
+  location.
+* **Relative Path**: the path to this location, relative to the space that
+  contains it.
+* **Description**: a description of the location to be displayed to the user.
+* **Quota**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Enabled**: if checked, this location will be accessible to pipelines
+  associated with it. If unchecked, it will not be available to any pipeline.
+* **Set as global default location for its purpose**: if checked, this location
+  will be the default location for its purpose unless the user specifically
+  tells Archivematica otherwise during processing.
 
 How to Configure a Location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -664,14 +649,15 @@ identified by a UUID, which can be found in the dashboard under Administration
 register its UUID with the Storage Service, with a description of
 "Archivematica on <hostname>".
 
-**Fields**
+Fields:
 
-* UUID: Unique identifier of the Archivematica pipeline
-* Description: Description of the pipeline displayed to the user. e.g. Sankofa
-  demo site
-* Enabled: If checked, this pipeline can access locations associate with it.
-  If unchecked, all locations will be disabled, even if associated.
-* Default Locations: If checked, the default locations configured in
+* **UUID**: the unique identifier of the Archivematica pipeline.
+* **Description**: a description of the pipeline displayed to the user. e.g.
+  ``Development site``.
+* **Enabled**: If checked, this pipeline can access locations associate with it.
+  If unchecked, all locations will be disabled, even if associated directly with
+  this pipeline.
+* **Default Location**: If checked, the default locations configured in
   Administration -> Configuration will be created or associated with the new
   pipeline.
 
@@ -692,7 +678,7 @@ also be reflected in the Packages tab.
 
 AIPs cannot be created or deleted through the Storage Service interface, though a
 deletion request can be submitted through Archivematica that must be approved or
-rejected by the storage service administrator. To learn more about deleting an AIP, see
+rejected by the Storage Service administrator. To learn more about deleting an AIP, see
 :ref:`Deleting an AIP <archivematica:delete-aip>`. Stored DIPs cannot be deleted
 through either the Storage Service or Archivematica interfaces. Deletion requests
 for transfers are automatically generated when all of the objects from the transfer
@@ -717,10 +703,10 @@ Service.
 Users
 ^^^^^
 
-Only registered users can long into the storage service, and the Users page is
+Only registered users can long into the Storage Service, and the Users page is
 where users can be created or modified.
 
-The storage service has two types of users: administrative users, and regular
+The Storage Service has two types of users: administrative users, and regular
 users. The only distinction between the two types is for email notifications;
 administrators will be notified by email when special events occur, while
 regular users will not.
@@ -784,10 +770,12 @@ To import a key:
 1. Click on Import Existing Key
 
 2. Paste in your key in ASCII-armored format.
-   
+
 Set Language
 ^^^^^^^^^^^^^^^
 
 Configure language settings for the Storage Service in this area of the Administration tab. Strings are available for translation on the localization platform (Transifex).
 
 :ref:`Back to the top <administrators>`
+
+.. _`LOCKSS`: http://www.lockss.org/
