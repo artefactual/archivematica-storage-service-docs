@@ -236,11 +236,8 @@ Fields:
 Dataverse
 ^^^^^^^^^
 
-As of Storage Service version 0.9, Dataverse integration is a beta feature. It
-requires the use of a development branch of Archivematica
-(https://github.com/artefactual/archivematica/tree/dev/issue-8693-dataverse) and
-of the Automation Tools
-(https://github.com/artefactual/automation-tools/tree/dev/dataverse)
+Dataverse Integration is supported with Archivematica v1.8 (and higher) and Storage 
+Service v0.13 (and higher).
 
 Fields:
 
@@ -262,17 +259,44 @@ Fields:
   Archivematica METS file to uniquely identify the PREMIS agent named above.
   This field is optional.
 
-Inside this space, at least one location should be created for the purpose of
-Transfer Source. This is the only type of location that will be allowed inside a
-Dataverse space.
+Dataverse spaces support Transfer Source Locations (Locations for other 
+purposes are not curently supported). At least one location should be created
+as a Transfer Source. 
 
-Within this location, the relative path can be used to store a query string,
-which is used to interrogate the Dataverse Search API (for example, q=* will
-return all datasets).
+Within this location, the relative path can be used to set two of the parameters
+available in the Dataverse Search API. The q (or "Query") parameter is a 
+general search parameter. The ’subtree’ parameter can be used to indicate a 
+sub-dataverse. For example, the following entry in 'Relative Path': 
 
-The Storage Service will always add ``type=dataset`` to the calls that it makes
-to the Dataverse Search API. The automation tools will create one transfer for
-every dataset, which subsequently becomes one SIP and one AIP.
+::
+
+  Query:*
+  Subtree:Archivematica
+
+will return all datasets within the Archivematica dataverse. The other API 
+parameters are set using the fields described above for the space, or are set 
+with fixed values. The parameters used are:
+
+::
+
+  URL: https://<Host field set in Space configuration>/api/search/
+
+  {
+	  'q': '<Relative Path field set in Location configuration>',
+	  'sort': 'name',
+	  'key': u '<API Key field set in Space configuration>',
+	  'start': 50,
+	  'per_page': 50,
+	  'show_entity_ids': True,
+	  'type': 'dataset',
+	  'subtree': '<Relative Path field set in Location configuration>',
+	  'order': 'asc'
+  }
+
+Search results are currently limited to 50 datasets. For repositories with more
+than 50 datasets we recommend creating multiple Locations with more specific 
+search criteria. For futher details of the API parameters, see the 
+`Dataverse api guide`_.
 
 .. _duracloud:
 
@@ -802,3 +826,4 @@ Configure language settings for the Storage Service in this area of the Administ
 :ref:`Back to the top <administrators>`
 
 .. _`LOCKSS`: http://www.lockss.org/
+.. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
