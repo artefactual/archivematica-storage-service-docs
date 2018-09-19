@@ -236,11 +236,7 @@ Fields:
 Dataverse
 ^^^^^^^^^
 
-As of Storage Service version 0.9, Dataverse integration is a beta feature. It
-requires the use of a development branch of Archivematica
-(https://github.com/artefactual/archivematica/tree/dev/issue-8693-dataverse) and
-of the Automation Tools
-(https://github.com/artefactual/automation-tools/tree/dev/dataverse)
+Dataverse Integration is supported with Archivematica v1.8+ and Storage Service v0.13+
 
 Fields:
 
@@ -267,12 +263,17 @@ Transfer Source. This is the only type of location that will be allowed inside a
 Dataverse space.
 
 Within this location, the relative path can be used to store a query string,
-which is used to interrogate the Dataverse Search API (for example, q=* will
-return all datasets).
+which is used to interrogate the Dataverse Search API. The q parameter is a 
+general search parameter. The ’subtree’ parameter can be used to indicate a 
+sub-dataverse. For example:
+   q=*
+   subtree=“Archivematica”
+will return all datasets contained within the “Archivematica” sub-dataverse. 
 
 The Storage Service will always add ``type=dataset`` to the calls that it makes
-to the Dataverse Search API. The automation tools will create one transfer for
-every dataset, which subsequently becomes one SIP and one AIP.
+to the Dataverse Search API. 
+
+For futher details of the API parameters, see the `Dataverse api guide`_
 
 .. _duracloud:
 
@@ -802,3 +803,4 @@ Configure language settings for the Storage Service in this area of the Administ
 :ref:`Back to the top <administrators>`
 
 .. _`LOCKSS`: http://www.lockss.org/
+.. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
