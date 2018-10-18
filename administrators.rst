@@ -302,8 +302,8 @@ Fields:
 
 .. _dspace:
 
-DSpace via SWORD2 API
-^^^^^^^^^^^^^^^^^^^^^
+DSpace via SWORD2 API or DSpace via REST API
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 DSpace locations are currently supported only for AIP Storage locations.  Becasue
 DSpace is typically used as a public-facing system, the behaviour is different
@@ -333,6 +333,7 @@ Fields:
   the handle to the community or collection being used for deposit.
 * **User**: a username for the DSpace instance with sufficient permissions to
   permit authentication.
+* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``; for production systems, this address will be slightly different, such as: ``https://demo.dspace.org/rest/``.  
 * **Password**: the password for the username above.
 * **Restricted metadata policy**: Use to restrict access to the metadata
   bitstream. Must be specified as a list of objects in JSON, e.g.
