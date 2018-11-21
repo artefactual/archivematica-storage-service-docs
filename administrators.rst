@@ -14,35 +14,6 @@ installation, both locally and remote.
    :width: 80%
    :alt: Home page of the Storage Service
 
-
-*On this page:*
-
-* :ref:`Storage Service glossary and organization <organization>`
-
-* :ref:`Archivematica Configuration <archivematica-configuration>`
-
-* :ref:`Pipelines <pipelines>`
-
-* :ref:`Spaces <spaces>`
-
-  * :ref:`Arkivum <arkivum>`
-  * :ref:`Dataverse <dataverse>`
-  * :ref:`DuraCloud <duracloud>`
-  * :ref:`FEDORA via SWORD2 <fedora>`
-  * :ref:`GPG encyption on local filesystem <gpg>`
-  * :ref:`Local filesystem <local-filesystem>`
-  * :ref:`LOCKSS (LOCKSS-o-matic) <admin-lockss>`
-  * :ref:`NFS <nfs>`
-  * :ref:`Pipeline local filesystem <pipeline>`
-  * :ref:`Swift <swift>`
-  * :ref:`S3 (Amazon) <amazon-s3>`
-
-* :ref:`Locations <locations>`
-
-* :ref:`Packages <packages>`
-
-* :ref:`Administration <administration>`
-
 .. _organization:
 
 Storage Service glossary and organization
@@ -82,7 +53,7 @@ location.
 
 .. _archivematica-configuration:
 
-Archivematica Configuration
+Archivematica configuration
 ---------------------------
 
 When installing Archivematica, options to configure it with the Storage
@@ -163,7 +134,6 @@ Fields:
   Administration -> Configuration will be created or associated with the new
   pipeline.
 
-
 .. _spaces:
 
 Spaces
@@ -236,7 +206,7 @@ Fields:
 Dataverse
 ^^^^^^^^^
 
-Dataverse Integration is supported with Archivematica v1.8 (and higher) and Storage 
+Dataverse Integration is supported with Archivematica v1.8 (and higher) and Storage
 Service v0.13 (and higher).
 
 Fields:
@@ -259,43 +229,39 @@ Fields:
   Archivematica METS file to uniquely identify the PREMIS agent named above.
   This field is optional.
 
-Dataverse spaces support Transfer Source Locations (Locations for other 
-purposes are not curently supported). At least one location should be created
-as a Transfer Source. 
+Dataverse spaces support Transfer Source Locations (Locations for other
+purposes are not currently supported). At least one location should be created
+as a Transfer Source.
 
 Within this location, the relative path can be used to set two of the parameters
-available in the Dataverse Search API. The q (or "Query") parameter is a 
-general search parameter. The ’subtree’ parameter can be used to indicate a 
-sub-dataverse. For example, the following entry in 'Relative Path': 
-
-::
+available in the Dataverse Search API. The q (or "Query") parameter is a
+general search parameter. The ’subtree’ parameter can be used to indicate a
+sub-dataverse. For example, the following entry in 'Relative Path'::
 
   Query:*
   Subtree:Archivematica
 
-will return all datasets within the Archivematica dataverse. The other API 
-parameters are set using the fields described above for the space, or are set 
-with fixed values. The parameters used are:
-
-::
+will return all datasets within the Archivematica dataverse. The other API
+parameters are set using the fields described above for the space, or are set
+with fixed values. The parameters used are::
 
   URL: https://<Host field set in Space configuration>/api/search/
 
   {
-	  'q': '<Relative Path field set in Location configuration>',
-	  'sort': 'name',
-	  'key': u '<API Key field set in Space configuration>',
-	  'start': 50,
-	  'per_page': 50,
-	  'show_entity_ids': True,
-	  'type': 'dataset',
-	  'subtree': '<Relative Path field set in Location configuration>',
-	  'order': 'asc'
+    'q': '<Relative Path field set in Location configuration>',
+    'sort': 'name',
+    'key': u '<API Key field set in Space configuration>',
+    'start': 50,
+    'per_page': 50,
+    'show_entity_ids': True,
+    'type': 'dataset',
+    'subtree': '<Relative Path field set in Location configuration>',
+    'order': 'asc'
   }
 
 Search results are currently limited to 50 datasets. For repositories with more
-than 50 datasets we recommend creating multiple Locations with more specific 
-search criteria. For futher details of the API parameters, see the 
+than 50 datasets we recommend creating multiple Locations with more specific
+search criteria. For further details of the API parameters, see the
 `Dataverse api guide`_.
 
 .. _duracloud:
@@ -305,7 +271,8 @@ DuraCloud
 
 .. seealso::
 
-   :ref:`Archivematica-DuraCloud Quick Start Guide <archivematica:duracloud-setup>`
+   :ref:`Archivematica-DuraCloud Quick Start Guide
+   <archivematica:duracloud-setup>`
 
 Archivematica can use DuraCloud as an access protocol for the Storage Service in
 version 0.5 and higher. Typically, a Storage Service space has a one-to-one
@@ -324,28 +291,130 @@ Fields:
 * **Password**: the password of the above user.
 * **Duraspace**: the name of the Space within DuraCloud
 
-.. _dspace:
+.. _dspacerest:
 
-DSpace via SWORD2 API or DSpace via REST API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+DSpace via REST API
+^^^^^^^^^^^^^^^^^^^
 
-DSpace locations are currently supported only for AIP Storage locations.  Becasue
-DSpace is typically used as a public-facing system, the behaviour is different
-than when using other access protocols for AIP Storage: upon deposit in DSpace,
-the AIP will be split into an objects bitstream, which contains all original and
-normalized objects in the AIP, as well as a metadata bitstream, which contains
-all of the bag artifacts, metadata and logs that one would expect to see in
-an Archivematica AIP. The metadata bitstream can optionally be restricted; see
-below. Presently, the Storage Service and Dashboard are not capable of
-downloading/reconstituting the AIP- this must be done manually from
-the DSpace interface.
+DSpace via REST API locations are supported for both AIP and DIP Storage
+locations. Because DSpace is typically used as a public-facing system, the
+behaviour is different than when using other access protocols for AIP Storage.
+Upon deposit in DSpace, the AIP will be deposited as a single compressed objects
+file (bitstream), which contains all original and normalized objects as well as
+the metadata pertaining to them. The DIP will be deposited as uncompressed files
+with the folder structure flattened.
 
-If using DSpace as the AIP location in conjunction with the ArchivesSpace workflow
-in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP hook will
-send the DSpace handle to the ArchivesSpace digital object record upon AIP
-storage.
+Presently, the Storage Service and Dashboard are not capable of
+downloading/reconstituting the AIP - this must be done manually from the DSpace
+interface.
+
+The DSpace via REST API space offers a novel way to facilitate increased
+automation. It is possible to supply :ref:`metadata with the transfer
+<archivematica:import-metadata>` as either a CSV or a JSON file. In the entry
+for the root folder ``objects`` it is possible to define any number of Dublin
+Core Metadata Elements Set properties which will map on to the corresponding
+DSpace record created for the AIP/DIP. In addition there are three optional
+custom properties which can be defined:
+
+* ``dspace_dip_collection``: the UUID of the DSpace collection into which the
+  DIP will be deposited. E.g. ``a12d749c-7727-4121-b6be-478cacde658f``
+* ``dspace_aip_collection``: the UUID of the DSpace collection into which the
+  AIP will be deposited. E.g. ``80c3519d-7a07-4830-beae-a868c149ecbe``
+* ``archivesspace_dip_collection``: the identifier of the archival object for
+  which a child digital object will be created which will link to the DSpace DIP
+  record. E.g. ``135569``
+
+.. note::
+
+   Note that the DSpace via REST API space only supports DSpace 6.x and not
+   other versions of DSpace.
 
 Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank for
+  unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``;
+  for production systems, this address will be slightly different, such as:
+  ``https://demo.dspace.org/rest/``.
+* **User**: a username for the DSpace instance with sufficient permissions to
+  permit authentication.
+* **Password**: the password for the username above.
+* **Default DSpace DIP collection id**: the UUID of the collection into which
+  the DIP will be deposited barring it being designated in a transfer metadata
+  file.
+* **Default DSpace AIP collection id**: the UUID of the collection into which
+  the AIP will be deposited barring it being designated in a transfer metadata
+  file.
+
+.. note::
+
+   The following seven fields are optional and can safely be ignored should you
+   only require a connection to DSpace.
+
+   Unlike the DSpace via SWORD2 space, which uses the :ref:`Dashboard
+   administration tab <archivematica:dashboard-admin>` to configure a single
+   ArchivesSpace, the DSpace via REST space gives you the option to configure
+   different ArchiveSpaces instances per space.
+
+* **ArchivesSpace URL**: URL to the ArchiveSpace server.
+  E.g.: ``http://sandbox.archivesspace.org/``.
+* **ArchivesSpace user**: ArchivesSpace username to authenticate as
+* **ArchivesSpace password**: ArchivesSpace password to authenticate with
+* **Default ArchivesSpace repository**: Identifier of the default ArchivesSpace
+  repository
+* **Default ArchivesSpace archival object**: Identifier of the default
+  ArchivesSpace archival object barring it being designated in a transfer
+  metadata file
+* **Send AIP to Tivoli Storage Manager**: this is a feature specific to the
+  requirements of Edinburgh University which sponsored the development of this
+  space. Essentially it executes a bash command using a binary called ``dsmc``.
+* **Verify SSL certificates**: Requests verifies SSL certificates for HTTPS
+  requests, just like a web browser. By default, SSL verification is enabled,
+  and Requests will throw a SSLError if it’s unable to verify the certificate:
+
+.. _dspace:
+
+DSpace via SWORD2 API
+^^^^^^^^^^^^^^^^^^^^^
+
+DSpace via SWORD2 locations are currently supported only for AIP Storage locations.
+Because DSpace is typically used as a public-facing system, the behaviour is different
+than when using other access protocols for AIP Storage: upon deposit in DSpace,
+the AIP will be split into two parts:
+
+* a compressed objects file (bitstream), which contains all original and
+  normalized objects
+* as well as a metadata file (bitstream), which contains all of the bag
+  artifacts, metadata and logs
+
+The metadata bitstream can optionally be restricted; 
+:ref:`see below <restrictedmetadata>`. Presently, the Storage Service and Dashboard
+are not capable of downloading/reconstituting the AIP - this must be done manually
+from the DSpace interface.
+
+If using DSpace as the AIP location in conjunction with the ArchivesSpace
+workflow in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP
+hook will send the DSpace handle to the ArchivesSpace digital object record upon
+AIP storage. The ArchivesSpace configuration is set up in the
+:ref:`Dashboard administration tab <archivematica:dashboard-admin>`.
+
+.. note::
+
+   Note that the DSpace via SWORD2 API space makes use of the DSpace REST API to
+   change the permissions of the metadata file. This means that you need to make
+   sure that the REST API is configured, see the `DSpace 5 REST API
+   documentation`_.
+
+   The DSpace via SWORD2 API space functionality only supports DSpace 5 and not
+   other versions. See changes in authentication in the DSpace REST API between
+   versions 5 and 6 in the `DSpace 6 REST API documentation`_.
+
+Fields:
+
+.. _restrictedmetadata:
 
 * **Size**: the maximum size allowed for this space. Set to 0 or leave blank
   for unlimited. This field is optional.
@@ -357,7 +426,9 @@ Fields:
   the handle to the community or collection being used for deposit.
 * **User**: a username for the DSpace instance with sufficient permissions to
   permit authentication.
-* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``; for production systems, this address will be slightly different, such as: ``https://demo.dspace.org/rest/``.  
+* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``;
+  for production systems, this address will be slightly different, such as:
+  ``https://demo.dspace.org/rest/``.
 * **Password**: the password for the username above.
 * **Restricted metadata policy**: Use to restrict access to the metadata
   bitstream. Must be specified as a list of objects in JSON, e.g.
@@ -373,7 +444,8 @@ Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
 `Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA/Archidora>`_,
 which allows ingest of material from Islandora to Archivematica. This workflow
-is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora 7.x-1.6.
+is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora
+7.x-1.6.
 
 Fields:
 
@@ -397,7 +469,8 @@ Fields:
 
    * A post-store callback can be configured, to enable Islandora to
      list objects that can be deleted once they have been
-     stored by Archivematica. See the :ref:`Administration <administration>` section.
+     stored by Archivematica. See the :ref:`Administration <administration>`
+     section.
 
 .. _gpg:
 
@@ -518,7 +591,7 @@ work properly, passwordless SSH must be set up between the Storage Service
 host and the Archivematica host.
 
 For example, the Storage Service is hosted on storage_service_host and
-Archivematica is running on archivematica1 . The transfer sources for
+Archivematica is running on archivematica1. The transfer sources for
 Archivematica are stored locally on archivematica1, but the Storage Service
 needs access to them. The Space for that transfer source would be a Pipeline
 Local Filesystem.
@@ -644,7 +717,7 @@ for the Storage Service to run, and must be locally available to the Storage
 Service. It should not be associated with any pipelines.
 
 AIP Recovery is where the :ref:`AIP recovery <recovery>` feature looks for an
-AIP to recover. No more than one AIP recovery locatio should be associated with
+AIP to recover. No more than one AIP recovery location should be associated with
 a given pipeline. The default value is
 ``/var/archivematica/storage_service/recover`` in a Local Filesystem. This is
 only required if AIP recovery is used.
@@ -668,6 +741,13 @@ Fields:
   location.
 * **Relative Path**: the path to this location, relative to the space that
   contains it.
+
+..  note::
+
+    When setting up a :ref:`DSpace via SWORD2 location <dspace>` the relative
+    path needs to be the URL of the destination collection for the transfers.
+    E.g.: ``https://demo.dspace.org/10673/60/``.
+
 * **Description**: a description of the location to be displayed to the user.
 * **Quota**: the maximum size allowed for this space. Set to 0 or leave blank
   for unlimited. This field is optional.
@@ -677,10 +757,10 @@ Fields:
   will be the default location for its purpose unless the user specifically
   tells Archivematica otherwise during processing.
 
-How to Configure a Location
+How to configure a Location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For Spaces of the type "Local Filesystem," Locations are basically directories
+For Spaces of the type "Local Filesystem", Locations are basically directories
 (or more accurately, paths to directories). You can create Locations for
 Transfer Source, Currently Processing, or AIP and DIP Storage.
 
@@ -698,7 +778,7 @@ To create and configure a new Location:
 
   ..  note::
 
-      If the path you are defining in your Location  doesn't exist, you must
+      If the path you are defining in your Location doesn't exist, you must
       create it manually and make sure it is writable by the Archivematica
       user.
 
@@ -720,17 +800,17 @@ Packages
    :alt: Storage Service packages screen.
 
 A Package is a file that Archivematica has stored in the Storage Service,
-commonly an Archival Information Package (AIP). Dissemination Information Packages
-(DIPs) which have been stored and Transfers which have been sent to backlog will
-also be reflected in the Packages tab.
+commonly an Archival Information Package (AIP). Dissemination Information
+Packages (DIPs) which have been stored and Transfers which have been sent to
+backlog will also be reflected in the Packages tab.
 
-AIPs cannot be created or deleted through the Storage Service interface, though a
-deletion request can be submitted through Archivematica that must be approved or
-rejected by the Storage Service administrator. To learn more about deleting an AIP, see
-:ref:`Deleting an AIP <archivematica:delete-aip>`. Stored DIPs cannot be deleted
-through either the Storage Service or Archivematica interfaces. Deletion requests
-for transfers are automatically generated when all of the objects from the transfer
-have successfully been stored in AIPs.
+AIPs cannot be created or deleted through the Storage Service interface, though
+a deletion request can be submitted through Archivematica that must be approved
+or rejected by the Storage Service administrator. To learn more about deleting
+an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. Stored DIPs
+cannot be deleted through either the Storage Service or Archivematica
+interfaces. Deletion requests for transfers are automatically generated when all
+of the objects from the transfer have successfully been stored in AIPs.
 
 For more information about Fixity Status, see :ref:`Fixity <fixity>`.
 
@@ -783,7 +863,8 @@ default locations by entering the relevant information.
 Version
 ^^^^^^^
 
-The version page will display the current version and specific git commit of your installation of the Storage Service.
+The version page will display the current version and specific git commit of
+your installation of the Storage Service.
 
 Service Callbacks
 ^^^^^^^^^^^^^^^^^
@@ -794,8 +875,12 @@ to be notified when internal actions have taken place.
 
 A callback can be configured for the Islandora (Fedora) integration, as follows:
 
-* URI: http://{islandora-base-url}/islandora/object/<source_id>/archidora/{Islandora API key}/delete
-  (the Islandora API key is generated on the Archidora admin screen in Islandora)
+* URI::
+
+     http://{islandora-base-url}/islandora/object/<source_id>/archidora/{Islandora API key}/delete
+
+  The Islandora API key is generated on the Archidora admin screen in Islandora.
+
 * Event: post-store
 * Method: post
 * Expected status: 200
@@ -819,12 +904,16 @@ To import a key:
 
 2. Paste in your key in ASCII-armored format.
 
-Set Language
-^^^^^^^^^^^^^^^
+Set language
+^^^^^^^^^^^^
 
-Configure language settings for the Storage Service in this area of the Administration tab. Strings are available for translation on the localization platform (Transifex).
+Configure language settings for the Storage Service in this area of the
+Administration tab. Strings are available for translation on the localization
+platform (Transifex).
 
 :ref:`Back to the top <administrators>`
 
 .. _`LOCKSS`: http://www.lockss.org/
 .. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
+.. _`DSpace 5 REST API documentation`: https://wiki.duraspace.org/display/DSDOC5x/REST+API
+.. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
