@@ -291,61 +291,6 @@ Fields:
 * **Password**: the password of the above user.
 * **Duraspace**: the name of the Space within DuraCloud
 
-.. _dspace:
-
-DSpace via SWORD2 API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-DSpace via SWORD2 locations are currently supported only for AIP Storage locations.
-Because DSpace is typically used as a public-facing system, the behaviour is different
-than when using other access protocols for AIP Storage: upon deposit in DSpace,
-the AIP will be split into two parts:
-
-* a compressed objects file (bitstream), which contains all original and
-  normalized objects
-* as well as a metadata file (bitstream), which contains all of the bag
-  artifacts, metadata and logs
-
-The metadata bitstream can optionally be restricted; see below. Presently, the
-Storage Service and Dashboard are not capable of downloading/reconstituting the
-AIP - this must be done manually from the DSpace interface.
-
-If using DSpace as the AIP location in conjunction with the ArchivesSpace
-workflow in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP
-hook will send the DSpace handle to the ArchivesSpace digital object record upon
-AIP storage. The ArchivesSpace configuration is set up in the
-:ref:`Dashboard administration tab <archivematica:dashboard-admin>`.
-
-.. note::
-
-   Note that the DSpace via SWORD2 API space makes use of the DSpace REST API to
-   change the permissions of the metadata file. This means that you need to make
-   sure that the REST API is configured, see the `DSpace 5 REST API
-   documentation`_. The DSpace REST functionality only supports DSpace 5 and not
-   other versions. See changes in authentication in the DSpace REST API between
-   versions 5 and 6 in the `DSpace 6 REST API documentation`_.
-
-Fields:
-
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited. This field is optional.
-* **Path**: the absolute path to the Space on the local filesystem.
-* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
-  compatible and preferably will be located on the same filesystem as the path.
-* **Service Document IRI**: URL of the service document. E.g.
-  ``http://demo.dspace.org/swordv2/servicedocument``, where servicedocument is
-  the handle to the community or collection being used for deposit.
-* **User**: a username for the DSpace instance with sufficient permissions to
-  permit authentication.
-* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``;
-  for production systems, this address will be slightly different, such as:
-  ``https://demo.dspace.org/rest/``.
-* **Password**: the password for the username above.
-* **Restricted metadata policy**: Use to restrict access to the metadata
-  bitstream. Must be specified as a list of objects in JSON, e.g.
-  ``[{"action":"READ","groupId":"5","rpType":"TYPE_CUSTOM"}]``. This will
-  override existing policies.
-
 .. _dspacerest:
 
 DSpace via REST API
@@ -378,6 +323,11 @@ custom properties which can be defined:
 * ``archivesspace_dip_collection``: the identifier of the archival object for
   which a child digital object will be created which will link to the DSpace DIP
   record. E.g. ``135569``
+
+.. note::
+
+   Note that the DSpace via REST API space only supports DSpace 6.x and not
+   other versions of DSpace.
 
 Fields:
 
@@ -424,6 +374,66 @@ Fields:
 * **Verify SSL certificates**: Requests verifies SSL certificates for HTTPS
   requests, just like a web browser. By default, SSL verification is enabled,
   and Requests will throw a SSLError if it’s unable to verify the certificate:
+
+.. _dspace:
+
+DSpace via SWORD2 API
+^^^^^^^^^^^^^^^^^^^^^
+
+DSpace via SWORD2 locations are currently supported only for AIP Storage locations.
+Because DSpace is typically used as a public-facing system, the behaviour is different
+than when using other access protocols for AIP Storage: upon deposit in DSpace,
+the AIP will be split into two parts:
+
+* a compressed objects file (bitstream), which contains all original and
+  normalized objects
+* as well as a metadata file (bitstream), which contains all of the bag
+  artifacts, metadata and logs
+
+The metadata bitstream can optionally be restricted; 
+:ref:`see below <restrictedmetadata>`. Presently, the Storage Service and Dashboard
+are not capable of downloading/reconstituting the AIP - this must be done manually
+from the DSpace interface.
+
+If using DSpace as the AIP location in conjunction with the ArchivesSpace
+workflow in the :ref:`Appraisal tab <archivematica:appraisal>`, a post Store AIP
+hook will send the DSpace handle to the ArchivesSpace digital object record upon
+AIP storage. The ArchivesSpace configuration is set up in the
+:ref:`Dashboard administration tab <archivematica:dashboard-admin>`.
+
+.. note::
+
+   Note that the DSpace via SWORD2 API space makes use of the DSpace REST API to
+   change the permissions of the metadata file. This means that you need to make
+   sure that the REST API is configured, see the `DSpace 5 REST API
+   documentation`_.
+
+   The DSpace via SWORD2 API space functionality only supports DSpace 5 and not
+   other versions. See changes in authentication in the DSpace REST API between
+   versions 5 and 6 in the `DSpace 6 REST API documentation`_.
+
+Fields:
+
+.. _restrictedmetadata:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+* **Service Document IRI**: URL of the service document. E.g.
+  ``http://demo.dspace.org/swordv2/servicedocument``, where servicedocument is
+  the handle to the community or collection being used for deposit.
+* **User**: a username for the DSpace instance with sufficient permissions to
+  permit authentication.
+* **REST URL**: URL to the "REST" webapp. E.g. ``http://localhost:8080/rest/``;
+  for production systems, this address will be slightly different, such as:
+  ``https://demo.dspace.org/rest/``.
+* **Password**: the password for the username above.
+* **Restricted metadata policy**: Use to restrict access to the metadata
+  bitstream. Must be specified as a list of objects in JSON, e.g.
+  ``[{"action":"READ","groupId":"5","rpType":"TYPE_CUSTOM"}]``. This will
+  override existing policies.
 
 .. _fedora:
 
