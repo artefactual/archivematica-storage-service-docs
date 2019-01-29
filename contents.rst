@@ -8,7 +8,6 @@
 
    index
    administrators
-   users
    recovery
    install
    fixity
