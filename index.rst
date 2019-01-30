@@ -12,8 +12,6 @@ Archivematica Storage Service documentation
 This documentation describes the Storage Service, used by Archivematica to manage
 archival storage and transfer locations and packages.
 
-*On this page*:
-
 * :ref:`Administering the Storage Service <administrators>`
 * :ref:`AIP recovery <recovery>`
 * :ref:`Installation <install>`
