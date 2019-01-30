@@ -25,8 +25,9 @@ Service displays these reports in the Packages tab; see :ref:`reporting
 Installation
 ------------
 
-#. Checkout or link the code to `/usr/lib/archivematica/fixity` by navigating to
-   `/usr/lib/archivematica/` and cloning the code.
+#. Checkout or link the code to ``/usr/lib/archivematica/fixity`` by navigating
+   to ``/usr/lib/archivematica/``` and cloning the code. Once this is complete,
+   the directory ``/usr/lib/archivematica/fixity`` should exist.
 
    .. code-block:: bash
 
@@ -38,39 +39,28 @@ Installation
       If you get a permissions error, try running the command as sudo:
       ``sudo git clone https://github.com/artefactual/fixity.git``
 
-   Once this is complete, the directory `/usr/lib/archivematica/fixity` should
-   exist. Navigate to the home directory:
+#. Navigate to the home directory and switch to root. Then create a virtualenv
+   in ``/usr/share/python/fixity`` and install Fixity and dependencies in it.
 
    .. code-block:: bash
 
       user@root:/usr/lib/archivematica/$ cd ~
-
-2. Next, switch to root:
-
-   .. code-block:: bash
-
       user@root:~$ sudo -i
-
-  Then run the following commands to create a virtualenv in
-  `/usr/share/python/fixity` and install Fixity and dependencies in it.
-
-  .. code-block:: bash
-
-     root@host:~# virtualenv /usr/share/python/fixity
-     root@host:~# source /usr/share/python/fixity/bin/activate
-     (fixity)root@host:~# cd /usr/lib/archivematica/fixity
-     (fixity)root@host:/usr/lib/archivematica/fixity# pip install -r requirements.txt
-     (fixity)root@host:/usr/lib/archivematica/fixity# python setup.py install
+      root@host:~# virtualenv /usr/share/python/fixity
+      root@host:~# source /usr/share/python/fixity/bin/activate
+      (fixity)root@host:~# cd /usr/lib/archivematica/fixity
+      (fixity)root@host:/usr/lib/archivematica/fixity# pip install -r requirements.txt
+      (fixity)root@host:/usr/lib/archivematica/fixity# python setup.py install
 
 
-3. Create a symlink from the executable to /usr/local/bin.  You must still be
+#. Create a symlink from the executable to /usr/local/bin.  You must still be
    logged in as root.
 
    .. code-block:: bash
 
       (fixity)root@host:/usr/lib/archivematica/fixity# ln -s /usr/share/python/fixity/bin/fixity /usr/local/bin/fixity
 
-4. Export the required environment variables. For ease of use later, creating
+#. Export the required environment variables. For ease of use later, creating
    `/etc/profile.d/fixity.sh` is recommended. To create the file, run the
    following commands:
 
@@ -79,7 +69,7 @@ Installation
       (fixity)root@host:/usr/lib/archivematica/fixity# touch /etc/profile.d/fixity.sh
       (fixity)root@host:/usr/lib/archivematica/fixity# nano /etc/profile.d/fixity.sh
 
-   You are now editing the environment variables file. You should use the URL of
+#. You are now editing the environment variables file. You should use the URL of
    your Storage Service, and the username and API key of one of your Storage
    Service users. Replace the URL, user and key with your data.
 
@@ -90,29 +80,31 @@ Installation
       export STORAGE_SERVICE_USER=myuser
       export STORAGE_SERVICE_KEY=myapikey
 
-   Optionally, if you are using Fixity with a reporting service, you can also
-   add the following:
+   .. note::
 
-   .. code-block:: bash
+      Optionally, if you are using Fixity with a reporting service, you can also
+      add the following:
 
-      export REPORT_URL=http://myurl.com
-      export REPORT_USERNAME=myuser
-      export REPORT_PASSWORD=mypassword
+      .. code-block:: bash
 
-   Finally, load the variables from the file.
+         export REPORT_URL=http://myurl.com
+         export REPORT_USERNAME=myuser
+         export REPORT_PASSWORD=mypassword
+
+#. Finally, load the variables from the file.
 
    .. code-block:: bash
 
       (fixity)root@host:/usr/lib/archivematica/fixity# source /etc/profile.d/fixity.sh
 
-5. Run Fixity with sudo or as root the first time. Subsequent runs can be with
+#. Run Fixity with sudo or as root the first time. Subsequent runs can be with
    any user.
 
    .. code-block:: bash
 
       (fixity)root@host:/usr/lib/archivematica/fixity# fixity scanall
 
-6. Exit the virtualenv and root user:
+#. Exit the virtualenv and root user.
 
    .. code-block:: bash
 
@@ -122,8 +114,8 @@ Installation
       user@host:~$
 
 
-7. After the initial install, to run Fixity just load the variables you defined
-   above and set Fixity to scan all AIPs:
+#. The first time you run Fixity after the initial install, load the variables
+   you defined above and set Fixity to scan all AIPs.
 
    .. code-block:: bash
 
