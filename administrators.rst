@@ -843,14 +843,16 @@ Packages
 A package is a file that Archivematica has stored in the Storage Service,
 commonly an Archival Information Package (AIP). Dissemination Information
 Packages (DIPs) which have been stored and transfers which have been sent to
-backlog will also be reflected in the Packages tab.
+backlog will also be listed in the Packages tab.
 
 AIPs cannot be created or deleted through the Storage Service interface, though
 a deletion request can be submitted through Archivematica that must be approved
 or rejected by the Storage Service administrator. To learn more about deleting
-an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. Stored DIPs
-cannot be deleted through either the Storage Service or Archivematica
-interfaces. Deletion requests for transfers are automatically generated when all
+an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. 
+
+Stored DIPs can be deleted through the Storage Service interface by choosing the "Delete" option in the "Actions" column.  
+
+Deletion requests for transfers are automatically generated when all
 of the objects from the transfer have successfully been stored in AIPs.
 
 For more information about Fixity Status, see :ref:`Fixity <fixity>`.
