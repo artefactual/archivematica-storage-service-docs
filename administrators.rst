@@ -22,7 +22,7 @@ installation, both locally and remote.
 
   * :ref:`Location purposes <location-purposes>`
 
-* :ref:`Packages <packages>`
+* :ref:`Packages <packages-tab>`
 * :ref:`Administration <administration>`
 
 .. _organization:
@@ -830,7 +830,7 @@ To create and configure a new Location:
    enabled under the Dashboard "Administration" tab) or as a destination for AIP
    storage.
 
-.. _packages:
+.. _packages-tab:
 
 Packages
 --------
@@ -848,9 +848,9 @@ backlog will also be listed in the Packages tab.
 AIPs cannot be created or deleted through the Storage Service interface, though
 a deletion request can be submitted through Archivematica that must be approved
 or rejected by the Storage Service administrator. To learn more about deleting
-an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. 
+an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`.
 
-Stored DIPs can be deleted through the Storage Service interface by choosing the "Delete" option in the "Actions" column.  
+Stored DIPs can be deleted through the Storage Service interface by choosing the "Delete" option in the "Actions" column.
 
 Deletion requests for transfers are automatically generated when all
 of the objects from the transfer have successfully been stored in AIPs.
