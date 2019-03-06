@@ -1,18 +1,29 @@
 .. _administrators:
 
-==========================================
-Storage Service Administrator Instructions
-==========================================
+=================================
+Administering the Storage Service
+=================================
 
 The Archivematica Storage Service allows the configuration of storage spaces
 associated with multiple Archivematica pipelines. It allows a storage
 administrator to configure what storage is available to each Archivematica
 installation, both locally and remote.
 
-.. image:: images/SS1-0.*
-   :align: center
-   :width: 80%
-   :alt: Home page of the Storage Service
+*On this page*
+
+* :ref:`Storage Service glossary and organization <organization>`
+* :ref:`Archivematica configuration <archivematica-configuration>`
+* :ref:`Pipelines <pipelines>`
+* :ref:`Spaces <spaces>`
+
+  * :ref:`Access protocols <access-protocols>`
+
+* :ref:`Locations <locations>`
+
+  * :ref:`Location purposes <location-purposes>`
+
+* :ref:`Packages <packages>`
+* :ref:`Administration <administration>`
 
 .. _organization:
 
@@ -61,46 +72,43 @@ Service will be presented.
 
 .. image:: images/Install3.*
    :align: center
-   :width: 60%
+   :width: 40%
    :alt: Configuring the Storage Service during Archivematica installation.
 
-If you have installed the Storage Service at a different URL, you may change
+If you have installed the Storage Service at a different URL, you should change
 that here.
 
-The top button 'Use default transfer source & AIP storage locations' will
-attempt to automatically configure default Locations for Archivematica,
-register a new Pipeline, and generate an error if the Storage Service is not
-available. Use this option if you want the Storage Service to automatically
-set up the configured default values.
+The **Use default transfer source & AIP storage locations** option will attempt to
+automatically configure default Locations for Archivematica, register a new
+Pipeline, and generate an error if the Storage Service is not available. Use
+this option if you want the Storage Service to automatically set up the
+configured default values.
 
-The bottom button 'Register this pipeline & set up transfer source and AIP
-storage locations' will only attempt to register a new Pipeline with the
-Storage Service, and will not error if not Storage Service can be found. It
-will also open a link to the provided Storage Service URL, so that Locations
-can be configured manually. Use this option if the default values not desired,
-or the Storage Service is not running yet. Locations will have to be
-configured manually before any Transfers can be processed, or AIPs stored.
+The **Register this pipeline & set up transfer source and AIP storage
+locations** option will only attempt to register a new Pipeline with the Storage
+Service, and will not error if not Storage Service can be found. It will also
+open a link to the provided Storage Service URL, so that Locations can be
+configured manually. Use this option if the default values not desired, or the
+Storage Service is not running yet. Locations will have to be configured
+manually before any Transfers can be processed, or AIPs stored.
 
-If the Storage Service is running, the URL to it should be entered, and
-Archivematica will attempt to register its dashboard UUID as a new Pipeline.
-Otherwise, the dashboard UUID is displayed, and a Pipeline for this
+If the Storage Service is running, the URL to it should be provided and
+Archivematica will attempt to register the dashboard UUID as a new Pipeline.
+Otherwise, the dashboard UUID is displayed and a Pipeline for the
 Archivematica instance can be manually created and configured. The dashboard
 UUID is also available in Archivematica under Administration -> General.
 
 Change the port in the web server configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Storage Services uses nginx by default, so you can edit
-``/etc/nginx/sites-enabled/storage`` and change the line that says
-
-``listen 8000;``
-
-change ``8000`` to whatever port you prefer to use.
+The Storage Services uses nginx by default. To change the port, edit the file
+``/etc/nginx/sites-enabled/storage`` and change the line that says ``listen
+8000;``, replacing 8000 with whatever port you use.
 
 Keep in mind that in a default installation of Archivematica, the dashboard is
-running in Apache on port 80. So it is not possible to make nginx run on port
-80 on the same machine. If you install the Storage Service on its own server,
-you can set it to use port 80.
+running in Apache on port 80. It is not possible to make nginx run on port 80 on
+the same machine. If you install the Storage Service on its own server, you can
+set it to use port 80.
 
 Make sure to adjust the dashboard UUID in the Archivematica dashboard under
 Administration -> General.
@@ -110,61 +118,67 @@ Administration -> General.
 Pipelines
 ---------
 
+All pipelines need to be registered with the Storage Service using the
+pipeline's unique universal identifier (UUID). The UUID can be found in the
+Archivematica dashboard under Administration -> General Configuration. When you
+first install Archivematica, it will attempt to register the pipeline's UUID
+automatically with the Storage Service with the description ``Archivematica on
+<hostname>``. You can also add new pipelines by navigating to the Pipelines tab
+in the Storage Service and clicking on **Create new pipeline**.
+
 .. image:: images/Pipelines.*
    :align: center
    :width: 80%
    :alt: Storage Service pipelines screen.
 
-A pipeline is an Archivematica instance registered with the Storage Service,
-including the server and all associated clients. Each pipeline is uniquely
-identified by a UUID, which can be found in the dashboard under
-**Administration** -> **General Configuration**. When installing Archivematica,
-it will attempt to register the UUID with the Storage Service, with a
-description of "Archivematica on <hostname>".
-
 Fields:
 
-* **UUID**: the unique identifier of the Archivematica pipeline.
-* **Description**: a description of the pipeline displayed to the user. e.g.
+* **UUID**: The unique identifier of the Archivematica pipeline.
+* **Description**: A description of the pipeline displayed to the user. e.g.
   ``Development site``.
 * **Enabled**: If checked, this pipeline can access locations associate with it.
   If unchecked, all locations will be disabled, even if associated directly with
   this pipeline.
-* **Default Location**: If checked, the default locations configured in
-  Administration -> Configuration will be created or associated with the new
-  pipeline.
+* **Default Location**: If checked, the default locations that have been
+  selected in Administration -> Configuration will be created for or associated
+  with the new pipeline.
 
 .. _spaces:
 
 Spaces
 ------
 
+Spaces contain all of the information needed to connect Archivematica to a
+storage location. The space is where protocol-specific information, like an NFS
+export path and hostname, or the username of a system accessible only via SSH,
+is stored.
+
 .. image:: images/Spaces.*
    :align: center
    :width: 80%
    :alt: Storage Service spaces screen.
 
-A storage Space contains all the information necessary to connect to the
-physical storage. It is where protocol-specific information, like an NFS
-export path and hostname, or the username of a system accessible only via SSH,
-is stored. All locations must be contained in a space.
+Each space has specific configuration fields depending on the access protocol
+that is selected. See :ref:`Access protocols <access-protocols>` below for
+more information.
 
-A space is usually the immediate parent of the Location folders. For example,
-if you had transfer source locations at ``/home/artefactual/archivematica-
-sampledata-2013-10-10-09-17-20`` and ``/home/artefactual/maildir_transfers``, the
-Space's path would be ``/home/artefactual/``
+.. note::
 
-Currently supported protocols are local filesystem, NFS, pipeline
-local filesystem, LOCKSS, DuraCloud, Arkivum, Fedora and Swift.
+   A space is usually the immediate parent of the Location folders. For example,
+   if you want to define two transfer source locations located at
+   ``/home/artefactual/archivematica-sampledata`` and
+   ``/home/artefactual/maildir_transfers``, the space's path would be
+   ``/home/artefactual/``.
 
-Some protocols require a staging path. This is a temporary location on the
-Storage Service server that is used when copying material from that service
-service (DuraCloud, Swift, etc) to another space within the Storage Service.
+.. _access-protocols:
+
+Access protocols
+^^^^^^^^^^^^^^^^
 
 .. _arkivum:
 
 Arkivum
-^^^^^^^
++++++++
 
 Archivematica can use Arkivum's A-Stor as an access protocol in version 0.7 and
 higher. A-Stor can expose a CIFS share to the Storage Service so that the
@@ -204,10 +218,10 @@ Fields:
 .. _dataverse:
 
 Dataverse
-^^^^^^^^^
++++++++++
 
-Dataverse Integration is supported with Archivematica v1.8 (and higher) and Storage
-Service v0.13 (and higher).
+Dataverse Integration is supported with Archivematica v1.8 (and higher) and
+Storage Service v0.13 (and higher).
 
 Fields:
 
@@ -267,7 +281,7 @@ search criteria. For further details of the API parameters, see the
 .. _duracloud:
 
 DuraCloud
-^^^^^^^^^
++++++++++
 
 .. seealso::
 
@@ -294,7 +308,7 @@ Fields:
 .. _dspacerest:
 
 DSpace via REST API
-^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++
 
 DSpace via REST API locations are supported for both AIP and DIP Storage
 locations. Because DSpace is typically used as a public-facing system, the
@@ -378,7 +392,7 @@ Fields:
 .. _dspace:
 
 DSpace via SWORD2 API
-^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++
 
 DSpace via SWORD2 locations are currently supported only for AIP Storage locations.
 Because DSpace is typically used as a public-facing system, the behaviour is different
@@ -390,7 +404,7 @@ the AIP will be split into two parts:
 * as well as a metadata file (bitstream), which contains all of the bag
   artifacts, metadata and logs
 
-The metadata bitstream can optionally be restricted; 
+The metadata bitstream can optionally be restricted;
 :ref:`see below <restrictedmetadata>`. Presently, the Storage Service and Dashboard
 are not capable of downloading/reconstituting the AIP - this must be done manually
 from the DSpace interface.
@@ -438,7 +452,7 @@ Fields:
 .. _fedora:
 
 Fedora via SWORD2
-^^^^^^^^^^^^^^^^^
++++++++++++++++++
 
 Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
@@ -475,7 +489,7 @@ Fields:
 .. _gpg:
 
 GPG encryption on local file system
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++++++++++
 
 Creating a GPG encryption space will allow users to create encrypted AIPs and
 transfers. Only AIP storage, Transfer backlog and Replicator locations can be
@@ -508,7 +522,7 @@ Fields:
 .. _local-filesystem:
 
 Local Filesystem
-^^^^^^^^^^^^^^^^
+++++++++++++++++
 
 Local Filesystem spaces handle storage that is available locally on the
 machine running the Storage Service. Typically this is the hard drive, SSD or
@@ -528,7 +542,7 @@ Fields:
 .. _admin-lockss:
 
 LOCKSS
-^^^^^^
+++++++
 
 Archivematica can store AIPs in a `LOCKSS`_ network via LOCKSS-O-Matic, which
 uses SWORD to communicate between the Storage Service and a Private LOCKSS
@@ -559,7 +573,7 @@ Fields:
 .. _nfs:
 
 NFS
-^^^
++++
 
 NFS spaces are for NFS exports mounted on the Storage Service server and the
 Archivematica pipeline.
@@ -583,7 +597,7 @@ Fields:
 .. _pipeline:
 
 Pipeline Local Filesystem
-^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++
 
 Pipeline Local Filesystems refer to the storage that is local to the
 Archivematica pipeline, but remote to the Storage Service. For this Space to
@@ -621,7 +635,7 @@ Fields:
 .. _swift:
 
 Swift
-^^^^^
++++++
 
 OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
 higher. At this time, locations within Swift have been tested as AIP Storage,
@@ -648,7 +662,7 @@ Fields:
 .. _amazon-s3:
 
 S3 (Amazon)
-^^^^^^^^^^^
++++++++++++
 
 Amazon S3 is available as an access protocol as of Storage Service 0.12. At this
 time, locations within S3 have only been tested for AIP Storage.
@@ -671,83 +685,31 @@ Fields:
 Locations
 ---------
 
+Locations are contained within spaces and have a defined purpose in the
+Archivematica system. Each location is associated with at least one pipeline. A
+pipeline can have multiple instances of any location, and a location can be
+associated with any number of pipelines, with the exception of Backlog and
+Currently Processing locations, for which there must be exactly one per
+pipeline.
+
 .. image:: images/Locations.*
    :align: center
-   :width: 80%
+   :width: 60%
    :alt: Storage Service locations screen.
 
-A storage Location is contained within a Space, and knows its purpose in the
-Archivematica system. Each Location is associated with at least one pipeline;
-with the exception of Backlog and Currently Processing locations, for which
-there must be exactly one per pipeline, a pipeline can have multiple instances
-of any location, and a location can be associated with any number of pipelines.
-Currently, a Location can have one of eight purposes: Transfer Source, Transfer
-Backlog, AIP Storage, DIP Storage, Currently Processing, Storage Service
-Internal Processing, AIP Recovery or FEDORA Deposit.
-
-Transfer source locations display in Archivematica's Transfer tab, and any
-folder in a transfer source can be selected to become a Transfer. The default
-value is ``/home`` in a Local Filesystem. This is required to start transfers.
-
-Transfer backlog stores transfers until such a time that the user continues
-processing them. The default value is
-``/var/archivematica/sharedDirectory/www/AIPsStore/transferBacklog`` in a Local
-Filesystem. This is required to store and retrieve transfers in backlog.
-
-AIP storage locations are where the completed AIPs are put for long-term
-storage. The default value is '/var/archivematica/sharedDirectory/www/AIPsStore'
-in a Local Filesystem. This is required to store and retrieve AIPs.
-
-Likewise, DIP storage is used for storing DIPs until such a time that they can
-be uploaded to an access system. The default value is
-``/var/archivematica/sharedDirectory/www/DIPsStore`` in a Local Filesystem.
-This is required to store and retrieve DIPs. This is not required to upload DIPs
-to access systems.
-
-During processing, Archivematica uses the currently processing location
-associated with that pipeline. Exactly one currently processing location should
-be associated with a given pipeline. The default value is
-``/var/archivematica/sharedDirectory`` in a Local Filesystem. This is required
-for Archivematica to run.
-
-Likewise, there should only be exactly one Storage Service Internal Processing
-location for each Storage Service installation. The default value is
-``/var/archivematica/storage_service`` in a Local Filesystem. This is required
-for the Storage Service to run, and must be locally available to the Storage
-Service. It should not be associated with any pipelines.
-
-AIP Recovery is where the :ref:`AIP recovery <recovery>` feature looks for an
-AIP to recover. No more than one AIP recovery location should be associated with
-a given pipeline. The default value is
-``/var/archivematica/storage_service/recover`` in a Local Filesystem. This is
-only required if AIP recovery is used.
-
-FEDORA Deposit is used with the Archidora plugin to ingest material from
-Islandora. This is only available to the FEDORA Space, and is only required for
-that space.
-
-Replicator locations can be configured to replicate the AIPs in one or more AIP
-storage locations. If you wish for the replicated AIPs to be encrypted, create
-the location in an :ref:`encrypted space <gpg>`.
-
-If you want the same directory on disk to have multiple purposes, multiple
-Locations with different purposes can be created.
+A location can have one of nine purposes: AIP Recovery, AIP
+Storage, Currently Processing, DIP Storage, FEDORA Deposit, Storage Service
+Internal Processing, Transfer Backlog, Transfer Source, or Replicator.
 
 Fields:
 
 * **Purpose**: the function that this location will fulfill, e.g.
-  ``AIP storage``.
+  ``AIP storage``. See :ref:`location purposes <location-purposes>` for more
+  information.
 * **Pipelines**: the Archivematica instance(s) that will be able to use this
   location.
 * **Relative Path**: the path to this location, relative to the space that
   contains it.
-
-..  note::
-
-    When setting up a :ref:`DSpace via SWORD2 location <dspace>` the relative
-    path needs to be the URL of the destination collection for the transfers.
-    E.g.: ``https://demo.dspace.org/10673/60/``.
-
 * **Description**: a description of the location to be displayed to the user.
 * **Quota**: the maximum size allowed for this space. Set to 0 or leave blank
   for unlimited. This field is optional.
@@ -757,34 +719,113 @@ Fields:
   will be the default location for its purpose unless the user specifically
   tells Archivematica otherwise during processing.
 
-How to configure a Location
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
 
-For Spaces of the type "Local Filesystem", Locations are basically directories
-(or more accurately, paths to directories). You can create Locations for
-Transfer Source, Currently Processing, or AIP and DIP Storage.
+   When setting up a :ref:`DSpace via SWORD2 location <dspace>` the relative
+   path needs to be the URL of the destination collection for the transfers.
+   E.g.: ``https://demo.dspace.org/10673/60/``.
+
+.. _location-purposes:
+
+Location purposes
+^^^^^^^^^^^^^^^^^
+
+**AIP Recovery**
+
+AIP Recovery locations are where the :ref:`AIP recovery <recovery>` feature
+looks for an AIP to recover. No more than one AIP recovery location should be
+associated with a given pipeline. The default value is
+``/var/archivematica/storage_service/recover`` in a Local Filesystem. This is
+only required if AIP recovery is used.
+
+**AIP Storage**
+
+AIP Storage locations are where the completed AIPs are placed for long-term
+storage. For pipelines using the default locations, the default path is
+```/var/archivematica/sharedDirectory/www/AIPsStore`` in a Local Filesystem. An
+AIP storage location is required to store and retrieve AIPs.
+
+**Currently Processing**
+
+Archivematica uses the Currently Processing location associated with that
+pipeline to store materials during active processing. Exactly one currently
+processing location should be associated with a given pipeline. For pipelines
+using the default locations, the default path is
+``/var/archivematica/sharedDirectory`` in a Local Filesystem. A currently
+processing location is required for Archivematica to run.
+
+**DIP Storage**
+
+The DIP Storage location is used for storing DIPs until such a time that they
+can be uploaded to an access system. For pipelines using the default locations,
+the default path is ``/var/archivematica/sharedDirectory/www/DIPsStore`` in a
+Local Filesystem. A DIP storage location is required to store and retrieve DIPs,
+but it is not required to upload DIPs to access systems.
+
+**FEDORA Deposit**
+
+A FEDORA Deposit location is used with the Archidora plugin to ingest material
+from Islandora. This is only available to the FEDORA Space, and is only required
+for that space.
+
+**Storage Service Internal Processing**
+
+There should only be one Storage Service Internal Processing
+location for a Storage Service installation. For pipelines using the default
+locations, the default path is ``/var/archivematica/storage_service`` in a
+Local Filesystem. This is required for the Storage Service to run, and must be
+locally available to the Storage Service. It should not be associated with any
+pipelines.
+
+**Transfer Backlog**
+
+Transfer Backlog locations store transfers until the user continues processing
+them. For pipelines using the default locations, the default path is
+``/var/archivematica/sharedDirectory/www/AIPsStore/transferBacklog`` in a Local
+Filesystem. This is required to store and retrieve transfers in backlog.
+
+**Transfer Source**
+
+A list of Transfer source locations are displayed in the transfer source
+dropdown on the Archivematica pipeline's :ref:`Transfer tab
+<archivematica:transfer>`. Any folder in a transfer source can be selected to
+become a transfer. The default value is ``/home`` in a local filesystem.
+
+**Replicator**
+
+Replicator locations can be configured to replicate the AIPs in one or more AIP
+storage locations. If you wish for the replicated AIPs to be encrypted, create
+the location in an :ref:`encrypted space <gpg>`.
+
+.. note::
+
+   If you want the same space to have multiple purposes, multiple locations with
+   different purposes can be created.
+
+How to configure a location
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To create and configure a new Location:
 
-1. In the Storage Service, click on the "Spaces" tab.
-2. Under the Space that you want to add the Location to, click on the
-   "Create Location here" link.
-3. Choose a purpose (e.g. AIP Storage) and pipeline, and enter a "Relative Path"
-   (e.g. ``var/mylocation``) and human-readable description. The Relative Path is
-   relative to the Path defined in the Space you are adding the Location to.
+#. In the Storage Service, navigate to the Spaces tab.
+#. Under the space that you want to add the location to, click on **Create
+   Location here**.
+#. Choose a purpose (e.g. AIP Storage) and pipeline, and enter a "Relative Path"
+   (e.g. ``var/mylocation``) and human-readable description. The Relative Path
+   is relative to the Path defined in the Space you are adding the Location to.
    For example, for the default Space, the Path is ``/`` so your Location path
    would be relative to that (in the example here, the complete path would end
    up being ``/var/mylocation``).
 
-  ..  note::
+   .. note::
 
       If the path you are defining in your Location doesn't exist, you must
       create it manually and make sure it is writable by the Archivematica
       user.
 
-4. If desired, for an AIP storage location choose the replicator location(s).
-5. Save the Location settings.
-6. The new Location will now be available as an option under the appropriate
+#. For an AIP storage location, choose the replicator location(s) if desired.
+#. Save the Location settings.
+#. The new Location will now be available as an option under the appropriate
    options in the Dashboard, for example as a Transfer location (which must be
    enabled under the Dashboard "Administration" tab) or as a destination for AIP
    storage.
@@ -799,21 +840,22 @@ Packages
    :width: 80%
    :alt: Storage Service packages screen.
 
-A Package is a file that Archivematica has stored in the Storage Service,
+A package is a file that Archivematica has stored in the Storage Service,
 commonly an Archival Information Package (AIP). Dissemination Information
-Packages (DIPs) which have been stored and Transfers which have been sent to
-backlog will also be reflected in the Packages tab.
+Packages (DIPs) which have been stored and transfers which have been sent to
+backlog will also be listed in the Packages tab.
 
 AIPs cannot be created or deleted through the Storage Service interface, though
 a deletion request can be submitted through Archivematica that must be approved
 or rejected by the Storage Service administrator. To learn more about deleting
-an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. Stored DIPs
-cannot be deleted through either the Storage Service or Archivematica
-interfaces. Deletion requests for transfers are automatically generated when all
+an AIP, see :ref:`Deleting an AIP <archivematica:delete-aip>`. 
+
+Stored DIPs can be deleted through the Storage Service interface by choosing the "Delete" option in the "Actions" column.  
+
+Deletion requests for transfers are automatically generated when all
 of the objects from the transfer have successfully been stored in AIPs.
 
 For more information about Fixity Status, see :ref:`Fixity <fixity>`.
-
 
 .. _administration:
 
