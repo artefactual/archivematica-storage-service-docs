@@ -962,6 +962,13 @@ Callbacks allow REST calls to be made by the Archivematica Storage Service
 after performing certain types of actions. This allows external services
 to be notified when internal actions have taken place.
 
+External applications can integrate with Archivematica via the `post_store` API
+endpoint or `stored` endpoints. See the `API documentation`_  for more
+information on using these endpoints.
+
+A callback can be configured for the SCOPE integration. See the `SCOPE
+documentation`_ for how to set up this callback.
+
 A callback can be configured for the Islandora (Fedora) integration, as follows:
 
 * URI::
@@ -1002,7 +1009,9 @@ platform (Transifex).
 
 :ref:`Back to the top <administrators>`
 
+.. _`API documentation`: https://wiki.archivematica.org/Storage_Service_API#AIP_storage_callback_request
 .. _`LOCKSS`: http://www.lockss.org/
 .. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
 .. _`DSpace 5 REST API documentation`: https://wiki.duraspace.org/display/DSDOC5x/REST+API
 .. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
+.. _`SCOPE documentation`: https://github.com/CCA-Public/scope
