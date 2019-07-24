@@ -917,37 +917,80 @@ Service.
    :width: 80%
    :alt: Storage Service Administration screen.
 
+Configuration
+^^^^^^^^^^^^^
+
+The configuration page allows you to control the behaviour of the Storage
+Service.
+
+**Pipelines are disabled upon creation?** allows you to decide whether a newly
+created Archivematica :ref:`pipeline <pipeline>` can access the :ref:`Locations
+<locations>` that are assigned to it. By disabling newly created pipelines, you
+can provide some security against unwanted perusal of the files in assigned
+locations, or use by unauthorized Archivematica instances. This can also be
+configured individually when creating a pipeline manually through the Storage
+Service website.
+
+**Object counting in spaces is disabled?** allows you to disable automatic
+object counting for spaces that display count information to users, like the
+space containing the transfer source location. Having object counting enabled
+can cause delays and timeouts in the dashboard.
+
+.. figure:: images/object-count-enabled.*
+   :align: center
+   :width: 80%
+   :alt: A list of directory names with object counts beside them - for example, ``archivematica-sampledata (3810 objects)``.
+
+   The transfer browser with object counting enabled.
+
+.. figure:: images/object-count-disabled.*
+   :align: center
+   :width: 80%
+   :alt: A list of directory names with no object counts beside them - for example, ``archivematica-sampledata``.
+
+   The transfer browser with object counting disabled.
+
+Recovery request
+++++++++++++++++
+
+These fields allow you to set up notifications for events related to the AIP
+deletion workflow - for example, deletion approvals or rejections.
+
+Fields:
+
+* **Recovery request: URL to notify:** the server that should receive the
+  JSON-encoded event message from the Storage Service.
+* **Recovery request notification: Username (optional):** A username for basic
+  access authentication.
+* **Recovery request notification: Password (optional)** A password for basic
+  access authentication.
+
+Default locations
++++++++++++++++++
+
+The default location settings allow you to define default locations for any new
+pipeline that is registered with the Storage Service. You can define default
+locations for the following:
+
+* Transfer source
+* AIP storage
+* DIP storage
+* Transfer backlog
+* AIP recovery
+
+Multiple transfer source or AIP storage locations can be configured by holding
+down ``Ctrl`` when selecting them.
+
+A Currently Processing location is also created for every new pipeline, since
+one is required.
+
 Users
 ^^^^^
-
-Only registered users can long into the Storage Service, and the Users page is
-where users can be created or modified.
 
 The Storage Service has two types of users: administrative users, and regular
 users. The only distinction between the two types is for email notifications;
 administrators will be notified by email when special events occur, while
-regular users will not.
-
-Settings
-^^^^^^^^
-
-Settings control the behavior of the Storage Service. Default Locations are
-the created or associated with pipelines when they are created.
-
-**Pipelines are disabled upon creation?** sets whether a newly created Pipeline
-can access its Locations. If a Pipeline is disabled, it cannot access any of
-its locations. By disabling newly created Pipelines, it provides some security
-against unwanted perusal of the files in Locations, or use by unauthorized
-Archivematica instances. This can be configured individually when creating a
-Pipeline manually through the Storage Service website.
-
-**Default Locations** sets which existing locations should be associated with a
-newly created Pipeline, or which new Locations should be created for each new
-Pipeline. No matter what is configured here, a Currently Processing location
-is created for all Pipelines, since one is required. Multiple Transfer Source
-or AIP Storage Locations can be configured by holding down Ctrl when selecting
-them. New Locations in an existing Space can be created for Pipelines that use
-default locations by entering the relevant information.
+regular users will not. Only registered users can long into the Storage Service.
 
 Version
 ^^^^^^^
@@ -955,33 +998,38 @@ Version
 The version page will display the current version and specific git commit of
 your installation of the Storage Service.
 
-Service Callbacks
+Service callbacks
 ^^^^^^^^^^^^^^^^^
 
-Callbacks allow REST calls to be made by the Archivematica Storage Service
-after performing certain types of actions. This allows external services
-to be notified when internal actions have taken place.
+Callbacks allow Archivematica Storage Service to make REST calls after
+performing certain types of actions, so that external services are notified when
+internal actions have taken place. External applications can integrate with
+Archivematica via the `post_store` API endpoint or `stored` endpoints. See the
+`API documentation`_  for more information on using these endpoints. Callbacks
+can be created to alert external services when an AIP, DIP, or AIC has been
+stored.
 
-External applications can integrate with Archivematica via the `post_store` API
-endpoint or `stored` endpoints. See the `API documentation`_  for more
-information on using these endpoints.
+To create a new callback, click on **Create new callback**. This will bring you
+to a form where you can enter the callback information.
 
-A callback can be configured for the SCOPE integration. See the `SCOPE
-documentation`_ for how to set up this callback.
+Fields:
 
-A callback can be configured for the Islandora (Fedora) integration, as follows:
+* **Event**: Type of event when this callback should be executed (i.e.
+  post-store AIP, post-store DIP)
+* **URI**: URL to contact upon callback execution.
+* **Method**: HTTP request method to use in connecting to the URL (i.e. GET,
+  POST)
+* **Headers (key/value)**: the header(s) for the request.
+* **Body**: Body content for each request. Set the 'Content-type' header
+  accordingly.
+* **Expected status**: Expected HTTP response from the server, used to validate
+  the callback response.
+* **Enabled**: check the box to enable the callback.
 
-* URI::
+A callback can be configured for the SCOPE integration. See the
+`SCOPE documentation`_ for how to set up this callback.
 
-     http://{islandora-base-url}/islandora/object/<source_id>/archidora/{Islandora API key}/delete
-
-  The Islandora API key is generated on the Archidora admin screen in Islandora.
-
-* Event: post-store
-* Method: post
-* Expected status: 200
-
-Encryption Keys
+Encryption keys
 ^^^^^^^^^^^^^^^
 
 GPG encryption keys can be created or imported to be used in spaces to store
@@ -990,18 +1038,18 @@ created by the Storage Service or imported.
 
 To create a new key:
 
-1. Click on Create New Key
+1. Click on **Create New Key**
 
 2. Enter the name and email address you want associated with the key.
 
 To import a key:
 
-1. Click on Import Existing Key
+1. Click on **Import Existing Key**
 
 2. Paste in your key in ASCII-armored format.
 
-Set language
-^^^^^^^^^^^^
+Language
+^^^^^^^^
 
 Configure language settings for the Storage Service in this area of the
 Administration tab. Strings are available for translation on the localization
