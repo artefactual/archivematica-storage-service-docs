@@ -118,27 +118,33 @@ Administration -> General.
 Pipelines
 ---------
 
-All pipelines need to be registered with the Storage Service using the
-pipeline's unique universal identifier (UUID). The UUID can be found in the
-Archivematica dashboard under Administration -> General Configuration. When you
-first install Archivematica, it will attempt to register the pipeline's UUID
-automatically with the Storage Service with the description ``Archivematica on
-<hostname>``. You can also add new pipelines by navigating to the Pipelines tab
-in the Storage Service and clicking on **Create new pipeline**.
+The pipeline in Archivematica is the Archivematica dashboard. All pipelines need
+to be registered with the Storage Service using the pipeline's unique universal
+identifier (UUID). The UUID can be found in the Archivematica dashboard under
+Administration -> General Configuration. When you first install Archivematica,
+it will attempt to register the pipeline's UUID automatically with the Storage
+Service with the description ``Archivematica on <hostname>``.
 
 .. image:: images/Pipelines.*
    :align: center
    :width: 80%
    :alt: Storage Service pipelines screen.
 
+A single Storage Service can be connected to many pipelines. To connect a
+pipeline to an existing Storage Service, click on **Create new pipeline** on the
+Pipelines tab of the Storage Service.
+
 Fields:
 
 * **UUID**: The unique identifier of the Archivematica pipeline.
-* **Description**: A description of the pipeline displayed to the user. e.g.
-  ``Development site``.
+* **Description**: A description of the pipeline that will be displayed to the
+  user. e.g. ``Development site``.
+* **Remote name**: the base URL of the pipeline server. This is used for making
+  API calls.
+* **API username**: The username to use when making API calls to the pipeline.
+* **API key**: The API key to use when making API calls to the pipeline.
 * **Enabled**: If checked, this pipeline can access locations associate with it.
-  If unchecked, all locations will be disabled, even if associated directly with
-  this pipeline.
+  If unchecked, all locations associated with this pipeline will be disabled.
 * **Default Location**: If checked, the default locations that have been
   selected in Administration -> Configuration will be created for or associated
   with the new pipeline.
