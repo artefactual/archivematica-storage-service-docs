@@ -908,7 +908,7 @@ Stored DIPs can be deleted through the Storage Service interface by choosing the
 Deletion requests for transfers are automatically generated when all
 of the objects from the transfer have successfully been stored in AIPs.
 
-For more information about Fixity Status, see :ref:`Fixity <fixity>`.
+For more information about Fixity Status, see :ref:`Fixity <fixity-docs>`.
 
 .. _administration:
 

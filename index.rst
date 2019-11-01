@@ -15,7 +15,7 @@ archival storage and transfer locations and packages.
 * :ref:`Administering the Storage Service <administrators>`
 * :ref:`AIP recovery <recovery>`
 * :ref:`Installation <install>`
-* :ref:`Fixity application <fixity>`
+* :ref:`Fixity application <fixity-docs>`
 
 Go to the :ref:`Archivematica User and Administrator <archivematica:home>`
 documentation.

@@ -1,4 +1,4 @@
-.. _fixity_docs:
+.. _fixity-docs:
 
 ======
 Fixity
@@ -42,7 +42,7 @@ store.
 See the `Fixity`_ documentation for more information on its installation and
 usage.
 
-:ref:`Return to the top <fixity_docs>`
+:ref:`Return to the top <fixity-docs>`
 
 .. _`Archivematica AIP`: https://www.archivematica.org/en/docs/archivematica-1.9/user-manual/archival-storage/aip-structure/#bagit-documentation
 .. _`Bagit specification`: https://tools.ietf.org/html/rfc8493
