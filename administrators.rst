@@ -670,8 +670,8 @@ Fields:
 S3 (Amazon)
 +++++++++++
 
-Amazon S3 is available as an access protocol as of Storage Service 0.12. At
-this time, locations within S3 have only been tested for AIP Storage.
+Amazon S3 is available as an access protocol as of Storage Service 0.12.
+Locations within S3 can be used as AIP Storage, Replicator and Transfer Source.
 
 Fields:
 
