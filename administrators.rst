@@ -287,27 +287,28 @@ search criteria. For further details of the API parameters, see the
 DuraCloud
 +++++++++
 
-.. seealso::
-
-   :ref:`Archivematica-DuraCloud Quick Start Guide
-   <archivematica:duracloud-setup>`
-
 Archivematica can use DuraCloud as an access protocol for the Storage Service in
-version 0.5 and higher. Typically, a Storage Service space has a one-to-one
-relationship with a space within DuraCloud.
+version 0.5 and higher. A Storage Service space has a one-to-one relationship
+to a space within DuraCloud.
+
+To set up your Archivematica instance with DuraCloud, please see :ref:`Using
+DuraCloud with Archivematica <archivematica:duracloud-setup>`.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
-  for unlimited. This field is optional.
-* **Path**: the absolute path to the Space on the local filesystem.
-* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
-  compatible and preferably will be located on the same filesystem as the path.
-* **Host**: the hostname of the DuraCloud instance, e.g.
-  ``example.duracloud.org``.
-* **User**: a username with sufficient permissions to permit authentication.
-* **Password**: the password of the above user.
-* **Duraspace**: the name of the Space within DuraCloud
+* **Access protocol**: DuraCloud
+* **Size**: *This field is optional.*
+* **Path**: Leave this field blank.
+* **Staging path**: A location on your local disk where Archivematica can
+  place files for staging purposes, for example
+  ``var/archivematica/storage_service/duracloud_staging``
+* **Host**: Hostname of the DuraCloud instance, e.g. ``site.duracloud.org``
+* **Username**: The username for the Archivematica user that you created in
+  DuraCloud.
+* **Password**: The password for the Archivematica user that you created in
+  DuraCloud.
+* **Duraspace**: The name of the space in DuraCloud you are creating this
+  Storage Service space for (e.g. transfer-source, aip-store, etc).
 
 .. _dspacerest:
 
