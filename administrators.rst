@@ -1026,11 +1026,8 @@ Service callbacks
 
 Callbacks allow Archivematica Storage Service to make REST calls after
 performing certain types of actions, so that external services are notified when
-internal actions have taken place. External applications can integrate with
-Archivematica via the `post_store` API endpoint or `stored` endpoints. See the
-`API documentation`_  for more information on using these endpoints. Callbacks
-can be created to alert external services when an AIP, DIP, or AIC has been
-stored.
+internal actions have taken place. You can create callbacks to alert external
+services when an AIP, DIP, or AIC has been stored.
 
 To create a new callback, click on **Create new callback**. This will bring you
 to a form where you can enter the callback information.
@@ -1048,6 +1045,32 @@ Fields:
 * **Expected status**: Expected HTTP response from the server, used to validate
   the callback response.
 * **Enabled**: check the box to enable the callback.
+
+Event types available include:
+
+* **Post-store AIP (source files)**: Occurs after an AIP has been stored and
+  causes the execution of a request for each source file of the AIP.
+* **Post-store AIP, Post-store AIC and Post-store DIP**:  Occurs after an AIP,
+  AIC or DIP has been stored and causes the execution of a single request for
+  the package.
+
+You can use the following placeholders in the URI and Body fields:
+
+* **Post-store AIP (source files)**: ``<source_id>`` will be replaced by the
+  source file UUID.
+* **Post-store AIP, Post-store AIC and Post-store DIP**: ``<package_uuid>``
+  will be replaced by the AIP, AIC or DIP UUID. ``<package_name>`` will be
+  replaced by the AIP, AIC or DIP name, with the trailing UUID removed.
+
+.. note::
+
+   For AIPs created directly from a transfer, the value that replaces
+   ``<package_name>`` will be equal to the name of the transfer after
+   successful completion of the "Change transfer filenames" Microservice.
+
+External applications can integrate with Archivematica via the `post_store`
+API endpoint or `stored` endpoints. See the `API documentation`_  for more
+information on using these endpoints.
 
 A callback can be configured for the SCOPE integration. See the
 `SCOPE documentation`_ for how to set up this callback.
