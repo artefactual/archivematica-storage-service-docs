@@ -1026,7 +1026,7 @@ Service callbacks
 
 Callbacks allow Archivematica Storage Service to make REST calls after
 performing certain types of actions, so that external services are notified when
-internal actions have taken place.  You can created callbacks to alert external
+internal actions have taken place. You can create callbacks to alert external
 services when an AIP, DIP, or AIC has been stored.
 
 To create a new callback, click on **Create new callback**. This will bring you
