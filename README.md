@@ -31,3 +31,9 @@ Note that some documentation lives in separate repositories:
 * [archivematica-storage-service-docs](https://github.com/artefactual/archivematica-storage-service-docs):
   This repository! Contains documentation for the Storage Service, Archivematica's
   archival storage management system.
+
+### Security
+
+If you have a security concern about Archivematica or any of its companion
+repositories, please see the [SECURITY file in the main Archivematica
+repository](https://github.com/artefactual/archivematica).
