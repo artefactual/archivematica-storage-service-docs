@@ -9,13 +9,74 @@
 Archivematica Storage Service documentation
 ===========================================
 
-This documentation describes the Storage Service, used by Archivematica to manage
-archival storage and transfer locations and packages.
+The Storage Service is used alongside Archivematica to manage the storage
+locations and packages for one or many Archivematica dashboards.
+
+For information about Archivematica, including user and administrator manuals,
+please see the :ref:`Archivematica documentation <archivematica:home>`.
+
+.. _storage-service-administration:
+
+Administering the Storage Service
+---------------------------------
+
+This section provides information for Storage Service administrators. This
+manual is intended for systems administrators who are responsible for
+installing, configuring, setting up, and maintaining Archivematica and related
+systems.
 
 * :ref:`Administering the Storage Service <administrators>`
-* :ref:`AIP recovery <recovery>`
-* :ref:`Installation <install>`
-* :ref:`Fixity application <fixity-docs>`
+* :ref:`Storage Service glossary and organization <organization>`
+* :ref:`Archivematica configuration <archivematica-configuration>`
+* :ref:`Pipelines <pipelines>`
+* :ref:`Spaces <spaces>`
+* :ref:`Locations <locations>`
+* :ref:`Packages <packages-tab>`
+* :ref:`Administration <administration>`
 
-Go to the :ref:`Archivematica User and Administrator <archivematica:home>`
-documentation.
+.. _storage-service-aip-recovery:
+
+AIP recovery
+------------
+
+AIP recovery support allows a storage service administrator to replace a corrupt
+version of a stored AIP with a correct version (restored from a backup, for
+example).
+
+* :ref:`AIP recovery <recovery>`
+* :ref:`How AIP recovery works <how-recovery-works>`
+* :ref:`Example recovery command <example-recovery-command>`
+* :ref:`Reporting recovery progress to external systems <reporting-recovery-progress>`
+
+.. _storage-service-fixity:
+
+Fixity
+------
+
+The Archivematica Storage Service exposes an `API endpoint`_ that allows users
+to check fixity on individual AIPs. `Fixity`_ is also an application for use
+with the Archivematica Storage Service. The Fixity application is run from the
+command-line and uses the API endpoint to perform batch checking across the
+entirety of the AIP storage location.
+
+* :ref:`Fixity <fixity-docs>`
+* :ref:`Fixity application <fixity-application>`
+
+.. _storage-service-installation:
+
+Installation
+------------
+
+This section describes how to install the Storage Service manually.
+
+.. note::
+   Most users install the Storage Service alongside Archivematica from Ansible
+   or packages using the :ref:`Archivematica general installation
+   <archivematica:installation>` documentation.
+
+* :ref:`Manually installing the Storage Service <install>`
+
+:ref:`Back to the top <index>`
+
+.. _`API endpoint`: https://wiki.archivematica.org/Storage_Service_API#Check_fixity
+.. _`Fixity`: https://github.com/artefactual/fixity
