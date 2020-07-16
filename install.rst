@@ -5,9 +5,9 @@
     Holly Becker
     Misty De Meo
 
-=======
-Install
-=======
+=======================================
+Manually installing the Storage Service
+=======================================
 
 This page describes how to install the Storage Service manually; however for most users it is easier and better to install from Ansible or packages.
 Please the :ref:`Archivematica general installation <archivematica:installation>` documentation for instructions on installing both Archivematica and the Storage Service from Ansible or packages.

@@ -25,6 +25,7 @@ recovery request administration page, click "Packages" then "View recovery
 requests" in the storage service administration web interface. Enter a reason
 for approval then click "Approve" to start recovery.
 
+.. _how-recovery-works:
 
 How Recovery Works
 ------------------
@@ -39,6 +40,7 @@ One an AIP recovery has been approved, the storage service does the following:
 #. Checks the fixity data of the stored AIP, failing recovery if the fixity
    check fails
 
+.. _example-recovery-command:
 
 Example Recovery command
 ------------------------
@@ -56,6 +58,8 @@ the notfication using a curl command. Here is an example:
 In this example, ``<description``, ``<int>`` and ``<email>`` are to be replaced
 by information for human use, to relay information from the person making the AIP
 recovery request to the Storage Service administrator.
+
+.. _reporting-recovery-progress:
 
 Reporting Recovery Progress to External Systems
 -----------------------------------------------

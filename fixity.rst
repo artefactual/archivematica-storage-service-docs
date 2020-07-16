@@ -31,7 +31,9 @@ contents. An example can be seen in the error shown above:
       *Oxum error. Found 8 files and 71101 bytes on disk; expected 8 files and
       71100 bytes.*
 
-Fixity Application
+.. _fixity-application:
+
+Fixity application
 ------------------
 
 `Fixity`_ is also an application for use with the Archivematica Storage
