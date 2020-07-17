@@ -60,7 +60,9 @@ command-line and uses the API endpoint to perform batch checking across the
 entirety of the AIP storage location.
 
 * :ref:`Fixity <fixity-docs>`
-* :ref:`Fixity application <fixity-application>`
+* :ref:`Checking fixity using the API endpoint <using-fixity-endpoint>`
+* :ref:`Using the Fixity application <fixity-application>`
+* :ref:`Reviewing fixity results in the Storage Service <reviewing-fixity-checks>`
 
 .. _storage-service-installation:
 
