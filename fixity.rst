@@ -10,9 +10,10 @@ endpoint that enables users to check the fixity of individual AIPs in storage.
 Users can access the API endpoint directly or by using the Fixity application
 developed by Artefactual.
 
-The fixity API endpoint validates the contents of the AIP against the checksums
-and payload oxum listed in the AIP's `Bagit files`_. This can tell users if
-files have been modified, deleted, or added to the AIP.
+Archivematica AIPs are packaged according to the `BagIt File Packaging Format`_.
+The fixity API endpoint verifies the bag by validating the contents of the bag
+against the checksums and payload oxum listed in the bag files. This can tell
+users if files have been modified, deleted, or added to the AIP.
 
 For more information about fixity and checksums, see the Digital Preservation
 Coalition's `Digital Preservation Handbook`_.
@@ -86,7 +87,7 @@ changed.
 :ref:`Return to the top <fixity-docs>`
 
 .. _Archivematica AIP: https://www.archivematica.org/en/docs/archivematica-1.9/user-manual/archival-storage/aip-structure/#bagit-documentation
-.. _Bagit files: https://tools.ietf.org/html/rfc8493
+.. _BagIt File Packaging Format: https://tools.ietf.org/html/rfc8493
 .. _API endpoint: https://wiki.archivematica.org/Storage_Service_API#Check_fixity
 .. _Fixity: https://github.com/artefactual/fixity
 .. _Digital Preservation Handbook: https://www.dpconline.org/handbook/technical-solutions-and-tools/fixity-and-checksums
