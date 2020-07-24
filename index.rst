@@ -44,8 +44,8 @@ version of a stored AIP with a correct version (restored from a backup, for
 example).
 
 * :ref:`AIP recovery <recovery>`
-* :ref:`How AIP recovery works <how-recovery-works>`
-* :ref:`Example recovery command <example-recovery-command>`
+* :ref:`Performing an AIP recovery <how-recovery-works>`
+* :ref:`Example recovery request <example-recovery-request>`
 * :ref:`Reporting recovery progress to external systems <reporting-recovery-progress>`
 
 .. _storage-service-fixity:

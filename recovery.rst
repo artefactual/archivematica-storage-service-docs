@@ -1,92 +1,116 @@
 .. _recovery:
 
-:Authors:
-    Mike Cantelon
-
 ============
-AIP Recovery
+AIP recovery
 ============
 
-AIP recovery support allows a storage service administrator to replace a
-corrupt version of a stored AIP with a correct version (restored from a backup,
-for example).
+AIP recovery support allows a Storage Service administrator to replace a corrupt
+version of a stored AIP with the correct version. This process requires that you
+have a non-corrupted backup copy of the AIP. By replacing the AIP using the
+recovery process, the recovered version of the AIP will be available to users
+through the Archivematica dashboard.
 
-The AIP recovery process involves copying a recovered version of an AIP
-into a dedicated recovery directory accessible by the storage service. You can
-determine the location of this directory by clicking "Locations" in the storage
-service administration web interface then finding the path assocated with AIP
-recovery.
+*On this page*:
 
-Once the recovered version is in place, recovery can be requested via the
-storage service's REST interface.
-
-The recovery request must then be approved by an administrator. To get to the
-recovery request administration page, click "Packages" then "View recovery
-requests" in the storage service administration web interface. Enter a reason
-for approval then click "Approve" to start recovery.
+* :ref:`Performing an AIP recovery <how-recovery-works>`
+* :ref:`Example recovery request <example-recovery-request>`
+* :ref:`Reporting recovery progress to external systems <reporting-recovery-progress>`
 
 .. _how-recovery-works:
 
-How Recovery Works
-------------------
+Performing an AIP recovery
+--------------------------
 
-One an AIP recovery has been approved, the storage service does the following:
+#. Determine the path of the *AIP recovery* directory. You can find the path of
+   this directory by clicking on the **Locations** tab in the Storage Service
+   user interface, then finding the path that has the purpose "AIP Recovery".
+   This is the AIP recovery location.
 
-#. Checks the fixity data of the recovered AIP files, failing recovery if the
-   fixity check fails
-#. Copies the corrupt AIP file to a backup directory within the recovery
-   location
-#. Copies the recovered AIP files to AIP storage
-#. Checks the fixity data of the stored AIP, failing recovery if the fixity
-   check fails
+   .. image:: images/aip-recovery-location.*
+      :align: center
+      :width: 80%
+      :alt: The Locations tab has a table with all Storage Service locations listed. The AIP recovery location has the purpose "AIP Recovery" in the first column.
 
-.. _example-recovery-command:
+#. Copy the recovered version of the AIP to the AIP recovery location.
 
-Example Recovery command
+#. Using the Storage Service REST API, make a
+   :ref:`recovery request <example-recovery-request>`.
+
+#. Approve the AIP recovery request by going to the **Packages** tab in the
+   Storage Service user interface, then clicking on **View recovery requests**.
+   Provide a reason for the recovery and click **Approve**.
+
+#. Once the recovery has been approved, the Storage Service will do the
+   following:
+
+   * Check the fixity data of the recovered AIP. Recovery will fail if this
+     initial fixity check fails.
+   * Copy the corrupt AIP to a backup directory within the recovery location.
+   * Copy the recovered AIP to AIP storage.
+   * Check the fixity data of the stored AIP. Recovery will fail if this second
+     fixity check fails.
+
+The AIP will now be available for download in the Packages tab of the Storage
+Service user interface, as well as through the Archival Storage tab of the
+Archivematica dashboard.
+
+.. _example-recovery-request:
+
+Example recovery request
 ------------------------
 
-AIP recovery was designed to be used with `Binder <http://binder.readthedocs.org/en/latest/>`_.
-Binder is capable of sending notification to the Storage Service that a replacement
-AIP is ready for recovery. If you are not using Binder, it is possible to send
-the notfication using a curl command. Here is an example:
+Once the recovered AIP is in place, you must make an API request using the
+Storage Service REST API. Here is an example:
 
 .. code:: bash
 
    curl --data="event_reason=<description>&pipeline=<pipeline UUID>&user_id=<int>&user_email=<email>" http://127.0.0.1:8000/api/v2/file/<package UUID>/recover_aip/?format=json
 
+Replace the placeholders with the following information:
 
-In this example, ``<description``, ``<int>`` and ``<email>`` are to be replaced
-by information for human use, to relay information from the person making the AIP
-recovery request to the Storage Service administrator.
+* ``<description>``: a description of why the recovery request is being made.
+* ``<int>``: the numerical user ID. To find the user ID, go to the
+  **Administration** tab and click on **Users** in the lefthand sidebar. Click
+  on **Edit** for the user who is making the request. The user ID is shown in
+  the URL of the user edit page - for example, the user ID for
+  ``http://my-site:8000/administration/users/1/edit/`` is **1**.
+* ``<email>``: the email address of the user making the request.
+
+If you use `Binder`_, Binder is capable of sending a notification to the Storage
+Service that a replacement AIP is ready for recovery. Check the `Binder recovery
+documentation`_ for more information.
 
 .. _reporting-recovery-progress:
 
-Reporting Recovery Progress to External Systems
+Reporting recovery progress to external systems
 -----------------------------------------------
 
-AIP recovery can be optionally configured to report progress to another system,
-via a REST POST call, when an AIP recovery has been approved, rejected, or has
-failed. The information sent includes the ID of the recover request, whether
-the recovery request was processed successfully, and a text message including
-the recover request status ("APPROVE" or "REJECT") and the administrator's
-reasoning for the decision.
+AIP recovery can be optionally configured to report progress to another system
+via a REST POST call. The call will report whether the AIP recovery task has
+been approved, rejected, or has failed. The information sent includes the ID of
+the recovery request, whether the recovery request was processed successfully,
+and a text message including the recover request status ("APPROVE" or "REJECT")
+and the administrator's reasoning for the decision.
 
 The following is an example of the JSON sent by this POST call:
 
-::
+.. code:: bash
 
-    {
-      "event_id": 127,
-      "message": "APPROVE: Request approved, files look good.",
-      "success": true
-    }
+   {
+     "event_id": 127,
+     "message": "APPROVE: Request approved, files look good.",
+     "success": true
+   }
 
-To configure the storage service to report AIP restore progress to another
-system, click "Administration" in the storage service administration web
-interface and enter a REST endpoint URL into the "Recover request notification
-url" field.
+To configure the Storage Service to report AIP restore progress to another
+system, click **Administration** in the Storage Service user
+interface and enter a REST endpoint URL into the **Recovery request: URL to
+notify** field.
 
-If the endpoint requires basic authentication, you'll also need to enter a
-username and password into the two fields below it. Click "Save" when you're done.
+If the endpoint requires authentication, you'll also need to enter a username
+and password into the two fields below it. Click **Save** when you are done.
 
 :ref:`Back to the top <recovery>`
+
+.. _Binder: http://binder.readthedocs.org/en/latest/
+.. _Binder recovery documentation: https://github.com/artefactual/binder#storage-service-aip-recovery-process-and-configuration
