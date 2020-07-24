@@ -4,11 +4,11 @@
 AIP recovery
 ============
 
-AIP recovery support allows a Storage Service administrator to replace a corrupt
-version of a stored AIP with the correct version. This process requires that you
-have a non-corrupted backup copy of the AIP. By replacing the AIP using the
-recovery process, the recovered version of the AIP will be available to users
-through the Archivematica dashboard.
+AIP recovery allows a Storage Service administrator to replace a corrupt version
+of a stored AIP with the correct version. This process requires that you have a
+non-corrupted backup copy of the AIP. By replacing the AIP using the recovery
+process, the recovered version of the AIP will be available to users through the
+Archivematica dashboard.
 
 *On this page*:
 
