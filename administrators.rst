@@ -643,9 +643,7 @@ Swift
 +++++
 
 OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
-higher. At this time, locations within Swift have been tested as AIP Storage,
-DIP Storage and Transfer Backlog. Using Swift as Transfer Source is possible,
-but under-tested at this time.
+higher.
 
 Fields:
 
@@ -663,6 +661,16 @@ Fields:
 * **Tenant**: the tenant/account name, required when connecting to an auth
   2.0 system.
 * **Region**: the region in Swift. This field is optional.
+
+.. note::
+   
+    Swift cannot be used for transfers containing an object over 5GB
+    (for uncompressed packages) or that are 5GB in total (for compressed packages).   
+    This applies to the Transfer Source, Backlog, AIP and DIP Locations.
+    
+    Any object/package over 5GB must be segmented by the application interacting with
+    Swift, a function which is not currently available for the Swift space. 
+    See the `Swift documentation for large objects`_.
 
 .. _amazon-s3:
 
@@ -1110,3 +1118,4 @@ platform (Transifex).
 .. _`DSpace 5 REST API documentation`: https://wiki.duraspace.org/display/DSDOC5x/REST+API
 .. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
+.. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
