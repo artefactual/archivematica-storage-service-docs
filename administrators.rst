@@ -1,8 +1,8 @@
 .. _administrators:
 
-=================================
+*********************************
 Administering the Storage Service
-=================================
+*********************************
 
 The Archivematica Storage Service allows the configuration of storage spaces
 associated with multiple Archivematica pipelines. It allows a storage
@@ -28,16 +28,16 @@ installation, both locally and remote.
 .. _organization:
 
 Storage Service glossary and organization
------------------------------------------
+=========================================
 
 Pipelines
-^^^^^^^^^
+---------
 
 A pipeline refers to a single installation of an Archivematica dashboard. One
 Storage Service can be used to configure multiple Archivematica pipelines.
 
 Spaces
-^^^^^^
+------
 
 A space models a specific storage device. That device might be a locally-
 accessible disk, a network share, or a remote system accessible via a protocol
@@ -48,14 +48,14 @@ Packages are not stored directly inside a space; instead, packages are stored
 within locations, which are organized subdivisions of a space.
 
 Locations
-^^^^^^^^^
+---------
 
 A location is a subdivision of a space. Each location is assigned a specific
 purpose, such as AIP storage, DIP storage, transfer source or transfer backlog,
 in order to provide an organized way to structure content within a space.
 
 Packages
-^^^^^^^^
+--------
 
 The Storage Service is oriented to storing packages. A "package" is a bundle of
 one or more files transferred from an external service; for example, a package
@@ -65,7 +65,7 @@ location.
 .. _archivematica-configuration:
 
 Archivematica configuration
----------------------------
+===========================
 
 When installing Archivematica, options to configure it with the Storage
 Service will be presented.
@@ -99,7 +99,7 @@ Archivematica instance can be manually created and configured. The dashboard
 UUID is also available in Archivematica under Administration -> General.
 
 Change the port in the web server configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------------------
 
 The Storage Services uses nginx by default. To change the port, edit the file
 ``/etc/nginx/sites-enabled/storage`` and change the line that says ``listen
@@ -116,7 +116,7 @@ Administration -> General.
 .. _pipelines:
 
 Pipelines
----------
+=========
 
 The pipeline in Archivematica is the Archivematica dashboard. All pipelines need
 to be registered with the Storage Service using the pipeline's unique universal
@@ -152,7 +152,7 @@ Fields:
 .. _spaces:
 
 Spaces
-------
+======
 
 Spaces contain all of the information needed to connect Archivematica to a
 storage location. The space is where protocol-specific information, like an NFS
@@ -179,12 +179,12 @@ more information.
 .. _access-protocols:
 
 Access protocols
-^^^^^^^^^^^^^^^^
+----------------
 
 .. _arkivum:
 
 Arkivum
-+++++++
+^^^^^^^
 
 Archivematica can use Arkivum's A-Stor as an access protocol in version 0.7 and
 higher. A-Stor can expose a CIFS share to the Storage Service so that the
@@ -224,7 +224,7 @@ Fields:
 .. _dataverse:
 
 Dataverse
-+++++++++
+^^^^^^^^^
 
 Dataverse Integration is supported with Archivematica v1.8 (and higher) and
 Storage Service v0.13 (and higher).
@@ -285,7 +285,7 @@ search criteria. For further details of the API parameters, see the
 .. _duracloud:
 
 DuraCloud
-+++++++++
+^^^^^^^^^
 
 Archivematica can use DuraCloud as an access protocol for the Storage Service in
 version 0.5 and higher. A Storage Service space has a one-to-one relationship
@@ -313,7 +313,7 @@ Fields:
 .. _dspacerest:
 
 DSpace via REST API
-+++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^
 
 DSpace via REST API locations are supported for both AIP and DIP Storage
 locations. Because DSpace is typically used as a public-facing system, the
@@ -397,7 +397,7 @@ Fields:
 .. _dspace:
 
 DSpace via SWORD2 API
-+++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^
 
 DSpace via SWORD2 locations are currently supported only for AIP Storage locations.
 Because DSpace is typically used as a public-facing system, the behaviour is different
@@ -457,7 +457,7 @@ Fields:
 .. _fedora:
 
 Fedora via SWORD2
-+++++++++++++++++
+^^^^^^^^^^^^^^^^^
 
 Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
@@ -494,7 +494,7 @@ Fields:
 .. _gpg:
 
 GPG encryption on local file system
-+++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating a GPG encryption space will allow users to create encrypted AIPs and
 transfers. Only AIP storage, Transfer backlog and Replicator locations can be
@@ -527,7 +527,7 @@ Fields:
 .. _local-filesystem:
 
 Local Filesystem
-++++++++++++++++
+^^^^^^^^^^^^^^^^
 
 Local Filesystem spaces handle storage that is available locally on the
 machine running the Storage Service. Typically this is the hard drive, SSD or
@@ -547,7 +547,7 @@ Fields:
 .. _admin-lockss:
 
 LOCKSS
-++++++
+^^^^^^
 
 Archivematica can store AIPs in a `LOCKSS`_ network via LOCKSS-O-Matic, which
 uses SWORD to communicate between the Storage Service and a Private LOCKSS
@@ -578,7 +578,7 @@ Fields:
 .. _nfs:
 
 NFS
-+++
+^^^
 
 NFS spaces are for NFS exports mounted on the Storage Service server and the
 Archivematica pipeline.
@@ -602,7 +602,7 @@ Fields:
 .. _pipeline:
 
 Pipeline Local Filesystem
-+++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Pipeline Local Filesystems refer to the storage that is local to the
 Archivematica pipeline, but remote to the Storage Service. For this Space to
@@ -640,7 +640,7 @@ Fields:
 .. _swift:
 
 Swift
-+++++
+^^^^^
 
 OpenStack's Swift is available as an access protocol in Storage Service 0.7 and
 higher.
@@ -675,7 +675,7 @@ Fields:
 .. _amazon-s3:
 
 S3 (Amazon)
-+++++++++++
+^^^^^^^^^^^
 
 Amazon S3 is available as an access protocol as of Storage Service version 0.12.
 Locations within S3 can be used as AIP Storage, Replicator and Transfer Source
@@ -762,7 +762,7 @@ Fields:
 .. _locations:
 
 Locations
----------
+=========
 
 Locations are contained within spaces and have a defined purpose in the
 Archivematica system. Each location is associated with at least one pipeline. A
@@ -807,9 +807,10 @@ Fields:
 .. _location-purposes:
 
 Location purposes
-^^^^^^^^^^^^^^^^^
+-----------------
 
-**AIP Recovery**
+AIP Recovery
+^^^^^^^^^^^^
 
 AIP Recovery locations are where the :ref:`AIP recovery <recovery>` feature
 looks for an AIP to recover. No more than one AIP recovery location should be
@@ -817,14 +818,16 @@ associated with a given pipeline. The default value is
 ``/var/archivematica/storage_service/recover`` in a Local Filesystem. This is
 only required if AIP recovery is used.
 
-**AIP Storage**
+AIP Storage
+^^^^^^^^^^^
 
 AIP Storage locations are where the completed AIPs are placed for long-term
 storage. For pipelines using the default locations, the default path is
 ```/var/archivematica/sharedDirectory/www/AIPsStore`` in a Local Filesystem. An
 AIP storage location is required to store and retrieve AIPs.
 
-**Currently Processing**
+Currently Processing
+^^^^^^^^^^^^^^^^^^^^
 
 Archivematica uses the Currently Processing location associated with that
 pipeline to store materials during active processing. Exactly one currently
@@ -833,7 +836,8 @@ using the default locations, the default path is
 ``/var/archivematica/sharedDirectory`` in a Local Filesystem. A currently
 processing location is required for Archivematica to run.
 
-**DIP Storage**
+DIP Storage
+^^^^^^^^^^^
 
 The DIP Storage location is used for storing DIPs until such a time that they
 can be uploaded to an access system. For pipelines using the default locations,
@@ -841,13 +845,15 @@ the default path is ``/var/archivematica/sharedDirectory/www/DIPsStore`` in a
 Local Filesystem. A DIP storage location is required to store and retrieve DIPs,
 but it is not required to upload DIPs to access systems.
 
-**FEDORA Deposit**
+FEDORA Deposit
+^^^^^^^^^^^^^^
 
 A FEDORA Deposit location is used with the Archidora plugin to ingest material
 from Islandora. This is only available to the FEDORA Space, and is only required
 for that space.
 
-**Storage Service Internal Processing**
+Storage Service Internal Processing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There should only be one Storage Service Internal Processing
 location for a Storage Service installation. For pipelines using the default
@@ -856,21 +862,24 @@ Local Filesystem. This is required for the Storage Service to run, and must be
 locally available to the Storage Service. It should not be associated with any
 pipelines.
 
-**Transfer Backlog**
+Transfer Backlog
+^^^^^^^^^^^^^^^^
 
 Transfer Backlog locations store transfers until the user continues processing
 them. For pipelines using the default locations, the default path is
 ``/var/archivematica/sharedDirectory/www/AIPsStore/transferBacklog`` in a Local
 Filesystem. This is required to store and retrieve transfers in backlog.
 
-**Transfer Source**
+Transfer Source
+^^^^^^^^^^^^^^^
 
 A list of Transfer source locations are displayed in the transfer source
 dropdown on the Archivematica pipeline's :ref:`Transfer tab
 <archivematica:transfer>`. Any folder in a transfer source can be selected to
 become a transfer. The default value is ``/home`` in a local filesystem.
 
-**Replicator**
+Replicator
+^^^^^^^^^^
 
 Replicator locations can be configured to replicate the AIPs in one or more AIP
 storage locations. If you wish for the replicated AIPs to be encrypted, create
@@ -882,7 +891,7 @@ the location in an :ref:`encrypted space <gpg>`.
    different purposes can be created.
 
 How to configure a location
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 To create and configure a new Location:
 
@@ -912,7 +921,7 @@ To create and configure a new Location:
 .. _packages-tab:
 
 Packages
---------
+========
 
 .. image:: images/Packages.*
    :align: center
@@ -939,7 +948,7 @@ For more information about Fixity Status, see :ref:`Fixity <fixity-docs>`.
 .. _administration:
 
 Administration
---------------
+==============
 
 The Administration section manages the users and settings for the Storage
 Service.
@@ -950,7 +959,7 @@ Service.
    :alt: Storage Service Administration screen.
 
 Configuration
-^^^^^^^^^^^^^
+-------------
 
 The configuration page allows you to control the behaviour of the Storage
 Service.
@@ -983,7 +992,7 @@ can cause delays and timeouts in the dashboard.
    The transfer browser with object counting disabled.
 
 Recovery request
-++++++++++++++++
+^^^^^^^^^^^^^^^^
 
 These fields allow you to set up notifications for events related to the AIP
 deletion workflow - for example, deletion approvals or rejections.
@@ -998,7 +1007,7 @@ Fields:
   access authentication.
 
 Default locations
-+++++++++++++++++
+^^^^^^^^^^^^^^^^^
 
 The default location settings allow you to define default locations for any new
 pipeline that is registered with the Storage Service. You can define default
@@ -1017,7 +1026,7 @@ A Currently Processing location is also created for every new pipeline, since
 one is required.
 
 Users
-^^^^^
+-----
 
 The Storage Service has two types of users: administrative users, and regular
 users. The only distinction between the two types is for email notifications;
@@ -1025,13 +1034,13 @@ administrators will be notified by email when special events occur, while
 regular users will not. Only registered users can long into the Storage Service.
 
 Version
-^^^^^^^
+-------
 
 The version page will display the current version and specific git commit of
 your installation of the Storage Service.
 
 Service callbacks
-^^^^^^^^^^^^^^^^^
+-----------------
 
 Callbacks allow Archivematica Storage Service to make REST calls after
 performing certain types of actions, so that external services are notified when
@@ -1085,7 +1094,7 @@ A callback can be configured for the SCOPE integration. See the
 `SCOPE documentation`_ for how to set up this callback.
 
 Encryption keys
-^^^^^^^^^^^^^^^
+---------------
 
 GPG encryption keys can be created or imported to be used in spaces to store
 encrypted AIPs, transfers or replicated AIPs/transfers. Keys can either be
@@ -1104,7 +1113,7 @@ To import a key:
 2. Paste in your key in ASCII-armored format.
 
 Language
-^^^^^^^^
+--------
 
 Configure language settings for the Storage Service in this area of the
 Administration tab. Strings are available for translation on the localization
