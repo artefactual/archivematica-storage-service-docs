@@ -28,18 +28,26 @@ Make sure that you take a back up of your SQLite database before you proceed.
 
     CREATE DATABASE storage_service_test CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-4. Update the service configuration, e.g. in
+4. Grant privileges to the user::
+
+    GRANT ALL PRIVILEGES ON storage_service_test.* TO 'username'@'localhost';
+
+5. Update the service configuration, e.g. in
    ``/etc/default/archivematica-storage-service``, remove ``SS_DB_NAME`` and add
    instead the following::
 
     SS_DB_URL=mysql://username:password@hostname:3306/storage_service_test
 
-5. Create the MySQL tables::
+6. Create the MySQL tables::
 
     su - archivematica -s /bin/bash -c "set -a -e -x; source /etc/default/archivematica-storage-service; cd /usr/lib/archivematica/storage-service/; /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py migrate"
 
-6. Load the JSON export::
+7. Load the JSON export::
 
     su - archivematica -s /bin/bash -c "set -a -e -x; source /etc/default/archivematica-storage-service; cd /usr/lib/archivematica/storage-service/; /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py loaddata /tmp/datadump.json"
+
+8. Start Storage Service::
+
+    systemctl start archivematica-storage-service
 
 .. _issue 952: https://github.com/archivematica/Issues/issues/952
