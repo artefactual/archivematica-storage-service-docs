@@ -10,7 +10,7 @@
    administrators
    recovery
    install
-   migration_sqlite_mysql
+   migration-sqlite-mysql
    fixity
 
 Indices and tables
