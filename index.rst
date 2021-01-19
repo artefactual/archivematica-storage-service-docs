@@ -66,17 +66,11 @@ entirety of the AIP storage location.
 
 .. _storage-service-installation:
 
-Installation
-------------
-
-This section describes how to install the Storage Service manually.
-
-.. note::
-   Most users install the Storage Service alongside Archivematica from Ansible
-   or packages using the :ref:`Archivematica general installation
-   <archivematica:installation>` documentation.
+Installation and setup
+----------------------
 
 * :ref:`Manually installing the Storage Service <install>`
+* :ref:`Migrating data from SQLite to MySQL <migration-sqlite-mysql>`
 
 :ref:`Back to the top <index>`
 
