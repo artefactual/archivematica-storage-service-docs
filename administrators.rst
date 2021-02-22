@@ -759,6 +759,48 @@ Fields:
    the slash. Do so with caution and be prepared to put the leading-slash
    back if there is any impact on storing AIPs as a result.
 
+Debugging S3
+""""""""""""
+
+There are times when the S3 storage adapter may need to be debugged. For
+example, if a transfer isn't able to complete because it cannot reach your S3
+implementation.
+
+The S3 adapter written for the Storage Service relies heavily on the `Boto3`_
+S3 SDK (Software Development Kit). The library is hosted on GitHub and the
+GitHub issues for Boto3 are a good place to start when trying to understand
+potential upstream issues.
+
+In the Storage Service, debug logging can be increased for the Boto3 adapter.
+There is more information about overriding the Storage Service defaults in the
+`installation README.md`_.
+
+In the `logging configuration`_, administrators should be able to find entries
+for the two primary Boto3 components::
+
+        "boto3": {"level": "INFO"},
+        "botocore": {"level": "INFO"}
+
+Changing the log level for these entries from INFO to DEBUG will output the
+entire wire-trace between the Storage Service and your S3 implementation
+through the lens of the Boto3 SDK. The standard Boto3 logging will provide
+high-level information, and botocore will be much more detailed.
+
+From the documentation, the `Boto3 developers`_ are careful to note as follows:
+
+.. warning::
+
+    Be aware that when logging anything from 'botocore' the full wire trace
+    will appear in your logs. If your payloads contain sensitive data this
+    should not be used in production.
+
+.. note::
+
+     When updating the debug configuration, if the Boto3 entries are not
+     present then they can be added manually. If adding these manually then
+     keep in mind that the change must not compromise the integrity of the
+     JSON.
+
 .. _locations:
 
 Locations
@@ -1211,3 +1253,7 @@ platform (Transifex).
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
 .. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
 .. _`Replication management command`: https://github.com/artefactual/archivematica-storage-service/blob/34f9d6fde79bcde0f962a004ac2f575d8911794b/storage_service/common/management/commands/create_aip_replicas.py
+.. _`Boto3`: https://github.com/boto/boto3
+.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.17.x/install#logging-configuration
+.. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
+.. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
