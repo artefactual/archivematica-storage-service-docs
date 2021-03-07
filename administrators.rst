@@ -927,17 +927,9 @@ Replicator locations can be configured to replicate the AIPs in one or more AIP
 storage locations. Replicators can be configured for each of the following
 protocols supported by the Storage Service:
 
+* Duracloud.
 * Local filesystem, including GPG encrypted.
 * S3.
-* Arkivum.
-* Duracloud.
-* DSpace via SWORD2 API.
-* DSpace via REST API.
-* Fedora via Sword2.
-* LOCKSS-o-matic.
-* NFS.
-* Pipeline local filesystem.
-* Swift.
 
 Replicators are associated with an AIP storage location via the storage
 location's configuration page. As such Replicators must be configured before
