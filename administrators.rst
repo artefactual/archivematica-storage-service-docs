@@ -678,8 +678,8 @@ S3 (Amazon)
 ^^^^^^^^^^^
 
 Amazon S3 is available as an access protocol as of Storage Service version 0.12.
-Locations within S3 can be used as AIP Storage, Replicator and Transfer Source
-:ref:`locations <location-purposes>`.
+Locations within S3 can be used as AIP Storage, DIP Storage, Replicator and
+Transfer Source :ref:`locations <location-purposes>`.
 
 Fields:
 
