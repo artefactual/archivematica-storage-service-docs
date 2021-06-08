@@ -801,6 +801,36 @@ From the documentation, the `Boto3 developers`_ are careful to note as follows:
      keep in mind that the change must not compromise the integrity of the
      JSON.
 
+.. _write-only-replica-staging:
+
+Write-Only Replica Staging on local filesystem
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Write-Only Replica Staging spaces allow users to stage AIP replicas on a local
+filesystem for delivery to offline storage systems such as tape robots. Only
+Replicator locations can be created in a Write-Only Replica Staging space.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the absolute path to the Space on the local filesystem.
+* **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
+  compatible and preferably will be located on the same filesystem as the path.
+
+.. important::
+
+   Write-Only Replica Staging is a write-once space. Replicas stored in a
+   Replicator location in a Write-Only Replica Staging space cannot
+   downloaded, deleted, or fixity checked after storage.
+
+.. important::
+
+   Replicas written within a Write-Only Replica Staging space are stored
+   directly within the Replicator location's path rather than within the
+   typical UUID quad directories. This enables efficient retrieval of packages
+   stored in the space by offline storage systems.
+
 .. _locations:
 
 Locations
@@ -928,7 +958,7 @@ storage locations. Replicators can be configured for each of the following
 protocols supported by the Storage Service:
 
 * Duracloud.
-* Local filesystem, including GPG encrypted.
+* Local filesystem, including GPG encrypted and write-only replica staging.
 * S3.
 
 Replicators are associated with an AIP storage location via the storage
@@ -963,9 +993,13 @@ versa.
 
 If a Replicator is disabled, reingest can be used to selectively remove
 replicas from that replica location. If a new Replicator is enabled, reingest
-can be used to replicate an existing AIP in that replica location. The Storage
-Service replica management command `Replication management command`_ can be
-used to perform these actions in bulk and without the need for reingest.
+can be used to replicate an existing AIP in that replica location.
+
+**Creating and updating replicas without reingest:**
+
+Replicas can also be created and updated in bulk without the need for reingest
+using the :ref:`create AIP replicas <creating-aip-replicas>`
+:ref:`management command <management>`.
 
 **Deletion of the source AIP will delete the replicas:**
 
@@ -1025,8 +1059,9 @@ To create and configure a new Location:
       be added via this page.
 
       Replica AIPs will be created only after a location has been associated
-      with a Replicator, but can also be created retroactively via the storage
-      service replica management command `Replication management command`_.
+      with a Replicator, but can also be created retroactively via the
+      :ref:`create AIP replicas <creating-aip-replicas>`
+      :ref:`management command <management>`.
 
 #. Save the Location settings.
 #. The new Location will now be available as an option under the appropriate
@@ -1244,7 +1279,6 @@ platform (Transifex).
 .. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
 .. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
-.. _`Replication management command`: https://github.com/artefactual/archivematica-storage-service/blob/34f9d6fde79bcde0f962a004ac2f575d8911794b/storage_service/common/management/commands/create_aip_replicas.py
 .. _`Boto3`: https://github.com/boto/boto3
 .. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.17.x/install#logging-configuration
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json

@@ -12,6 +12,7 @@
    install
    migration-sqlite-mysql
    fixity
+   management
 
 Indices and tables
 ==================

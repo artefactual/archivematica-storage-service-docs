@@ -64,6 +64,18 @@ entirety of the AIP storage location.
 * :ref:`Using the Fixity application <fixity-application>`
 * :ref:`Reviewing fixity results in the Storage Service <reviewing-fixity-checks>`
 
+.. _management-commands:
+
+Management commands
+-------------------
+
+The Archivematica Storage Service implements multiple management commands using
+the command interface provided by the Django web framework. These allow
+administrators to perform tasks such as creating new replicas of existing AIPs.
+
+* :ref:`Management commands <management>`
+* :ref:`Creating new AIP replicas <creating-aip-replicas>`
+
 .. _storage-service-installation:
 
 Installation and setup
