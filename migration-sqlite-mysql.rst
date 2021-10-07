@@ -22,7 +22,15 @@ Make sure that you take a back up of your SQLite database before you proceed.
 
 2. Export your data to JSON::
 
-    su - archivematica -s /bin/bash -c "set -a -e -x; source /etc/default/archivematica-storage-service; cd /usr/lib/archivematica/storage-service/; /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py --exclude auth.permission --exclude contenttypes --exclude=sessions.session --natural-foreign --natural-primary --indent 4 dumpdata > /tmp/datadump.json"
+    sudo -u archivematica bash -c " \
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py dumpdata \
+            --exclude=auth.permission --exclude=contenttypes --exclude=sessions.session --natural-foreign --natural-primary --indent 4 -o /tmp/datadump.json
+    ";
 
 3. Create the MySQL database::
 
@@ -40,14 +48,32 @@ Make sure that you take a back up of your SQLite database before you proceed.
 
 6. Create the MySQL tables::
 
-    su - archivematica -s /bin/bash -c "set -a -e -x; source /etc/default/archivematica-storage-service; cd /usr/lib/archivematica/storage-service/; /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py migrate"
+    sudo -u archivematica bash -c " \
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py migrate
+    ";
 
 7. Load the JSON export::
 
-    su - archivematica -s /bin/bash -c "set -a -e -x; source /etc/default/archivematica-storage-service; cd /usr/lib/archivematica/storage-service/; /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py loaddata /tmp/datadump.json"
+    sudo -u archivematica bash -c " \
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py loaddata /tmp/datadump.json
+    ";
 
 8. Start Storage Service::
 
     systemctl start archivematica-storage-service
 
+If you use Ansible, the Archivematica role can perform the migration
+automatically. Please follow the `instructions`_.
+
 .. _issue 952: https://github.com/archivematica/Issues/issues/952
+.. _instructions: https://github.com/artefactual-labs/ansible-archivematica-src#migration-to-mysql-in-storage-service
