@@ -1198,7 +1198,8 @@ edit, disable, and delete pipelines, spaces, and locations. Managers can also
 configure the Storage Service, create callbacks, and create and delete keys.
 
 **Administrators** have all the permissions listed above, and can additionally
-create and manage other Storage Service users.
+create and manage other Storage Service users. Administrators will also receive
+email notifications when special events occur.
 
 Version
 -------
