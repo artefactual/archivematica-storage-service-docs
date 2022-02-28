@@ -1179,10 +1179,26 @@ one is required.
 Users
 -----
 
-The Storage Service has two types of users: administrative users, and regular
-users. The only distinction between the two types is for email notifications;
-administrators will be notified by email when special events occur, while
-regular users will not. Only registered users can long into the Storage Service.
+The Users section allows you to manage users for the Storage Service. Only
+registered users can long into the Storage Service.
+
+There are four user roles: administrator, manager, reviewer, and reader.
+
+**Readers** can see all information pipelines, spaces, locations, and packages
+tab, but cannot edit, manage deletion requests, or take any other action in
+those tabs. In the administration tab, readers can edit their own user profiles.
+Readers can also change the language of the Storage Service interface for
+themselves.
+
+**Reviewers** have all the permissions listed above, and can additionally
+review, approve, and reject package recovery and deletion requests.
+
+**Managers** have all the permissions listed above, and can additionally create,
+edit, disable, and delete pipelines, spaces, and locations. Managers can also
+configure the Storage Service, create callbacks, and create and delete keys.
+
+**Administrators** have all the permissions listed above, and can additionally
+create and manage other Storage Service users.
 
 Version
 -------
