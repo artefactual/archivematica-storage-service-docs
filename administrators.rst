@@ -70,7 +70,7 @@ Archivematica configuration
 When installing Archivematica, options to configure it with the Storage
 Service will be presented.
 
-.. image:: images/Install3.*
+.. image:: images/installer.*
    :align: center
    :width: 40%
    :alt: Configuring the Storage Service during Archivematica installation.
