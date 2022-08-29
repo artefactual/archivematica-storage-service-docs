@@ -637,6 +637,33 @@ Fields:
   rsync with remote shell.
 * **Rsync password**: the password for the rsync daemon
 
+.. _admin-rclone:
+
+RClone
+^^^^^^
+
+`rclone`_ is a command-line program to manage files in cloud storage, and is
+available as an access protocol in Storage Service 0.20 and higher.
+
+The RClone space allows for use of over 40 cloud providers with Archivematica
+as Transfer Source, AIP Store, DIP Store, and Replicator locations.
+Configuration of details such as access keys can be done with a configuration
+file or via environment variables (the recommended method). See the
+`rclone documentation on configuration via environment variables`_.
+
+Fields:
+
+* **Access protocol**: RClone
+* **Size**: *This field is optional.*
+* **Path**: Leave this field blank.
+* **Staging path**: A location on your local disk where Archivematica can
+  place files for staging purposes, for example
+  ``var/archivematica/storage_service/rclone_staging``.
+* **Remote name**: Remote name for the rclone configuration to use with this
+  Space. Must match value in environment variables, case-insensitive.
+* **Container/Bucket name**: Container or bucket name to use in configured
+  remote (optional, depending on service being used via rclone).
+
 .. _swift:
 
 Swift
@@ -1300,3 +1327,5 @@ platform (Transifex).
 .. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.17.x/install#logging-configuration
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
+.. _`rclone`: http://rclone.org
+.. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
