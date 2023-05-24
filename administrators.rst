@@ -1207,7 +1207,7 @@ Users
 -----
 
 The Users section allows you to manage users for the Storage Service. Only
-registered users can long into the Storage Service.
+registered users can log into the Storage Service.
 
 There are four user roles: administrator, manager, reviewer, and reader.
 
