@@ -17,7 +17,7 @@ A full list of commands can be retrieved as follows:
 	        source /etc/sysconfig/archivematica-storage-service \
 	            || (echo 'Environment file not found'; exit 1)
 	    cd /usr/lib/archivematica/storage-service
-	    /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py create_aip_replicas
+	    /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help
   ";
 
 If you want to see the help message of a specific command, try:
