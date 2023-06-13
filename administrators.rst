@@ -1324,7 +1324,7 @@ platform (Transifex).
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
 .. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
 .. _`Boto3`: https://github.com/boto/boto3
-.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.17.x/install#logging-configuration
+.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.20.x/install#logging-configuration
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
 .. _`rclone`: http://rclone.org
