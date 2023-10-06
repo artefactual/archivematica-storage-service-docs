@@ -10,83 +10,55 @@ general installation <archivematica:installation>` documentation for
 instructions on installing both Archivematica and the Storage Service from
 Ansible or packages.
 
-This app is designed to be run using `pip`_, `virtualenv`_, and
-`virtualenvwrapper`_. It has been tested with Python 2.7.3.
+This app is designed to run in Python 3.9.
 
-To get up and running:
+In Ubuntu 22.04 you can install Python 3.9 using the `deadsnakes ppa`_ ::
 
-#. Install pip (if it is not already installed) ::
+    sudo apt-get update
+    sudo apt-get install -y software-properties-common
+    sudo add-apt-repository -y ppa:deadsnakes/ppa
+    sudo apt-get install python3.9
 
-    $ sudo apt-get install python-pip
+Install dependencies (if they are not already installed) ::
 
-#. Install dependencies (if they are not already installed) ::
+    sudo apt-get install -y \
+        build-essential \
+        gcc \
+        git \
+        gettext \
+        gnupg1 \
+        libffi-dev \
+        libldap2-dev \
+        libmysqlclient-dev \
+        libsasl2-dev \
+        libssl-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        libz-dev \
+        nginx \
+        p7zip-full \
+        python3.9-dev \
+        python3.9-venv \
+        rclone \
+        rng-tools-debian \
+        rsync \
+        unar
 
-    $ sudo apt-get install gcc libxslt1-dev python-dev
+Create and configure the virtualenv, and add source code. ::
 
-#. Install virtualenv and virtualenvwrapper ::
-
-    $ pip install virtualenv virtualenvwrapper
-
-#. Add some environment variables to your shell startup script, such as .bashrc.
-   This allows pip, virtualenv, and virtualenvwrapper to do their magic. The
-   exact location of the virtualenvwrapper.sh script might be different on your
-   system. ::
-
-    export WORKON_HOME=$HOME/Envs
-    source /usr/local/bin/virtualenvwrapper.sh
-
-#. Create and configure the virtualenv, and add source code. ::
-
-    mkdir -p $WORKON_HOME
-    mkvirtualenv storage-service
-    git clone git@github.com:artefactual/archivematica-storage-service.git
+    python3.9 -m venv $HOME/ss-venv
+    source $HOME/ss-venv/bin/activate
+    git clone https://github.com/artefactual/archivematica-storage-service.git --branch stable/0.21.x
     cd archivematica-storage-service
-    setvirtualenvproject
+    pip install -r requirements.txt
 
-   You should now have a virtualenv, with it's own isolated python interpreter, and a project directory. The source code for the project should be there ready to work with.
+You should now have a virtual environment, with its own isolated Python
+interpreter, and a Django project in the ``storage_service`` subdirectory.
 
-#. Add dependencies. Assuming you are doing development work, use the local
-   requirements file. For a testing or production install, use
-   ``requirements/testing.txt`` or ``requirements/production.txt``,
-   respectively. ::
-
-    pip install -r requirements/local.txt
-
-#. Create required environment variables. Add the following to your virtualenv's
-   postactivate script, found in this example at
-   ``$WORKON_HOME/storage-service/bin/postactivate``. Set the
-   ``DJANGO_SETTINGS_MODULE`` to match whichever requirements file you installed
-   from (local, test or production). ::
-
-    PROJECTPATH=$(cat $VIRTUAL_ENV/.project)
-    export PYTHONPATH=$PYTHONPATH:$PROJECTPATH
-
-    export DJANGO_SETTINGS_MODULE=storage_service.settings.local
-    export DJANGO_SECRET_KEY='ADDKEY'
-    export SS_DB_NAME='storage_service/default.db'
-    export SS_DB_USER=''
-    export SS_DB_PASSWORD=''
-    export SS_DB_HOST=''
-
-#. Create the database schema. You can use the django-admin script to make an
-   initial version of the main database, then use the tool South to create the
-   FPR app's data model. ::
-
-    cdproject
-    cd storage_service
-    python2 manage.py syncdb
-    python2 manage.py migrate
-
-#. Start the server. This example uses Django's built in webserver, good for
-   testing only. Use a WSGI compliant webserver like Apache or Nginx in
-   production. Using 0.0.0.0 makes the app available on all interfaces. ::
-
-    cdproject
-    cd storage_service
-    python2 manage.py runserver 0.0.0.0:8000
+If you plan on doing development work on the Storage Service, it's recommended
+you use `the Docker Compose based development environment`_.
 
 :ref:`Back to the top <install>`
 
-.. _pip: https://pypi.org/project/pip/
-.. _virtualenv: https://virtualenv.pypa.io/en/latest/
-.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _`deadsnakes ppa`: https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
+.. _`the Docker Compose based development environment`: https://github.com/artefactual/archivematica/tree/qa/1.x/hack#archivematica-development-on-docker-compose
