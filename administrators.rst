@@ -181,6 +181,46 @@ more information.
 Access protocols
 ----------------
 
+.. _archipelago:
+
+Archipelago
+
+**Configuring Archipelago as a storage service space:**
+Archipelago is currently supported for AIP Storage locations. Archipelago is built on the content manaagement system Drupal, which accepts JSON API calls to create new entities. 
+The storage service is able to send AIPs directly to Archipelago this way, 
+creating new entities as an 'AIP' content type.
+
+**In Archipelago:**
+There are plans by Archipelago's developers to add AIP as a default object type for the platform. For now, we can create the AIP content type ourselves in a few steps.
+
+* In the Manage administrative menu, navigate to Structure > Content types (admin/structure/types). The Content types page appears showing all the available types of content. 
+
+* Click Add content type. Name the content type AIP. 
+* Add a single strawberry field only to the content type, and this will complete setup to allow transfers from Archivematica. 
+* Ensure your user has write permissions via JSON API. 
+
+For more info on creating the content type in Archipelago, see drupal instructions `here <https://www.drupal.org/docs/user_guide/en/structure-content-type.html>`_.
+
+
+**In Storage Service:**
+AIPs can be sent to an Archipelago instance via JSON API calls. The Archipelago instance URL is required, as well as an Archipelago username and password with write permissions on the platform. 
+* When creating the space, the staging path should be set to the default `/var/archievmatica/storage_service`. 
+* When creating the AIP storage location in the space, set the relative path to `/`. 
+
+During the transfer to Archipelago, the AIP file is uploaded first. If file uploads successfully, a new AIP type entity is created in Archipelago. 
+If the AIP file doesn't uploaded successfully, the new AIP entity is not created in Archipelago. The successful entity contains the uploaded file, and the corresponding Dublin Core metadata extracted from the mets.xml file associated with the AIP.
+
+Fields:
+
+* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+  for unlimited. This field is optional.
+* **Path**: the local path on the Storage Service machine to the CIFS share. This field is optional for Archipelago.
+* **Staging Path**: the absolute path to a staging area. When creating the space, the staging path should be set to the default `/var/archievmatica/storage_service`. 
+* **Archipealgo URL**: the hostname of the Archipelago web instance or IP address with port,
+  e.g. ``archipelago.example.com:8443``
+* **Archipelago username**: Archipelago username with write access required
+* **Archipelago password**: Arcihpelago password with write access required
+
 .. _arkivum:
 
 Arkivum
