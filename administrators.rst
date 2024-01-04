@@ -197,7 +197,7 @@ There are plans by Archipelago's developers to add AIP as a default object type 
 
 * Click Add content type. Name the content type AIP. 
 * Add a single strawberry field only to the content type, and this will complete setup to allow transfers from Archivematica. 
-* Ensure your user has write permissions via JSON API. 
+* Ensure your user has write permissions via JSON API. To do this, on Archipelago under Administration > Configuration > JSON:API, tick the box "Accept all JSON:API create, read, update, and delete operations." to allow JSON API writes to be made to archipelago. Specific permissions for the AIP content type can also be set under Administration > Struct > Content types > AIP > Manage permissions, where you can select if only authenticated users or anonymous users can create AIPs.
 
 For more info on creating the content type in Archipelago, see drupal instructions `here <https://www.drupal.org/docs/user_guide/en/structure-content-type.html>`_.
 
