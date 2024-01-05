@@ -188,7 +188,7 @@ Archipelago
 **Configuring Archipelago as a storage service space:**
 Archipelago is currently supported for AIP Storage locations. Archipelago is built on the content manaagement system Drupal, which accepts JSON API calls to create new entities. 
 The storage service is able to send AIPs directly to Archipelago this way, 
-creating new entities as an 'AIP' content type.
+creating new entities as an 'AIP' content type. Curretly Archipelago integration is limited to storing AIP storage. Retrieving, re-ingesting, deleting and integrating the API of the storage service with Archivematica is not yet possible.
 
 **In Archipelago:**
 There are plans by Archipelago's developers to add AIP as a default object type for the platform. For now, we can create the AIP content type ourselves in a few steps.
