@@ -773,6 +773,14 @@ Fields:
    will be automatically created if necessary, and if the AWS user has
    permissions to do so.
 
+   More specifically, the IAM user associated with the access key must be
+   granted the following permissions to interact with the bucket:
+
+   * ``s3:PutObject``
+   * ``s3:ListBucket``
+   * ``s3:GetBucketLocation``
+   * ``s3:GetObject``
+
 .. warning::
 
    For the `Path` configured in the Storage Space and `Relative Path`
