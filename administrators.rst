@@ -829,6 +829,20 @@ Fields:
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the PutObject operation: Access Denied
      ERROR 	2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
+
+   `s3:DeleteObject`_
+
+   Grants permission to remove the null version of an object and insert a delete
+   marker, which becomes the current version of the object.
+
+   Missing this permission raises this exception when the Storage Service tries
+   to delete a package::
+
+     ERROR 	2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
+     Traceback (most recent call last):
+     ...
+     botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
+
    `s3:CreateBucket`_
 
    Grants permission to create a new bucket.
@@ -856,6 +870,7 @@ Fields:
              "s3:PutObject",
              "s3:GetObject",
              "s3:ListBucket",
+             "s3:DeleteObject",
              "s3:GetBucketLocation"
            ],
            "Resource": [
@@ -1426,4 +1441,5 @@ platform (Transifex).
 .. _`s3:GetObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
 .. _`s3:GetBucketLocation`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html
 .. _`s3:PutObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+.. _`s3:DeleteObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
 .. _`s3:CreateBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
