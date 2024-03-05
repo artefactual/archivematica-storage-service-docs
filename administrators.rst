@@ -773,12 +773,11 @@ Fields:
    will be automatically created if necessary, and if the AWS user has
    permissions to do so.
 
-   More specifically, to interact with the bucket the IAM user associated with
-   the access key must be granted permission to the following actions on the S3
-   service. These permissions can be granted through IAM policies attached to
-   the user or its groups.
+   More specifically, the user associated with the access key must be granted
+   permission to the following actions on the S3 service to interact with the
+   bucket:
 
-   **List permissions**
+   *List permissions*
 
    `s3:ListBucket`_
 
@@ -792,7 +791,7 @@ Fields:
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the ListObjects operation: Access Denied
      ERROR 	2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
 
-   **Read permissions**
+   *Read permissions*
 
    `s3:GetObject`_
 
@@ -818,7 +817,7 @@ Fields:
      locations.models.StorageException: An error occurred (AccessDenied) when calling the GetBucketLocation operation: Access Denied
      ERROR 	2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
-   **Write permissions**
+   *Write permissions*
 
    `s3:PutObject`_
 
@@ -842,6 +841,30 @@ Fields:
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the CreateBucket operation: Access Denied
      ERROR 	2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+
+   In Amazon Web Services these permissions can be granted through IAM policies
+   attached to the user or its groups. For example, a policy that grants these
+   permissions on a bucket called ``mybucket`` might look like this::
+
+     {
+       "Version": "2012-10-17",
+       "Statement": [
+         {
+           "Sid": "VisualEditor0",
+           "Effect": "Allow",
+           "Action": [
+             "s3:PutObject",
+             "s3:GetObject",
+             "s3:ListBucket",
+             "s3:GetBucketLocation"
+           ],
+           "Resource": [
+             "arn:aws:s3:::mybucket/*",
+             "arn:aws:s3:::mybucket"
+           ]
+         }
+       ]
+     }
 
 .. warning::
 
