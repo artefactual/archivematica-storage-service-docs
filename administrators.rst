@@ -297,7 +297,8 @@ DuraCloud with Archivematica <archivematica:duracloud-setup>`.
 Fields:
 
 * **Access protocol**: DuraCloud
-* **Size**: *This field is optional.*
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: Leave this field blank.
 * **Staging path**: A location on your local disk where Archivematica can
   place files for staging purposes, for example
@@ -350,8 +351,8 @@ custom properties which can be defined:
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Leave blank for
-  unlimited. This field is optional.
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
   compatible and preferably will be located on the same filesystem as the path.
@@ -654,7 +655,8 @@ file or via environment variables (the recommended method). See the
 Fields:
 
 * **Access protocol**: RClone
-* **Size**: *This field is optional.*
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: Leave this field blank.
 * **Staging path**: A location on your local disk where Archivematica can
   place files for staging purposes, for example
