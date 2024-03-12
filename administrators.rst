@@ -773,6 +773,114 @@ Fields:
    will be automatically created if necessary, and if the AWS user has
    permissions to do so.
 
+   More specifically, the user associated with the access key must be granted
+   permission to the following actions on the S3 service to interact with the
+   bucket:
+
+   *List permissions*
+
+   `s3:ListBucket`_
+
+   Grants permission to list some or all of the objects in an Amazon S3 bucket
+   (up to 1000).
+
+   Missing this permission does not prevent packages from being stored, but
+   raises this exception when the Storage Service tries to browse the space or
+   its locations::
+
+     botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the ListObjects operation: Access Denied
+     ERROR 	2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
+
+   *Read permissions*
+
+   `s3:GetObject`_
+
+   Grants permission to retrieve objects from Amazon S3.
+
+   Missing this permission does not prevent packages from being stored, but
+   raises exceptions like these when the Storage Service tries to retrieve the
+   package or extract a file in it::
+
+     botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
+     ERROR 	2024-03-04 12:59:36  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/download/
+
+     botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
+     ERROR     2024-03-04 12:59:19  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/extract_file/
+
+   `s3:GetBucketLocation`_
+
+   Grants permission to return the Region that an Amazon S3 bucket resides in.
+
+   Missing this permission raises this exception when the Storage Service tries
+   to store the package::
+
+     locations.models.StorageException: An error occurred (AccessDenied) when calling the GetBucketLocation operation: Access Denied
+     ERROR 	2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+
+   *Write permissions*
+
+   `s3:PutObject`_
+
+   Grants permission to add an object to a bucket.
+
+   Missing this permission raises this exception when the Storage Service tries
+   to store the package::
+
+     botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the PutObject operation: Access Denied
+     ERROR 	2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+
+
+   `s3:DeleteObject`_
+
+   Grants permission to remove the null version of an object and insert a delete
+   marker, which becomes the current version of the object.
+
+   Missing this permission raises this exception when the Storage Service tries
+   to delete a package::
+
+     ERROR 	2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
+     Traceback (most recent call last):
+     ...
+     botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
+
+   `s3:CreateBucket`_
+
+   Grants permission to create a new bucket.
+
+   This permission is only necessary if you want to give the S3 space the
+   ability to create its bucket when it doesn't exist yet.
+
+   Missing this permission or setting up the incorrect bucket raises this
+   exception when the Storage Service tries to store the package::
+
+     botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the CreateBucket operation: Access Denied
+     ERROR 	2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+
+   In Amazon Web Services these permissions can be granted through IAM policies
+   attached to the user or its groups. For example, a policy that grants these
+   permissions on a bucket called ``mybucket`` might look like this::
+
+     {
+       "Version": "2012-10-17",
+       "Statement": [
+         {
+           "Sid": "VisualEditor0",
+           "Effect": "Allow",
+           "Action": [
+             "s3:PutObject",
+             "s3:GetObject",
+             "s3:ListBucket",
+             "s3:DeleteObject",
+             "s3:GetBucketLocation"
+           ],
+           "Resource": [
+             "arn:aws:s3:::mybucket/*",
+             "arn:aws:s3:::mybucket"
+           ]
+         }
+       ]
+     }
+
 .. warning::
 
    For the `Path` configured in the Storage Space and `Relative Path`
@@ -1329,3 +1437,9 @@ platform (Transifex).
 .. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
 .. _`rclone`: http://rclone.org
 .. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
+.. _`s3:ListBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+.. _`s3:GetObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+.. _`s3:GetBucketLocation`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html
+.. _`s3:PutObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+.. _`s3:DeleteObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
+.. _`s3:CreateBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
