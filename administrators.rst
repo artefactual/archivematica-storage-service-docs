@@ -208,7 +208,7 @@ Storage Service.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the local path on the Storage Service machine to the CIFS share,
   e.g. ``/mnt/astor``
@@ -231,7 +231,7 @@ Storage Service v0.13 (and higher).
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -297,7 +297,8 @@ DuraCloud with Archivematica <archivematica:duracloud-setup>`.
 Fields:
 
 * **Access protocol**: DuraCloud
-* **Size**: *This field is optional.*
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: Leave this field blank.
 * **Staging path**: A location on your local disk where Archivematica can
   place files for staging purposes, for example
@@ -350,8 +351,8 @@ custom properties which can be defined:
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank for
-  unlimited. This field is optional.
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
   compatible and preferably will be located on the same filesystem as the path.
@@ -435,7 +436,7 @@ Fields:
 
 .. _restrictedmetadata:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -468,7 +469,7 @@ is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -508,7 +509,7 @@ a GPG key on the :ref:`Administration page <administration>`.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -537,7 +538,7 @@ mounted, we recommend using a more specific Space if one is available.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -555,7 +556,7 @@ Network (PLN).
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -585,7 +586,7 @@ Archivematica pipeline.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to where the space is mounted on the filesystem
   local to the Storage Service.
@@ -622,7 +623,7 @@ Local Filesystem.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to where the space is mounted on the filesystem
   local to the Storage Service.
@@ -654,7 +655,8 @@ file or via environment variables (the recommended method). See the
 Fields:
 
 * **Access protocol**: RClone
-* **Size**: *This field is optional.*
+* **Size**: the maximum size allowed for this space. Leave blank
+  for unlimited. This field is optional.
 * **Path**: Leave this field blank.
 * **Staging path**: A location on your local disk where Archivematica can
   place files for staging purposes, for example
@@ -674,7 +676,7 @@ higher.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -710,7 +712,7 @@ Transfer Source :ref:`locations <location-purposes>`.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: *Not required: see below*.
 * **Staging path**: the absolute path to a staging area on the same server as
@@ -947,7 +949,7 @@ Replicator locations can be created in a Write-Only Replica Staging space.
 
 Fields:
 
-* **Size**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Size**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Path**: the absolute path to the Space on the local filesystem.
 * **Staging path**: the absolute path to a staging area. Must be UNIX filesystem
@@ -997,7 +999,7 @@ Fields:
 * **Relative Path**: the path to this location, relative to the space that
   contains it.
 * **Description**: a description of the location to be displayed to the user.
-* **Quota**: the maximum size allowed for this space. Set to 0 or leave blank
+* **Quota**: the maximum size allowed for this space. Leave blank
   for unlimited. This field is optional.
 * **Enabled**: if checked, this location will be accessible to pipelines
   associated with it. If unchecked, it will not be available to any pipeline.
