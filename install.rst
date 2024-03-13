@@ -61,4 +61,4 @@ you use `the Docker Compose based development environment`_.
 :ref:`Back to the top <install>`
 
 .. _`deadsnakes ppa`: https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
-.. _`the Docker Compose based development environment`: https://github.com/artefactual/archivematica/tree/qa/1.x/hack#archivematica-development-on-docker-compose
+.. _`the Docker Compose based development environment`: https://github.com/artefactual/archivematica/blob/qa/1.x/hack/README.md

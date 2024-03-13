@@ -76,4 +76,4 @@ If you use Ansible, the Archivematica role can perform the migration
 automatically. Please follow the `instructions`_.
 
 .. _issue 952: https://github.com/archivematica/Issues/issues/952
-.. _instructions: https://github.com/artefactual-labs/ansible-archivematica-src#migration-to-mysql-in-storage-service
+.. _instructions: https://github.com/artefactual-labs/ansible-archivematica-src/blob/stable/1.15.x/README.md#migration-to-mysql-in-storage-service

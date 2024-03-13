@@ -463,7 +463,7 @@ Fedora via SWORD2
 
 Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
-`Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA/Archidora>`_,
+`Archidora plugin <https://wiki.lyrasis.org/display/ISLANDORA/Archidora>`_,
 which allows ingest of material from Islandora to Archivematica. This workflow
 is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora
 7.x-1.6.
@@ -1428,17 +1428,17 @@ platform (Transifex).
 :ref:`Back to the top <administrators>`
 
 .. _`API documentation`: https://wiki.archivematica.org/Storage_Service_API#AIP_storage_callback_request
-.. _`LOCKSS`: http://www.lockss.org/
-.. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
-.. _`DSpace 5 REST API documentation`: https://wiki.duraspace.org/display/DSDOC5x/REST+API
-.. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
+.. _`LOCKSS`: https://www.lockss.org/
+.. _`Dataverse api guide`: https://guides.dataverse.org/en/latest/api/search.html
+.. _`DSpace 5 REST API documentation`: https://wiki.lyrasis.org/display/DSDOC5x/REST+API
+.. _`DSpace 6 REST API documentation`: https://wiki.lyrasis.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
 .. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
 .. _`Boto3`: https://github.com/boto/boto3
-.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.21.x/install#logging-configuration
+.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/blob/stable/0.21.x/install/README.md#logging-configuration
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
-.. _`rclone`: http://rclone.org
+.. _`rclone`: https://rclone.org
 .. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
 .. _`s3:ListBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
 .. _`s3:GetObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
