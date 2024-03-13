@@ -35,10 +35,10 @@ jobs:
       - name: "Linkcheck"
         run: |
           make linkcheck
-   lint:
-     name: "Linting"
-     runs-on: "ubuntu-22.04"
-     steps:
-     - uses: actions/checkout@v4
-     - uses: actions/setup-python@v5
-     - uses: pre-commit/action@v3
+  lint:
+    name: "Linting"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - uses: "actions/checkout@v4"
+      - uses: "actions/setup-python@v5"
+      - uses: "pre-commit/action@v3"
