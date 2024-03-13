@@ -39,10 +39,11 @@ Storage Service can be used to configure multiple Archivematica pipelines.
 Spaces
 ------
 
-A space models a specific storage device. That device might be a locally-
-accessible disk, a network share, or a remote system accessible via a protocol
-like FEDORA, SWIFT, DuraCloud, or LOCKSS. The space provides the Storage Service
-with configuration to read and/or write data stored within itself.
+A space models a specific storage device. That device might be a
+locally-accessible disk, a network share, or a remote system accessible via a
+protocol like FEDORA, SWIFT, DuraCloud, or LOCKSS. The space provides the
+Storage Service with configuration to read and/or write data stored within
+itself.
 
 Packages are not stored directly inside a space; instead, packages are stored
 within locations, which are organized subdivisions of a space.
@@ -791,7 +792,7 @@ Fields:
    its locations::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the ListObjects operation: Access Denied
-     ERROR 	2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
+     ERROR     2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
 
    *Read permissions*
 
@@ -804,7 +805,7 @@ Fields:
    package or extract a file in it::
 
      botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
-     ERROR 	2024-03-04 12:59:36  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/download/
+     ERROR     2024-03-04 12:59:36  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/download/
 
      botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
      ERROR     2024-03-04 12:59:19  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/extract_file/
@@ -817,7 +818,7 @@ Fields:
    to store the package::
 
      locations.models.StorageException: An error occurred (AccessDenied) when calling the GetBucketLocation operation: Access Denied
-     ERROR 	2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
    *Write permissions*
 
@@ -829,7 +830,7 @@ Fields:
    to store the package::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the PutObject operation: Access Denied
-     ERROR 	2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
 
    `s3:DeleteObject`_
@@ -840,7 +841,7 @@ Fields:
    Missing this permission raises this exception when the Storage Service tries
    to delete a package::
 
-     ERROR 	2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
+     ERROR     2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
      Traceback (most recent call last):
      ...
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
@@ -856,7 +857,7 @@ Fields:
    exception when the Storage Service tries to store the package::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the CreateBucket operation: Access Denied
-     ERROR 	2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
    In Amazon Web Services these permissions can be granted through IAM policies
    attached to the user or its groups. For example, a policy that grants these
