@@ -11,28 +11,27 @@ A full list of commands can be retrieved as follows:
 
 .. code:: bash
 
-   sudo -u archivematica bash -c " \
-	    set -a -e -x
-	    source /etc/default/archivematica-storage-service || \
-	        source /etc/sysconfig/archivematica-storage-service \
-	            || (echo 'Environment file not found'; exit 1)
-	    cd /usr/lib/archivematica/storage-service
-	    /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help
-  ";
+    sudo -u archivematica bash -c " \
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help
+    ";
 
 If you want to see the help message of a specific command, try:
 
 .. code:: bash
 
-   sudo -u archivematica bash -c " \
-       set -a -e -x
-	    source /etc/default/archivematica-storage-service || \
-	        source /etc/sysconfig/archivematica-storage-service \
-	            || (echo 'Environment file not found'; exit 1)
-	    cd /usr/lib/archivematica/storage-service
-	    /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python 
-           manage.py help create_aip_replicas
-   ";
+    sudo -u archivematica bash -c " \
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help create_aip_replicas
+    ";
 
 We've looked up the command for
 :ref:`creating new AIP replicas <creating-aip-replicas>` above.
@@ -56,12 +55,13 @@ Replicator locations.
 .. code:: bash
 
     sudo -u archivematica bash -c " \
-	    set -a -e -x
-	    source /etc/default/archivematica-storage-service || \
-	        source /etc/sysconfig/archivematica-storage-service \
-	            || (echo 'Environment file not found'; exit 1)
-	    cd /usr/lib/archivematica/storage-service
-	    /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py create_aip_replicas
+        set -a -e -x
+        source /etc/default/archivematica-storage-service || \
+            source /etc/sysconfig/archivematica-storage-service \
+                || (echo 'Environment file not found'; exit 1)
+        cd /usr/lib/archivematica/storage-service
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py create_aip_replicas
+    ";
 
 The command accepts the following parameters:
 

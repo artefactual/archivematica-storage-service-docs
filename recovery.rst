@@ -112,5 +112,5 @@ and password into the two fields below it. Click **Save** when you are done.
 
 :ref:`Back to the top <recovery>`
 
-.. _Binder: http://binder.readthedocs.org/en/latest/
-.. _Binder recovery documentation: https://github.com/artefactual/binder#storage-service-aip-recovery-process-and-configuration
+.. _Binder: https://binder.readthedocs.io/en/latest/
+.. _Binder recovery documentation: https://github.com/artefactual/binder/blob/qa/0.9.x/README.md#storage-service-aip-recovery-process-and-configuration

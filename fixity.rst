@@ -87,7 +87,7 @@ changed.
 :ref:`Return to the top <fixity-docs>`
 
 .. _Archivematica AIP: https://www.archivematica.org/en/docs/archivematica-1.9/user-manual/archival-storage/aip-structure/#bagit-documentation
-.. _BagIt File Packaging Format: https://tools.ietf.org/html/rfc8493
+.. _BagIt File Packaging Format: https://datatracker.ietf.org/doc/html/rfc8493
 .. _API endpoint: https://wiki.archivematica.org/Storage_Service_API#Check_fixity
 .. _Fixity: https://github.com/artefactual/fixity
 .. _Digital Preservation Handbook: https://www.dpconline.org/handbook/technical-solutions-and-tools/fixity-and-checksums

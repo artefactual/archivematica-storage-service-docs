@@ -39,10 +39,11 @@ Storage Service can be used to configure multiple Archivematica pipelines.
 Spaces
 ------
 
-A space models a specific storage device. That device might be a locally-
-accessible disk, a network share, or a remote system accessible via a protocol
-like FEDORA, SWIFT, DuraCloud, or LOCKSS. The space provides the Storage Service
-with configuration to read and/or write data stored within itself.
+A space models a specific storage device. That device might be a
+locally-accessible disk, a network share, or a remote system accessible via a
+protocol like FEDORA, SWIFT, DuraCloud, or LOCKSS. The space provides the
+Storage Service with configuration to read and/or write data stored within
+itself.
 
 Packages are not stored directly inside a space; instead, packages are stored
 within locations, which are organized subdivisions of a space.
@@ -462,7 +463,7 @@ Fedora via SWORD2
 
 Fedora via SWORD2 is currently supported in the Storage Service as an Access
 Protocol to facilitate use of the
-`Archidora plugin <https://wiki.duraspace.org/display/ISLANDORA/Archidora>`_,
+`Archidora plugin <https://wiki.lyrasis.org/display/ISLANDORA/Archidora>`_,
 which allows ingest of material from Islandora to Archivematica. This workflow
 is in beta testing as of Storage Service 0.9/Archivematica 1.5/Islandora
 7.x-1.6.
@@ -791,7 +792,7 @@ Fields:
    its locations::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the ListObjects operation: Access Denied
-     ERROR 	2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
+     ERROR     2024-03-04 12:56:10  django.request:log:log_response:241:  Internal Server Error: /api/v2/location/34664de6-025f-40a2-87f5-8720ce51169d/browse
 
    *Read permissions*
 
@@ -804,7 +805,7 @@ Fields:
    package or extract a file in it::
 
      botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
-     ERROR 	2024-03-04 12:59:36  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/download/
+     ERROR     2024-03-04 12:59:36  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/download/
 
      botocore.exceptions.ClientError: An error occurred (403) when calling the HeadObject operation: Forbidden
      ERROR     2024-03-04 12:59:19  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/bf96a036-2631-4fb6-bcdb-781d7690163e/extract_file/
@@ -817,7 +818,7 @@ Fields:
    to store the package::
 
      locations.models.StorageException: An error occurred (AccessDenied) when calling the GetBucketLocation operation: Access Denied
-     ERROR 	2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-04 13:03:04  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
    *Write permissions*
 
@@ -829,7 +830,7 @@ Fields:
    to store the package::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the PutObject operation: Access Denied
-     ERROR 	2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-04 13:06:26  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
 
    `s3:DeleteObject`_
@@ -840,7 +841,7 @@ Fields:
    Missing this permission raises this exception when the Storage Service tries
    to delete a package::
 
-     ERROR 	2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
+     ERROR     2024-03-05 10:20:41  django.request:log:log_response:241:  Internal Server Error: /packages/package_delete_request/
      Traceback (most recent call last):
      ...
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied
@@ -856,7 +857,7 @@ Fields:
    exception when the Storage Service tries to store the package::
 
      botocore.exceptions.ClientError: An error occurred (AccessDenied) when calling the CreateBucket operation: Access Denied
-     ERROR 	2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
+     ERROR     2024-03-05 08:11:34  django.request:log:log_response:241:  Internal Server Error: /api/v2/file/
 
    In Amazon Web Services these permissions can be granted through IAM policies
    attached to the user or its groups. For example, a policy that grants these
@@ -1427,17 +1428,17 @@ platform (Transifex).
 :ref:`Back to the top <administrators>`
 
 .. _`API documentation`: https://wiki.archivematica.org/Storage_Service_API#AIP_storage_callback_request
-.. _`LOCKSS`: http://www.lockss.org/
-.. _`Dataverse api guide`: http://guides.dataverse.org/en/latest/api/search.html
-.. _`DSpace 5 REST API documentation`: https://wiki.duraspace.org/display/DSDOC5x/REST+API
-.. _`DSpace 6 REST API documentation`: https://wiki.duraspace.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
+.. _`LOCKSS`: https://www.lockss.org/
+.. _`Dataverse api guide`: https://guides.dataverse.org/en/latest/api/search.html
+.. _`DSpace 5 REST API documentation`: https://wiki.lyrasis.org/display/DSDOC5x/REST+API
+.. _`DSpace 6 REST API documentation`: https://wiki.lyrasis.org/display/DSDOC6x/REST+API#RESTAPI-Index/Authentication
 .. _`SCOPE documentation`: https://github.com/CCA-Public/scope
 .. _`Swift documentation for large objects`: https://docs.openstack.org/swift/latest/overview_large_objects.html
 .. _`Boto3`: https://github.com/boto/boto3
-.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/tree/stable/0.21.x/install#logging-configuration
+.. _`installation README.md`: https://github.com/artefactual/archivematica-storage-service/blob/stable/0.21.x/install/README.md#logging-configuration
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/core/boto3.html#boto3.set_stream_logger
-.. _`rclone`: http://rclone.org
+.. _`rclone`: https://rclone.org
 .. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
 .. _`s3:ListBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
 .. _`s3:GetObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
