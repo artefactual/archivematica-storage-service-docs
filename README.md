@@ -74,7 +74,6 @@ documentation; notably the Archivematica docs will be missing. Instructions on
 how to build a local, offline version of the Archivematica is available on its
 [GitHub repo](https://github.com/artefactual/archivematica-docs).
 
-
 ## Contributing
 
 Thank you for considering a contribution to the Archivematica Storage Service
