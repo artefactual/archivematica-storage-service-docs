@@ -282,4 +282,5 @@ texinfo_documents = [
 
 linkcheck_ignore = [
     r"([(http:)(https:)]*(\/\/)[\S]*(.)*(github.com)([\s\S])*((.md)[#][\w-]*))",
+    r"([(http:)(https:)]*(\/\/)[\S]*(.)*(drupal.org))",
 ]
