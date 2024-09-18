@@ -76,10 +76,6 @@ Replace the placeholders with the following information:
   ``http://my-site:8000/administration/users/1/edit/`` is **1**.
 * ``<email>``: the email address of the user making the request.
 
-If you use `Binder`_, Binder is capable of sending a notification to the Storage
-Service that a replacement AIP is ready for recovery. Check the `Binder recovery
-documentation`_ for more information.
-
 .. _reporting-recovery-progress:
 
 Reporting recovery progress to external systems
@@ -111,6 +107,3 @@ If the endpoint requires authentication, you'll also need to enter a username
 and password into the two fields below it. Click **Save** when you are done.
 
 :ref:`Back to the top <recovery>`
-
-.. _Binder: https://binder.readthedocs.io/en/latest/
-.. _Binder recovery documentation: https://github.com/artefactual/binder/blob/qa/0.9.x/README.md#storage-service-aip-recovery-process-and-configuration
