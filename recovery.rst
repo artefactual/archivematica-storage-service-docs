@@ -31,7 +31,13 @@ Performing an AIP recovery
       :width: 80%
       :alt: The Locations tab has a table with all Storage Service locations listed. The AIP recovery location has the purpose "AIP Recovery" in the first column.
 
-#. Copy the recovered version of the AIP to the AIP recovery location.
+
+#. Copy the recovered version of the AIP to the AIP recovery location, ensuring
+   that the file or directory name matches the original AIP. If you are
+   recovering using an AIP replica, note that its name will include a different
+   UUID suffix, which you'll need to adjust to match the original AIP. Also,
+   verify that the `archivematica` user is the owner of the recovered copy
+   file or directory.
 
 #. Using the Storage Service REST API, make a
    :ref:`recovery request <example-recovery-request>`.
@@ -64,11 +70,26 @@ Storage Service REST API. Here is an example:
 
 .. code:: bash
 
-   curl --data="event_reason=<description>&pipeline=<pipeline UUID>&user_id=<int>&user_email=<email>" http://127.0.0.1:8000/api/v2/file/<package UUID>/recover_aip/?format=json
+   curl \
+      --location \
+      --request POST \
+      --header 'Authorization: ApiKey <SS user>:<SS user API key>' \
+      --header 'Content-Type: application/json' \
+      --data-raw '{
+          "event_reason": "<description>",
+          "pipeline": "<pipeline UUID>",
+          "user_id": "<int>",
+          "user_email": "<email>"
+      }' \
+      'http://127.0.0.1:8000/api/v2/file/<package UUID>/recover_aip/'
 
 Replace the placeholders with the following information:
 
+* ``<SS user>`` and ``<SS user API key>``: username and API key for
+  authenticating the AIP recovery request. See the
+  :ref:`API overview <archivematica:api-overview>`.
 * ``<description>``: a description of why the recovery request is being made.
+* ``<pipeline UUID>``: UUID of the pipeline which the AIP belongs to.
 * ``<int>``: the numerical user ID. To find the user ID, go to the
   **Administration** tab and click on **Users** in the lefthand sidebar. Click
   on **Edit** for the user who is making the request. The user ID is shown in
