@@ -31,6 +31,10 @@ Performing an AIP recovery
       :width: 80%
       :alt: The Locations tab has a table with all Storage Service locations listed. The AIP recovery location has the purpose "AIP Recovery" in the first column.
 
+#. Ensure the AIP recovery directory is empty before starting the recovery
+   process, and if a ``recover`` directory exists inside the internal processing
+   location (e.g. ``/var/archivematica/storage_service/var/archivematica/storage_service/recover``),
+   make sure it is empty as well.
 
 #. Copy the recovered version of the AIP to the AIP recovery location, ensuring
    that the file or directory name matches the original AIP. If you are
