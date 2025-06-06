@@ -16,8 +16,8 @@ A full list of commands can be retrieved as follows:
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.storage_service.manage \
+            help
     ";
 
 If you want to see the help message of a specific command, try:
@@ -29,8 +29,8 @@ If you want to see the help message of a specific command, try:
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py help create_aip_replicas
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.storage_service.manage \
+            help create_aip_replicas
     ";
 
 We've looked up the command for
@@ -59,8 +59,8 @@ Replicator locations.
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py create_aip_replicas
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.storage_service.manage \
+            create_aip_replicas
     ";
 
 The command accepts the following parameters:
