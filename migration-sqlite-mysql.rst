@@ -27,9 +27,9 @@ Make sure that you take a back up of your SQLite database before you proceed.
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py dumpdata \
-            --exclude=auth.permission --exclude=contenttypes --exclude=sessions.session --natural-foreign --natural-primary --indent 4 -o /tmp/datadump.json
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.manage \
+            dumpdata \
+                --exclude=auth.permission --exclude=contenttypes --exclude=sessions.session --natural-foreign --natural-primary --indent 4 -o /tmp/datadump.json
     ";
 
 3. Create the MySQL database::
@@ -53,8 +53,8 @@ Make sure that you take a back up of your SQLite database before you proceed.
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py migrate
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.manage \
+            migrate
     ";
 
 7. Load the JSON export::
@@ -64,8 +64,8 @@ Make sure that you take a back up of your SQLite database before you proceed.
         source /etc/default/archivematica-storage-service || \
             source /etc/sysconfig/archivematica-storage-service \
                 || (echo 'Environment file not found'; exit 1)
-        cd /usr/lib/archivematica/storage-service
-        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python manage.py loaddata /tmp/datadump.json
+        /usr/share/archivematica/virtualenvs/archivematica-storage-service/bin/python -m archivematica.storage_service.manage \
+            loaddata /tmp/datadump.json
     ";
 
 8. Start Storage Service::
