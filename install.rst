@@ -48,7 +48,7 @@ Create and configure the virtualenv, and add source code. ::
 
     python3.9 -m venv $HOME/ss-venv
     source $HOME/ss-venv/bin/activate
-    git clone https://github.com/artefactual/archivematica-storage-service.git --branch stable/0.23.x
+    git clone https://github.com/artefactual/archivematica-storage-service.git --branch stable/0.24.x
     cd archivematica-storage-service
     pip install -r requirements.txt
 
