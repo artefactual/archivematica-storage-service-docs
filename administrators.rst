@@ -687,10 +687,20 @@ RClone
 `rclone`_ is a command-line program to manage files in cloud storage, and is
 available as an access protocol in Storage Service 0.20 and higher.
 
-The RClone space allows for use of over 40 cloud providers with Archivematica
-as Transfer Source, AIP Store, DIP Store, and Replicator locations.
+The RClone space allows for use of over 40 cloud providers including Amazon S3, Azure Blobs and Google Cloud Storage with Archivematica
+as Transfer Source, AIP Store, DIP Store or Replicator locations.
 Configuration of details such as access keys can be done with a configuration
-file or via environment variables (the recommended method). See the
+file or via environment variables.
+
+The configuration file can be created for each different location using `rclone interactive configuration`_:
+
+.. code:: bash
+
+    sudo -u archivematica bash -c "rclone config"
+
+The remote name must match the one configured in the Storage Service.
+
+For configuration through environment variables, see the
 `rclone documentation on configuration via environment variables`_.
 
 Fields:
@@ -703,7 +713,7 @@ Fields:
   place files for staging purposes, for example
   ``var/archivematica/storage_service/rclone_staging``.
 * **Remote name**: Remote name for the rclone configuration to use with this
-  Space. Must match value in environment variables, case-insensitive.
+  Space. Must match value in environment variables or config file, case-insensitive.
 * **Container/Bucket name**: Container or bucket name to use in configured
   remote (optional, depending on service being used via rclone).
 
@@ -1479,6 +1489,7 @@ platform (Transifex).
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://docs.aws.amazon.com/boto3/latest/reference/core/boto3.html#boto3.set_stream_logger
 .. _`rclone`: https://rclone.org
+.. _`rclone interactive configuration`: https://rclone.org/commands/rclone_config/
 .. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
 .. _`s3:ListBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
 .. _`s3:GetObject`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
