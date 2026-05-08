@@ -687,7 +687,7 @@ RClone
 `rclone`_ is a command-line program to manage files in cloud storage, and is
 available as an access protocol in Storage Service 0.20 and higher.
 
-The RClone space allows for use of over 40 cloud providers including Amazon S3, Azure Blobs and Google Cloud Storage with Archivematica
+The RClone space allows for use of `over 40 cloud providers`_ including Amazon S3, Azure Blobs and Google Cloud Storage with Archivematica
 as Transfer Source, AIP Store, DIP Store or Replicator locations.
 Configuration of details such as access keys can be done with a configuration
 file or via environment variables.
@@ -1489,6 +1489,7 @@ platform (Transifex).
 .. _`logging configuration`: https://github.com/artefactual/archivematica-storage-service/blob/e68825db8819aceaa426a6066d612e810bf52ddd/install/storageService.logging.json
 .. _`Boto3 developers`: https://docs.aws.amazon.com/boto3/latest/reference/core/boto3.html#boto3.set_stream_logger
 .. _`rclone`: https://rclone.org
+.. _`over 40 cloud providers`: https://rclone.org/overview/
 .. _`rclone interactive configuration`: https://rclone.org/commands/rclone_config/
 .. _`rclone documentation on configuration via environment variables`: https://rclone.org/docs/#environment-variables
 .. _`s3:ListBucket`: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
